@@ -38,10 +38,6 @@ public class FileMenuController {
      * TabPane defined in Main.fxml
      */
     private TabPane tabPane;
-    /**
-     * the default untitled tab defined in Main.fxml
-     */
-    private Tab untitledTab;
 
     /**
      * Sets the tabFileMap.
@@ -58,15 +54,6 @@ public class FileMenuController {
      * @param tabPane TabPane
      */
     public void setTabPane(TabPane tabPane) { this.tabPane = tabPane; }
-
-    /**
-     * Sets the default untitledTab.
-     *
-     * @param untitledTab Tab
-     */
-    public void setUntitledTab(Tab untitledTab) {
-        this.untitledTab = untitledTab;
-    }
 
     /**
      * Helper method to get the text content of a specified file.
@@ -339,20 +326,9 @@ public class FileMenuController {
                 return;
             }
 
-            JavaCodeArea untitledJavaCodeArea = (JavaCodeArea)((VirtualizedScrollPane)
-                    this.untitledTab.getContent()).getContent();
-            // if the default untitled Java code area is empty, then fill that in with the file to be open
-            // this tab becomes the topmost tab
-            if (!this.tabPane.getTabs().isEmpty() && untitledJavaCodeArea.getText().isEmpty()) {
-                this.untitledTab.setText(openFile.getName());
-                untitledJavaCodeArea.appendText(contentString);
-                this.tabPane.getSelectionModel().select(this.untitledTab);
-                this.tabFileMap.put(this.untitledTab, openFile);
-            }
-            // if the default styled code area is not empty, open the file in a new tab window
-            else {
-                this.createTab(contentString, openFile.getName(), openFile);
-            }
+
+            this.createTab(contentString, openFile.getName(), openFile);
+
         }
     }
 
