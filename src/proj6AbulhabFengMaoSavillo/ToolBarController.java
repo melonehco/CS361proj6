@@ -28,10 +28,6 @@ import javafx.concurrent.Service;
  */
 public class ToolBarController {
     /**
-     * a HashMap mapping the tabs and the associated files
-     */
-    private Map<Tab,File> tabFileMap = new HashMap<Tab,File>();
-    /**
      * Console defined in Main.fxml
      */
     private StyleClassedTextArea console;
@@ -86,15 +82,6 @@ public class ToolBarController {
      */
     public void setConsole(StyleClassedTextArea console) {
         this.console = console;
-    }
-
-    /**
-     * Sets the tab file map.
-     *
-     * @param tabFileMap a HashMap mapping the tabs and the associated files
-     */
-    public void setTabFileMap(Map tabFileMap) {
-        this.tabFileMap = tabFileMap;
     }
 
     /**
@@ -199,7 +186,7 @@ public class ToolBarController {
             };
             inThread.start();
 
-            // true if compiled without compile-time error, else false
+            // true if ran without error, else false
             return curProcess.waitFor() == 0;
         } catch (Throwable e) {
             Platform.runLater(() -> {
@@ -302,45 +289,21 @@ public class ToolBarController {
     }
 
     /**
-     * Checks whether a file embedded in the specified tab should be saved before compiling.
-     * Pops up a dialog asking whether the user wants to save the file before compiling.
-     * Saves the file if the user agrees so.
-     *
-     * @param tab Tab where is file is to be compiled
-     * @return 0 if user clicked NO button; 1 if user clicked OK button;
-     *         2 is user clicked Cancel button; -1 is no saving is needed
-     */
-    private int checkSaveBeforeCompile(Tab tab) {
-        // if the file has not been saved or has been changed
-        if (this.fileMenuController.tabNeedsSaving(tab, true)) {
-            int buttonClicked = fileMenuController.createConfirmationDialog("Save Changes?",
-                    "Do you want to save the changes before compiling?",
-                    "Your recent file changes would not be compiled if not saved.");
-            // if user presses Yes button
-            if (buttonClicked == 1) {
-                this.fileMenuController.handleSaveAction();
-            }
-            return buttonClicked;
-        }
-        return -1;
-    }
-
-    /**
      * A CompileWorker subclass handling Java program compiling in a separated thread in the background.
      * CompileWorker extends the javafx Service class.
      */
     protected class CompileWorker extends Service<Boolean> {
         /**
-         * the selected tab in which the embedded file is to be compiled.
+         * the file to be compiled.
          */
-        private Tab tab;
+        private File file;
         /**
-         * Sets the selected tab.
+         * Sets the selected file.
          *
-         * @param tab the selected tab in which the embedded file is to be compiled.
+         * @param file the file to be compiled.
          */
-        private void setTab(Tab tab) {
-            this.tab = tab;
+        private void setFile(File file) {
+            this.file = file;
         }
 
         /**
@@ -360,7 +323,7 @@ public class ToolBarController {
                  *         false otherwise.
                  */
                 @Override protected Boolean call() {
-                    Boolean compileResult = compileJavaFile(tabFileMap.get(tab));
+                    Boolean compileResult = compileJavaFile(file);
                     if (compileResult) {
                         Platform.runLater(() -> console.appendText("Compilation was successful!\n"));
                     }
@@ -376,16 +339,16 @@ public class ToolBarController {
      */
     protected class CompileRunWorker extends Service<Boolean> {
         /**
-         * the selected tab in which the embedded file is to be compiled.
+         * the file to be compiled.
          */
-        private Tab tab;
+        private File file;
         /**
-         * Sets the selected tab.
+         * Sets the selected file.
          *
-         * @param tab the selected tab in which the embedded file is to be compiled.
+         * @param file the file to be compiled.
          */
-        private void setTab(Tab tab) {
-            this.tab = tab;
+        private void setFile(File file) {
+            this.file = file;
         }
 
         /**
@@ -405,8 +368,8 @@ public class ToolBarController {
                  *         false otherwise.
                  */
                 @Override protected Boolean call() {
-                    if (compileJavaFile(tabFileMap.get(tab))) {
-                        return runJavaFile(tabFileMap.get(tab));
+                    if (compileJavaFile(file)) {
+                        return runJavaFile(file);
                     }
                     return false;
                 }
@@ -420,13 +383,13 @@ public class ToolBarController {
      * @param event Event object
      * @param tab the Selected tab
      */
-    public void handleCompileButtonAction(Event event, Tab tab) {
+    public void handleCompileButtonAction(Event event, File file) {
         // user select cancel button
-        if (this.checkSaveBeforeCompile(tab) == 2) {
+        if (this.fileMenuController.checkSaveBeforeCompile() == 2) {
             event.consume();
         }
         else {
-            compileWorker.setTab(tab);
+            compileWorker.setFile(file);
             compileWorker.restart();
         }
     }
@@ -437,13 +400,13 @@ public class ToolBarController {
      * @param event Event object
      * @param tab the Selected tab
      */
-    public void handleCompileRunButtonAction(Event event, Tab tab) {
+    public void handleCompileRunButtonAction(Event event, File file) {
         // user select cancel button
-        if (this.checkSaveBeforeCompile(tab) == 2) {
+        if (this.fileMenuController.checkSaveBeforeCompile() == 2) {
             event.consume();
         }
         else {
-            compileRunWorker.setTab(tab);
+            compileRunWorker.setFile(file);
             compileRunWorker.restart();
         }
     }

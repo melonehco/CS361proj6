@@ -1,3 +1,6 @@
 - Dale’s comments
+	- bug
+	- last bullet
+	- refactor duplicate parts in checkSaveBeforeCompile and closeTab, probably
 - when taking out initial untitled tab, make handleTextChange private (currently used in Controller in method attached to initial tab)
 	- probably moving changing tab title to green to a handler attached to tab pane
