@@ -92,7 +92,7 @@ public class Controller {
     /**
      * a HashMap mapping the tabs and the associated files
      */
-    private Map<Tab,File> tabFileMap = new HashMap<Tab,File>();
+    private Map<Tab,File> tabFileMap = new HashMap<>();
 
 
     private ToolBarController.CompileWorker compileWorker;
@@ -105,7 +105,6 @@ public class Controller {
     private void setupToolbarController() {
         this.toolbarController = new ToolBarController();
         this.toolbarController.setConsole(this.console);
-        this.toolbarController.setTabFileMap(this.tabFileMap);
         this.toolbarController.setFileMenuController(this.fileMenuController);
         this.toolbarController.initialize();
         this.compileWorker = this.toolbarController.getCompileWorker();
@@ -119,7 +118,6 @@ public class Controller {
         this.fileMenuController = new FileMenuController();
         this.fileMenuController.setTabFileMap(this.tabFileMap);
         this.fileMenuController.setTabPane(this.tabPane);
-        this.fileMenuController.setUntitledTab(this.untitledTab);
     }
 
     /**
@@ -169,8 +167,6 @@ public class Controller {
      * Sets up references to the sub Controllers.
      */
     @FXML public void initialize() {
-        // put the default tab into the tab file map
-        this.tabFileMap.put(this.untitledTab, null);
 
         // set up the sub controllers
         this.setupEditMenuController();
@@ -201,7 +197,8 @@ public class Controller {
     @FXML private void handleCompileButtonAction(Event event) {
         // get the current tab and its corresponding File object
         Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-        this.toolbarController.handleCompileButtonAction(event, selectedTab);
+        File selectedFile = this.tabFileMap.get(selectedTab);
+        this.toolbarController.handleCompileButtonAction(event, selectedFile);
     }
 
     /**
@@ -212,7 +209,8 @@ public class Controller {
     @FXML private void handleCompileRunButtonAction(Event event) {
         // get the current tab and its corresponding File object
         Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-        this.toolbarController.handleCompileRunButtonAction(event, selectedTab);
+        File selectedFile = this.tabFileMap.get(selectedTab);
+        this.toolbarController.handleCompileRunButtonAction(event, selectedFile);
     }
 
     /**

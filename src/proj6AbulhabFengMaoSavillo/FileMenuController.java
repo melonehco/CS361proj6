@@ -38,10 +38,6 @@ public class FileMenuController {
      * TabPane defined in Main.fxml
      */
     private TabPane tabPane;
-    /**
-     * the default untitled tab defined in Main.fxml
-     */
-    private Tab untitledTab;
 
     /**
      * Sets the tabFileMap.
@@ -58,15 +54,6 @@ public class FileMenuController {
      * @param tabPane TabPane
      */
     public void setTabPane(TabPane tabPane) { this.tabPane = tabPane; }
-
-    /**
-     * Sets the default untitledTab.
-     *
-     * @param untitledTab Tab
-     */
-    public void setUntitledTab(Tab untitledTab) {
-        this.untitledTab = untitledTab;
-    }
 
     /**
      * Helper method to get the text content of a specified file.
@@ -91,7 +78,7 @@ public class FileMenuController {
      * @param file File that the input string is saved to
      * @return true is the specified file is successfully saved; false if an error occurs when saving the specified file.
      */
-    public boolean saveFile(String content, File file){
+    public boolean setFileContent(String content, File file){
         try {
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(content);
@@ -218,6 +205,33 @@ public class FileMenuController {
         return fileChooser;
     }
 
+    /**
+     * Checks whether a file embedded in the specified tab should be saved before compiling.
+     * Pops up a dialog asking whether the user wants to save the file before compiling.
+     * Saves the file if the user agrees so.
+     *
+     * @param tab Tab where is file is to be compiled
+     * @return 0 if user clicked NO button; 1 if user clicked OK button;
+     *         2 is user clicked Cancel button; -1 is no saving is needed
+     */
+    public int checkSaveBeforeCompile() {
+    	// get the selected tab from the tab pane
+        Tab tab = this.tabPane.getSelectionModel().getSelectedItem();
+
+        // if the file has not been saved or has been changed
+        if (this.tabNeedsSaving(tab, true)) {
+            int buttonClicked = createConfirmationDialog("Save Changes?",
+                    "Do you want to save the changes before compiling?",
+                    "Your recent file changes would not be compiled if not saved.");
+            // if user presses Yes button
+            if (buttonClicked == 1) {
+                this.handleSaveAction();
+            }
+            return buttonClicked;
+        }
+        return -1;
+    }
+
 
     /**
      * Helper method to handle closing tag action.
@@ -312,20 +326,9 @@ public class FileMenuController {
                 return;
             }
 
-            JavaCodeArea untitledJavaCodeArea = (JavaCodeArea)((VirtualizedScrollPane)
-                    this.untitledTab.getContent()).getContent();
-            // if the default untitled Java code area is empty, then fill that in with the file to be open
-            // this tab becomes the topmost tab
-            if (!this.tabPane.getTabs().isEmpty() && untitledJavaCodeArea.getText().isEmpty()) {
-                this.untitledTab.setText(openFile.getName());
-                untitledJavaCodeArea.appendText(contentString);
-                this.tabPane.getSelectionModel().select(this.untitledTab);
-                this.tabFileMap.put(this.untitledTab, openFile);
-            }
-            // if the default styled code area is not empty, open the file in a new tab window
-            else {
-                this.createTab(contentString, openFile.getName(), openFile);
-            }
+
+            this.createTab(contentString, openFile.getName(), openFile);
+
         }
     }
 
@@ -353,7 +356,7 @@ public class FileMenuController {
         else {
             JavaCodeArea activeJavaCodeArea = (JavaCodeArea)((VirtualizedScrollPane)
                     selectedTab.getContent()).getContent();
-            if(!this.saveFile(activeJavaCodeArea.getText(), this.tabFileMap.get(selectedTab))) {
+            if(!this.setFileContent(activeJavaCodeArea.getText(), this.tabFileMap.get(selectedTab))) {
                 return false;
             }
             selectedTab.setStyle("-fx-text-base-color: black");
@@ -381,7 +384,7 @@ public class FileMenuController {
             // get the selected tab from the tab pane
             Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
             JavaCodeArea activeJavaCodeArea = (JavaCodeArea)((VirtualizedScrollPane)selectedTab.getContent()).getContent();
-            if(!this.saveFile(activeJavaCodeArea.getText(), saveFile)) {
+            if(!this.setFileContent(activeJavaCodeArea.getText(), saveFile)) {
                 return false;
             }
             // set the title of the tab to the name of the saved file
