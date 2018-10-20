@@ -1,0 +1,3 @@
+- Dale’s comments
+- when taking out initial untitled tab, make handleTextChange private (currently used in Controller in method attached to initial tab)
+	- probably moving changing tab title to green to a handler attached to tab pane

@@ -21,9 +21,9 @@ import javafx.concurrent.Service;
 /**
  * ToolbarController handles Toolbar related actions.
  *
- * @author Liwei Jiang
- * @author Martin Deutsch
- * @author Tatsuya Yokota
+ * @author Evan Savillo
+ * @author Yi Feng
+ * @author Zena Abulhab
  * @author Melody Mao
  */
 public class ToolBarController {
@@ -238,7 +238,7 @@ public class ToolBarController {
             // signal output thread
             this.mutex.release();
             // wait for output to acquire mutex
-            Thread.sleep(5);
+            Thread.sleep(1);
         }
         inputWriter.close();
     }
@@ -274,7 +274,7 @@ public class ToolBarController {
                 this.mutex.release();
             }
             // wait for input thread to acquire mutex if necessary
-            Thread.sleep(5);
+            Thread.sleep(1);
         }
         this.mutex.release();
         reader.close();

@@ -19,9 +19,9 @@ import javafx.scene.Parent;
  * buttons for compiling, running, and stopping code; and a program console
  * that takes in standard input, displays standard output and program message.
  *
- * @author Liwei Jiang
- * @author Martin Deutsch
- * @author Tatsuya Yokota
+ * @author Evan Savillo
+ * @author Yi Feng
+ * @author Zena Abulhab
  * @author Melody Mao
  */
 public class Main extends Application {
