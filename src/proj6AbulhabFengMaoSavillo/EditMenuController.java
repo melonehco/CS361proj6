@@ -1,8 +1,8 @@
 /*
  * File: EditMenuController.java
- * F18 CS361 Project 5
- * Names: Liwei Jiang, Martin Deutsch, Tatsuya Yokota, and Melody Mao
- * Date: 10/12/2018
+ * F18 CS361 Project 6
+ * Names: Melody Mao, Zena Abulhab, Yi Feng, Evan Savillo
+ * Date: 10/27/2018
  * This file contains the EditMenuController class, handling Edit menu related actions.
  */
 
