@@ -25,9 +25,9 @@ import org.fxmisc.richtext.StyleClassedTextArea;
 /**
  * Main controller handles actions evoked by the Main window.
  *
- * @author Liwei Jiang
- * @author Martin Deutsch
- * @author Tatsuya Yokota
+ * @author Evan Savillo
+ * @author Yi Feng
+ * @author Zena Abulhab
  * @author Melody Mao
  */
 public class Controller {
@@ -164,12 +164,16 @@ public class Controller {
     }
 
     /**
-     * Calls the method that handles the text change in the StyledCodeArea.
+     * Calls the method that handles the text change in the JavaCodeArea.
      *
      * @param event Event object
      */
     @FXML private void handleTextChange(Event event) {
-        ((StyledCodeArea)event.getSource()).handleTextChange(this.tabPane);
+		Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+		// change the tab color to indicate the code field has been changed and not been saved
+		selectedTab.setStyle("-fx-text-base-color: green");
+    	
+        ((JavaCodeArea)event.getSource()).handleTextChange();
     }
 
     /**

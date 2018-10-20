@@ -24,9 +24,9 @@ import javafx.scene.control.TabPane;
 /**
  * FileMenuController handles File menu related actions.
  *
- * @author Liwei Jiang
- * @author Martin Deutsch
- * @author Tatsuya Yokota
+ * @author Evan Savillo
+ * @author Yi Feng
+ * @author Zena Abulhab
  * @author Melody Mao
  */
 public class FileMenuController {
@@ -105,17 +105,17 @@ public class FileMenuController {
 
 
     /**
-     * Helper method to check if the content of the specified StyledCodeArea
+     * Helper method to check if the content of the specified JavaCodeArea
      * matches the content of the specified File.
      *
-     * @param styledCodeArea StyledCodeArea to compare with the the specified File
-     * @param file File to compare with the the specified StyledCodeArea
-     * @return true if the content of the StyledCodeArea matches the content of the File; false if not
+     * @param javaCodeArea JavaCodeArea to compare with the the specified File
+     * @param file File to compare with the the specified JavaCodeArea
+     * @return true if the content of the JavaCodeArea matches the content of the File; false if not
      */
-    public boolean fileContainsMatch(StyledCodeArea styledCodeArea, File file) {
-        String styledCodeAreaContent = styledCodeArea.getText();
+    public boolean fileContainsMatch(JavaCodeArea javaCodeArea, File file) {
+        String javaCodeAreaContent = javaCodeArea.getText();
         String fileContent = this.getFileContent(file);
-        return styledCodeAreaContent.equals(fileContent);
+        return javaCodeAreaContent.equals(fileContent);
     }
 
 
@@ -128,12 +128,12 @@ public class FileMenuController {
      * @return true if the tab needs saving; false if the tab does not need saving.
      */
     public boolean tabNeedsSaving(Tab tab, boolean ifSaveEmptyFile) {
-        StyledCodeArea activeStyledCodeArea = (StyledCodeArea)((VirtualizedScrollPane)tab.getContent()).getContent();
+        JavaCodeArea activeJavaCodeArea = (JavaCodeArea)((VirtualizedScrollPane)tab.getContent()).getContent();
         // check whether the embedded text has been saved or not
         if (this.tabFileMap.get(tab) == null) {
             // if the newly created file is empty, don't save
             if (!ifSaveEmptyFile) {
-                if (activeStyledCodeArea.getText().equals("")) {
+                if (activeJavaCodeArea.getText().equals("")) {
                     return false;
                 }
             }
@@ -141,7 +141,7 @@ public class FileMenuController {
         }
         // check whether the saved file match the tab content or not
         else {
-            return !this.fileContainsMatch(activeStyledCodeArea, this.tabFileMap.get(tab));
+            return !this.fileContainsMatch(activeJavaCodeArea, this.tabFileMap.get(tab));
         }
     }
 
@@ -194,14 +194,12 @@ public class FileMenuController {
      * @param file File opened; null if creating an empty window
      */
     private void createTab(String contentString, String filename, File file) {
-        StyledCodeArea newStyledCodeArea = new StyledCodeArea();
-        newStyledCodeArea.appendText(contentString);
-        newStyledCodeArea.setOnKeyPressed(event -> newStyledCodeArea.handleTextChange(this.tabPane));
-        newStyledCodeArea.highlightText();
+        JavaCodeArea newJavaCodeArea = new JavaCodeArea();
+        newJavaCodeArea.appendText(contentString); //set to given contents
 
         Tab newTab = new Tab();
         newTab.setText(filename);
-        newTab.setContent(new VirtualizedScrollPane<>(newStyledCodeArea));
+        newTab.setContent(new VirtualizedScrollPane<>(newJavaCodeArea));
         newTab.setOnCloseRequest(event -> this.handleCloseAction(event));
 
         this.tabPane.getTabs().add(newTab);
@@ -314,14 +312,13 @@ public class FileMenuController {
                 return;
             }
 
-            StyledCodeArea untitledStyledCodeArea = (StyledCodeArea)((VirtualizedScrollPane)
+            JavaCodeArea untitledJavaCodeArea = (JavaCodeArea)((VirtualizedScrollPane)
                     this.untitledTab.getContent()).getContent();
-            // if the default untitled styled code area is empty, then fill that in with the file to be open
+            // if the default untitled Java code area is empty, then fill that in with the file to be open
             // this tab becomes the topmost tab
-            if (!this.tabPane.getTabs().isEmpty() && untitledStyledCodeArea.getText().isEmpty()) {
+            if (!this.tabPane.getTabs().isEmpty() && untitledJavaCodeArea.getText().isEmpty()) {
                 this.untitledTab.setText(openFile.getName());
-                untitledStyledCodeArea.appendText(contentString);
-                untitledStyledCodeArea.highlightText();
+                untitledJavaCodeArea.appendText(contentString);
                 this.tabPane.getSelectionModel().select(this.untitledTab);
                 this.tabFileMap.put(this.untitledTab, openFile);
             }
@@ -354,9 +351,9 @@ public class FileMenuController {
         // if the current styled code area was loaded from a file or previously saved to a file,
         // then the styled code area is saved to that file
         else {
-            StyledCodeArea activeStyledCodeArea = (StyledCodeArea)((VirtualizedScrollPane)
+            JavaCodeArea activeJavaCodeArea = (JavaCodeArea)((VirtualizedScrollPane)
                     selectedTab.getContent()).getContent();
-            if(!this.saveFile(activeStyledCodeArea.getText(), this.tabFileMap.get(selectedTab))) {
+            if(!this.saveFile(activeJavaCodeArea.getText(), this.tabFileMap.get(selectedTab))) {
                 return false;
             }
             selectedTab.setStyle("-fx-text-base-color: black");
@@ -383,8 +380,8 @@ public class FileMenuController {
         if (saveFile != null) {
             // get the selected tab from the tab pane
             Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-            StyledCodeArea activeStyledCodeArea = (StyledCodeArea)((VirtualizedScrollPane)selectedTab.getContent()).getContent();
-            if(!this.saveFile(activeStyledCodeArea.getText(), saveFile)) {
+            JavaCodeArea activeJavaCodeArea = (JavaCodeArea)((VirtualizedScrollPane)selectedTab.getContent()).getContent();
+            if(!this.saveFile(activeJavaCodeArea.getText(), saveFile)) {
                 return false;
             }
             // set the title of the tab to the name of the saved file

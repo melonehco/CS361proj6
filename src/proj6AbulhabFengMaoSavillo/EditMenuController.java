@@ -18,9 +18,9 @@ import org.fxmisc.richtext.CodeArea;
 /**
  * Main controller handles Edit menu related actions.
  *
- * @author Liwei Jiang
- * @author Martin Deutsch
- * @author Tatsuya Yokota
+ * @author Evan Savillo
+ * @author Yi Feng
+ * @author Zena Abulhab
  * @author Melody Mao
  */
 public class EditMenuController {

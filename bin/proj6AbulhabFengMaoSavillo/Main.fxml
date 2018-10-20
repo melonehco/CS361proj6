@@ -19,7 +19,7 @@
 <?import org.fxmisc.flowless.VirtualizedScrollPane?>
 <?import org.fxmisc.richtext.StyleClassedTextArea?>
 
-<?import proj6AbulhabFengMaoSavillo.StyledCodeArea?>
+<?import proj6AbulhabFengMaoSavillo.JavaCodeArea?>
 <VBox fx:id="VBox" stylesheets="@Main.css" fx:controller="proj6AbulhabFengMaoSavillo.Controller" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <MenuBar VBox.vgrow="NEVER">
         <Menu text="File" fx:id="fileMenu">
@@ -53,7 +53,7 @@
                 <content>
                     <VirtualizedScrollPane fx:id = "scrollPane">
                         <content>
-                            <StyledCodeArea fx:id="defaultCodeArea" stylesheets = "@Main.css" wrapText="true" onKeyPressed="#handleTextChange"/>
+                            <JavaCodeArea fx:id="defaultCodeArea" stylesheets = "@Main.css" wrapText="true" onKeyPressed="#handleTextChange"/>
                         </content>
                     </VirtualizedScrollPane>
                 </content>

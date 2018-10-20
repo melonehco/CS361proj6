@@ -4,7 +4,7 @@
  * Names: Melody Mao, Zena Abulhab, Yi Feng, Evan Savillo
  * Date: 10/27/2018
  * This file contains the StyledCodeArea class, which extends the CodeArea class
- * to handle syntax highlighting.
+ * to handle syntax highlighting for Java.
  */
 
 package proj6AbulhabFengMaoSavillo;
@@ -23,14 +23,14 @@ import java.util.regex.Pattern;
 
 /**
  * This class extends the CodeArea class from RichTextFx to handle
- * syntax highlighting.
+ * syntax highlighting for Java.
  *
- * @author Liwei Jiang
- * @author Martin Deutsch
- * @author Tatsuya Yokota
+ * @author Evan Savillo
+ * @author Yi Feng
+ * @author Zena Abulhab
  * @author Melody Mao
  */
-public class StyledCodeArea extends CodeArea {
+public class JavaCodeArea extends CodeArea {
     /**
      * a list of key words to be highlighted
      */
@@ -73,27 +73,30 @@ public class StyledCodeArea extends CodeArea {
                     + "|(?<INTEGER>" + INTEGER_PATTERN + ")"
     );
 
+    /**
+     * Creates a new empty JavaCodeArea
+     */
+    public JavaCodeArea()
+    {
+    	//update syntax coloring whenever contents update
+    	this.setOnKeyPressed(event -> this.handleTextChange());
+    	//highlight for syntax
+    	this.highlightText();
+    }
 
     /**
      * Helper function to highlight the text within the StyledCodeArea.
      */
-    public void highlightText() {
+    private void highlightText() {
         this.setStyleSpans(0, this.computeHighlighting(this.getText()));
     }
 
 
     /**
      * Handles the text change action.
-     * Changes the tab title to green when the selected StyledCodeArea has been changed and not been saved.
      * Listens to the text changes and highlights the keywords real-time.
-     *
-     * @param tabPane TabPane object holding the StyledCodeArea
      */
-    public void handleTextChange(TabPane tabPane) {
-        Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-        // change the tab color to indicate the code field has been changed and not been saved
-        selectedTab.setStyle("-fx-text-base-color: green");
-
+    public void handleTextChange() {
         Subscription cleanupWhenNoLongerNeedIt = this
 
                 // plain changes = ignore style changes that are emitted when syntax highlighting is reapplied
@@ -115,7 +118,7 @@ public class StyledCodeArea extends CodeArea {
      * @param text string to compute highlighting of
      * @return StyleSpans Collection Object
      */
-    public static StyleSpans<Collection<String>> computeHighlighting(String text) {
+    private static StyleSpans<Collection<String>> computeHighlighting(String text) {
         Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder
