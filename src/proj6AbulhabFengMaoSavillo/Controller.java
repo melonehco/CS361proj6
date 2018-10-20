@@ -86,7 +86,7 @@ public class Controller {
     /**
      * a HashMap mapping the tabs and the associated files
      */
-    private Map<Tab,File> tabFileMap = new HashMap<Tab,File>();
+    private Map<Tab,File> tabFileMap = new HashMap<>();
 
 
     private ToolBarController.CompileWorker compileWorker;
@@ -151,8 +151,6 @@ public class Controller {
      * Sets up references to the sub Controllers.
      */
     @FXML public void initialize() {
-        // put the default tab into the tab file map
-        this.tabFileMap.put(this.untitledTab, null);
 
         // set up the sub controllers
         this.setupEditMenuController();
