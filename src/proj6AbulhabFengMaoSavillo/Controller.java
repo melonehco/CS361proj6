@@ -113,7 +113,6 @@ public class Controller {
         this.fileMenuController = new FileMenuController();
         this.fileMenuController.setTabFileMap(this.tabFileMap);
         this.fileMenuController.setTabPane(this.tabPane);
-        this.fileMenuController.setUntitledTab(this.untitledTab);
     }
 
     /**

@@ -49,15 +49,15 @@
     </ToolBar>
     <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS">
         <tabs>
-            <Tab text="untitled" fx:id="untitledTab" onCloseRequest="#handleCloseAction">
-                <content>
-                    <VirtualizedScrollPane fx:id = "scrollPane">
-                        <content>
-                            <StyledCodeArea fx:id="defaultCodeArea" stylesheets = "@Main.css" wrapText="true" onKeyPressed="#handleTextChange"/>
-                        </content>
-                    </VirtualizedScrollPane>
-                </content>
-            </Tab>
+            <!--<Tab text="untitled" fx:id="untitledTab" onCloseRequest="#handleCloseAction">-->
+                <!--<content>-->
+                    <!--<VirtualizedScrollPane fx:id = "scrollPane">-->
+                        <!--<content>-->
+                            <!--<StyledCodeArea fx:id="defaultCodeArea" stylesheets = "@Main.css" wrapText="true" onKeyPressed="#handleTextChange"/>-->
+                        <!--</content>-->
+                    <!--</VirtualizedScrollPane>-->
+                <!--</content>-->
+            <!--</Tab>-->
         </tabs>
     </TabPane>
     <Separator/>
