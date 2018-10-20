@@ -78,6 +78,8 @@ public class JavaCodeArea extends CodeArea {
      */
     public JavaCodeArea()
     {
+        //color syntax immediately
+        this.handleTextChange();
     	//update syntax coloring whenever contents update
     	this.setOnKeyPressed(event -> this.handleTextChange());
     	//highlight for syntax

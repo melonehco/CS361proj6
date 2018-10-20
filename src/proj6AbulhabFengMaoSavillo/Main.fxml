@@ -1,69 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--File: Main.fxml-->
 <!--F18 CS361 Project 6-->
 <!--Names: Melody Mao, Zena Abulhab, Yi Feng, Evan Savillo-->
 <!--JXML file, laying out GUI elements of Main.java-->
 <!--Date: 10/27/2018-->
-
 <!--imported packages-->
+
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.VBox?>
 <?import org.fxmisc.flowless.VirtualizedScrollPane?>
 <?import org.fxmisc.richtext.StyleClassedTextArea?>
-
 <?import proj6AbulhabFengMaoSavillo.JavaCodeArea?>
-<VBox fx:id="VBox" stylesheets="@Main.css" fx:controller="proj6AbulhabFengMaoSavillo.Controller" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+<VBox fx:id="VBox" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proj6AbulhabFengMaoSavillo.Controller">
     <MenuBar VBox.vgrow="NEVER">
-        <Menu text="File" fx:id="fileMenu">
-            <MenuItem text="About..." fx:id="aboutMenuItem" onAction="#handleAboutAction"/>
+        <Menu fx:id="fileMenu" text="File">
+            <MenuItem fx:id="aboutMenuItem" onAction="#handleAboutAction" text="About..." />
             <SeparatorMenuItem />
-            <MenuItem text="New" fx:id="newMenuItem" onAction="#handleNewAction" accelerator="Shortcut+N"/>
-            <MenuItem text="Open..." fx:id="openMenuItem" onAction="#handleOpenAction" accelerator="Shortcut+O"/>
-            <MenuItem text="Close" fx:id="closeMenuItem" onAction="#handleCloseAction" accelerator="Shortcut+W"/>
-            <MenuItem text="Save" fx:id="saveMenuItem" onAction="#handleSaveAction" accelerator="Shortcut+S"/>
-            <MenuItem text="Save as..." fx:id="saveAsMenuItem" onAction="#handleSaveAsAction" accelerator="Shortcut+Shift+S"/>
+            <MenuItem fx:id="newMenuItem" accelerator="Shortcut+N" onAction="#handleNewAction" text="New" />
+            <MenuItem fx:id="openMenuItem" accelerator="Shortcut+O" onAction="#handleOpenAction" text="Open..." />
+            <MenuItem fx:id="closeMenuItem" accelerator="Shortcut+W" onAction="#handleCloseAction" text="Close" />
+            <MenuItem fx:id="saveMenuItem" accelerator="Shortcut+S" onAction="#handleSaveAction" text="Save" />
+            <MenuItem fx:id="saveAsMenuItem" accelerator="Shortcut+Shift+S" onAction="#handleSaveAsAction" text="Save as..." />
             <SeparatorMenuItem />
-            <MenuItem text="Exit" fx:id="exitMenuItem" onAction="#handleExitAction" accelerator="Shortcut+Shift+W"/>
+            <MenuItem fx:id="exitMenuItem" accelerator="Shortcut+Shift+W" onAction="#handleExitAction" text="Exit" />
         </Menu>
-        <Menu text="Edit" fx:id="editMenu">
-            <MenuItem text="Undo" fx:id="undoMenuItem" onAction="#handleEditMenuAction" accelerator="Shortcut+Z"/>
-            <MenuItem text="Redo" fx:id="redoMenuItem" onAction="#handleEditMenuAction" accelerator="Shortcut+Y"/>
-            <MenuItem text="Cut" fx:id="cutMenuItem" onAction="#handleEditMenuAction" accelerator="Shortcut+X"/>
-            <MenuItem text="Copy" fx:id="copyMenuItem" onAction="#handleEditMenuAction" accelerator="Shortcut+C"/>
-            <MenuItem text="Paste" fx:id="pasteMenuItem" onAction="#handleEditMenuAction" accelerator="Shortcut+V"/>
-            <MenuItem text="Select all" fx:id="selectMenuItem" onAction="#handleEditMenuAction" accelerator="Shortcut+A"/>
+        <Menu fx:id="editMenu" text="Edit">
+            <MenuItem fx:id="undoMenuItem" accelerator="Shortcut+Z" onAction="#handleEditMenuAction" text="Undo" />
+            <MenuItem fx:id="redoMenuItem" accelerator="Shortcut+Y" onAction="#handleEditMenuAction" text="Redo" />
+            <MenuItem fx:id="cutMenuItem" accelerator="Shortcut+X" onAction="#handleEditMenuAction" text="Cut" />
+            <MenuItem fx:id="copyMenuItem" accelerator="Shortcut+C" onAction="#handleEditMenuAction" text="Copy" />
+            <MenuItem fx:id="pasteMenuItem" accelerator="Shortcut+V" onAction="#handleEditMenuAction" text="Paste" />
+            <MenuItem fx:id="selectMenuItem" accelerator="Shortcut+A" onAction="#handleEditMenuAction" text="Select all" />
         </Menu>
     </MenuBar>
     <ToolBar VBox.vgrow="ALWAYS">
-        <Button text="Compile" fx:id="compileButton" onAction ="#handleCompileButtonAction"/>
-        <Button text="Compile &amp; Run" fx:id="compileRunButton" onAction="#handleCompileRunButtonAction"/>
-        <Button text="Stop" fx:id="stopButton" onAction="#handleStopButtonAction"/>
+        <Button fx:id="compileButton" onAction="#handleCompileButtonAction" text="Compile" />
+        <Button fx:id="compileRunButton" onAction="#handleCompileRunButtonAction" text="Compile &amp; Run" />
+        <Button fx:id="stopButton" onAction="#handleStopButtonAction" text="Stop" />
+        <Separator maxWidth="25" minWidth="25" />
+        <CheckBox fx:id="checkBox" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Toggle Structure" />
     </ToolBar>
-    <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS">
-        <tabs>
-            <Tab text="untitled" fx:id="untitledTab" onCloseRequest="#handleCloseAction">
-                <content>
-                    <VirtualizedScrollPane fx:id = "scrollPane">
+    <SplitPane fx:id="horizontalSplitPane" dividerPositions="0.25" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+        <TreeView fx:id="treeView" editable="true" prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false" />
+        <SplitPane dividerPositions="0.75" orientation="VERTICAL" prefHeight="329.0" prefWidth="416.0">
+            <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS">
+                <tabs>
+                    <Tab fx:id="untitledTab" onCloseRequest="#handleCloseAction" text="untitled">
                         <content>
-                            <JavaCodeArea fx:id="defaultCodeArea" stylesheets = "@Main.css" wrapText="true" onKeyPressed="#handleTextChange"/>
+                            <VirtualizedScrollPane fx:id="scrollPane">
+                                <content>
+                                    <JavaCodeArea fx:id="defaultCodeArea" onKeyPressed="#handleTextChange" stylesheets="@Main.css" wrapText="true" />
+                                </content>
+                            </VirtualizedScrollPane>
                         </content>
-                    </VirtualizedScrollPane>
+                    </Tab>
+                </tabs>
+            </TabPane>
+            <VirtualizedScrollPane SplitPane.resizableWithParent="false">
+                <content>
+                    <StyleClassedTextArea fx:id="console" />
                 </content>
-            </Tab>
-        </tabs>
-    </TabPane>
-    <Separator/>
-    <VirtualizedScrollPane>
-        <content>
-            <StyleClassedTextArea fx:id="console"/>
-        </content>
-    </VirtualizedScrollPane>
+            </VirtualizedScrollPane>
+        </SplitPane>
+    </SplitPane>
 </VBox>

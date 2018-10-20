@@ -11,13 +11,11 @@ import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
+
 import java.io.File;
 import java.util.*;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.Tab;
+
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.Bindings;
 import org.fxmisc.richtext.StyleClassedTextArea;
@@ -84,6 +82,14 @@ public class Controller {
      */
     @FXML private Menu editMenu;
     /**
+     * Checkbox which currently toggles File Structure View
+     */
+    @FXML private CheckBox checkBox;
+    /**
+     * Split pane which contains File Structure View on left and the rest on right
+     */
+    @FXML private SplitPane horizontalSplitPane;
+    /**
      * a HashMap mapping the tabs and the associated files
      */
     private Map<Tab,File> tabFileMap = new HashMap<Tab,File>();
@@ -143,6 +149,17 @@ public class Controller {
         this.stopButton.disableProperty().bind(((ifCompiling.not()).and(ifCompilingRunning.not())).or(ifTabPaneEmpty));
         this.compileButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(ifTabPaneEmpty));
         this.compileRunButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(ifTabPaneEmpty));
+
+        this.checkBox.selectedProperty().addListener(
+                (observable, oldValue, newValue) ->
+                {
+                    if (newValue)
+                        this.horizontalSplitPane.setDividerPosition(0, 0.0);
+                    else
+                    {
+                        this.horizontalSplitPane.setDividerPosition(0, 0.25);
+                    }
+                });
     }
 
     /**

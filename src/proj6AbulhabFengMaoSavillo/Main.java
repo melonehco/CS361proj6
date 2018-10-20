@@ -39,7 +39,7 @@ public class Main extends Application {
         Parent root = loader.load();
 
         // initialize a scene and add features specified in the css file to the scene
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, 640+160, 480+120);
         scene.getStylesheets().add(getClass().getResource("/proj6AbulhabFengMaoSavillo/Main.css").toExternalForm());
         // configure the stage
         stage.setTitle("DeutschJiangMaoYokota's Project 5");
