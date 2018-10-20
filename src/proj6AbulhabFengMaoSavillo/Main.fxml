@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--File: Main.fxml-->
-<!--F18 CS361 Project 5-->
-<!--Names: Liwei Jiang, Martin Deutsch, Tatsuya Yokota, Melody Mao-->
+<!--F18 CS361 Project 6-->
+<!--Names: Melody Mao, Zena Abulhab, Yi Feng, Evan Savillo-->
 <!--JXML file, laying out GUI elements of Main.java-->
-<!--Date: 10/12/2018-->
+<!--Date: 10/27/2018-->
 
 <!--imported packages-->
 <?import javafx.scene.control.Button?>
