@@ -7,6 +7,7 @@
  */
 
 package proj6AbulhabFengMaoSavillo;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -27,26 +28,29 @@ public class EditMenuController {
     /**
      * TabPane defined in Main.fxml
      */
-    @FXML private TabPane tabPane;
+    @FXML
+    private TabPane tabPane;
 
     /**
      * Sets the tab pane.
      *
      * @param tabPane TabPane defined in Main.fxml
      */
-    public void setTabPane(TabPane tabPane) { this.tabPane = tabPane; }
+    public void setTabPane(TabPane tabPane) {
+        this.tabPane = tabPane;
+    }
 
     /**
      * Handles the Edit menu action.
      *
-     *  @param event ActionEvent object
+     * @param event ActionEvent object
      */
     public void handleEditMenuAction(ActionEvent event) {
         // get the code area embedded in the selected tab window
         Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-        CodeArea activeCodeArea = (CodeArea)((VirtualizedScrollPane)selectedTab.getContent()).getContent();
-        MenuItem clickedItem = (MenuItem)event.getTarget();
-        switch(clickedItem.getId()) {
+        CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
+        MenuItem clickedItem = (MenuItem) event.getTarget();
+        switch (clickedItem.getId()) {
             case "undoMenuItem":
                 activeCodeArea.undo();
                 break;

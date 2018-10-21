@@ -7,7 +7,10 @@
  */
 
 package proj6AbulhabFengMaoSavillo;
+
 import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -19,6 +22,7 @@ import java.util.*;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.Bindings;
 import org.fxmisc.richtext.StyleClassedTextArea;
+
 
 /**
  * Main controller handles actions evoked by the Main window.
@@ -44,55 +48,67 @@ public class Controller {
     /**
      * Compile button defined in Main.fxml
      */
-    @FXML private Button compileButton;
+    @FXML
+    private Button compileButton;
     /**
      * CompileRun button defined in Main.fxml
      */
-    @FXML private Button compileRunButton;
+    @FXML
+    private Button compileRunButton;
     /**
      * Stop button defined in Main.fxml
      */
-    @FXML private Button stopButton;
+    @FXML
+    private Button stopButton;
     /**
      * TabPane defined in Main.fxml
      */
-    @FXML private TabPane tabPane;
+    @FXML
+    private TabPane tabPane;
     /**
      * the default untitled tab defined in Main.fxml
      */
-    @FXML private Tab untitledTab;
+    @FXML
+    private Tab untitledTab;
     /**
      * the console pane defined in Main.fxml
      */
-    @FXML private StyleClassedTextArea console;
+    @FXML
+    private StyleClassedTextArea console;
     /**
      * Close menu item of the File menu defined in Main.fxml
      */
-    @FXML private MenuItem closeMenuItem;
+    @FXML
+    private MenuItem closeMenuItem;
     /**
      * Save menu item of the File menu defined in Main.fxml
      */
-    @FXML private MenuItem saveMenuItem;
+    @FXML
+    private MenuItem saveMenuItem;
     /**
      * Save As menu item of the File menu defined in Main.fxml
      */
-    @FXML private MenuItem saveAsMenuItem;
+    @FXML
+    private MenuItem saveAsMenuItem;
     /**
      * Edit menu defined in Main.fxml
      */
-    @FXML private Menu editMenu;
+    @FXML
+    private Menu editMenu;
     /**
      * Checkbox which currently toggles File Structure View
      */
-    @FXML private CheckBox checkBox;
+    @FXML
+    private CheckBox checkBox;
     /**
      * Split pane which contains File Structure View on left and the rest on right
      */
-    @FXML private SplitPane horizontalSplitPane;
+    @FXML
+    private SplitPane horizontalSplitPane;
     /**
      * a HashMap mapping the tabs and the associated files
      */
-    private Map<Tab,File> tabFileMap = new HashMap<>();
+    private Map<Tab, File> tabFileMap = new HashMap<>();
 
 
     private ToolBarController.CompileWorker compileWorker;
@@ -143,21 +159,18 @@ public class Controller {
         this.saveAsMenuItem.disableProperty().bind(ifTabPaneEmpty);
         this.editMenu.disableProperty().bind(ifTabPaneEmpty);
 
-
         this.stopButton.disableProperty().bind(((ifCompiling.not()).and(ifCompilingRunning.not())).or(ifTabPaneEmpty));
         this.compileButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(ifTabPaneEmpty));
         this.compileRunButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(ifTabPaneEmpty));
 
-        this.checkBox.selectedProperty().addListener(
-                (observable, oldValue, newValue) ->
-                {
-                    if (newValue)
-                        this.horizontalSplitPane.setDividerPosition(0, 0.0);
-                    else
-                    {
-                        this.horizontalSplitPane.setDividerPosition(0, 0.25);
-                    }
-                });
+        SplitPane.Divider divider = this.horizontalSplitPane.getDividers().get(0);
+        this.checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) divider.setPosition(0.0);
+            else divider.setPosition(0.25);
+        });
+        divider.positionProperty().addListener(((observable, oldValue, newValue) -> {
+            if (this.checkBox.isSelected()) divider.setPosition(0.0);
+        }));
     }
 
     /**
@@ -166,8 +179,8 @@ public class Controller {
      * Sets up bindings.
      * Sets up references to the sub Controllers.
      */
-    @FXML public void initialize() {
-
+    @FXML
+    public void initialize() {
         // set up the sub controllers
         this.setupEditMenuController();
         this.setupFileMenuController();
@@ -181,12 +194,13 @@ public class Controller {
      *
      * @param event Event object
      */
-    @FXML private void handleTextChange(Event event) {
-		Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-		// change the tab color to indicate the code field has been changed and not been saved
-		selectedTab.setStyle("-fx-text-base-color: green");
-    	
-        ((JavaCodeArea)event.getSource()).handleTextChange();
+    @FXML
+    private void handleTextChange(Event event) {
+        Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
+        // change the tab color to indicate the code field has been changed and not been saved
+        selectedTab.setStyle("-fx-text-base-color: green");
+
+        ((JavaCodeArea) event.getSource()).handleTextChange();
     }
 
     /**
@@ -194,7 +208,8 @@ public class Controller {
      *
      * @param event Event object
      */
-    @FXML private void handleCompileButtonAction(Event event) {
+    @FXML
+    private void handleCompileButtonAction(Event event) {
         // get the current tab and its corresponding File object
         Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
         File selectedFile = this.tabFileMap.get(selectedTab);
@@ -206,7 +221,8 @@ public class Controller {
      *
      * @param event Event object
      */
-    @FXML private void handleCompileRunButtonAction(Event event) {
+    @FXML
+    private void handleCompileRunButtonAction(Event event) {
         // get the current tab and its corresponding File object
         Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
         File selectedFile = this.tabFileMap.get(selectedTab);
@@ -216,51 +232,78 @@ public class Controller {
     /**
      * Calls the method that handles the Stop button action from the toolbarController.
      */
-    @FXML private void handleStopButtonAction() { this.toolbarController.handleStopButtonAction(); }
+    @FXML
+    private void handleStopButtonAction() {
+        this.toolbarController.handleStopButtonAction();
+    }
 
     /**
      * Calls the method that handles About menu item action from the fileMenuController.
      */
-    @FXML private void handleAboutAction() { this.fileMenuController.handleAboutAction(); }
+    @FXML
+    private void handleAboutAction() {
+        this.fileMenuController.handleAboutAction();
+    }
 
     /**
      * Calls the method that handles the New menu item action from the fileMenuController.
      */
-    @FXML private void handleNewAction() { this.fileMenuController.handleNewAction(); }
+    @FXML
+    private void handleNewAction() {
+        this.fileMenuController.handleNewAction();
+    }
 
     /**
      * Calls the method that handles the Open menu item action from the fileMenuController.
      */
-    @FXML private void handleOpenAction() { this.fileMenuController.handleOpenAction(); }
+    @FXML
+    private void handleOpenAction() {
+        this.fileMenuController.handleOpenAction();
+    }
 
     /**
      * Calls the method that handles the Close menu item action from the fileMenuController.
      *
      * @param event Event object
      */
-    @FXML private void handleCloseAction(Event event) { this.fileMenuController.handleCloseAction(event); }
+    @FXML
+    private void handleCloseAction(Event event) {
+        this.fileMenuController.handleCloseAction(event);
+    }
 
     /**
      * Calls the method that handles the Save As menu item action from the fileMenuController.
      */
-    @FXML private void handleSaveAsAction() { this.fileMenuController.handleSaveAsAction(); }
+    @FXML
+    private void handleSaveAsAction() {
+        this.fileMenuController.handleSaveAsAction();
+    }
 
     /**
      * Calls the method that handles the Save menu item action from the fileMenuController.
      */
-    @FXML private void handleSaveAction() { this.fileMenuController.handleSaveAction(); }
+    @FXML
+    private void handleSaveAction() {
+        this.fileMenuController.handleSaveAction();
+    }
 
     /**
      * Calls the method that handles the Exit menu item action from the fileMenuController.
      *
      * @param event Event object
      */
-    @FXML public void handleExitAction(Event event) { this.fileMenuController.handleExitAction(event); }
+    @FXML
+    public void handleExitAction(Event event) {
+        this.fileMenuController.handleExitAction(event);
+    }
 
     /**
      * Calls the method that handles the Edit menu action from the editMenuController.
      *
-     *  @param event ActionEvent object
+     * @param event ActionEvent object
      */
-    @FXML private void handleEditMenuAction(ActionEvent event) { this.editMenuController.handleEditMenuAction(event); }
+    @FXML
+    private void handleEditMenuAction(ActionEvent event) {
+        this.editMenuController.handleEditMenuAction(event);
+    }
 }

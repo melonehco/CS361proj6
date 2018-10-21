@@ -9,12 +9,11 @@
 
 package proj6AbulhabFengMaoSavillo;
 
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.Subscription;
+
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
@@ -34,7 +33,7 @@ public class JavaCodeArea extends CodeArea {
     /**
      * a list of key words to be highlighted
      */
-    private static final String[] KEYWORDS = new String[] {
+    private static final String[] KEYWORDS = new String[]{
             "abstract", "assert", "boolean", "break", "byte",
             "case", "catch", "char", "class", "const",
             "continue", "default", "do", "double", "else",
@@ -76,23 +75,52 @@ public class JavaCodeArea extends CodeArea {
     /**
      * Creates a new empty JavaCodeArea
      */
-    public JavaCodeArea()
-    {
+    public JavaCodeArea() {
         //color syntax immediately
         this.handleTextChange();
-    	//update syntax coloring whenever contents update
-    	this.setOnKeyPressed(event -> this.handleTextChange());
-    	//highlight for syntax
-    	this.highlightText();
+        //update syntax coloring whenever contents update
+        this.setOnKeyPressed(event -> this.handleTextChange());
+        //highlight for syntax
+        this.highlightText();
+    }
+
+    /**
+     * Computes the highlighting of substrings of text to return the style of each substring.
+     *
+     * @param text string to compute highlighting of
+     * @return StyleSpans Collection Object
+     */
+    private static StyleSpans<Collection<String>> computeHighlighting(String text) {
+        Matcher matcher = PATTERN.matcher(text);
+        int lastKwEnd = 0;
+        StyleSpansBuilder<Collection<String>> spansBuilder
+                = new StyleSpansBuilder<>();
+        while (matcher.find()) {
+            String styleClass =
+                    matcher.group("KEYWORD") != null ? "keyword" :
+                            matcher.group("PAREN") != null ? "paren" :
+                                    matcher.group("BRACE") != null ? "brace" :
+                                            matcher.group("BRACKET") != null ? "bracket" :
+                                                    matcher.group("SEMICOLON") != null ? "semicolon" :
+                                                            matcher.group("STRING") != null ? "string" :
+                                                                    matcher.group("COMMENT") != null ? "comment" :
+                                                                            matcher.group("INTEGER") != null ? "integer" :
+                                                                                    null; /* never happens */
+            assert styleClass != null;
+            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
+            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
+            lastKwEnd = matcher.end();
+        }
+        spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
+        return spansBuilder.create();
     }
 
     /**
      * Helper function to highlight the text within the StyledCodeArea.
      */
     private void highlightText() {
-        this.setStyleSpans(0, this.computeHighlighting(this.getText()));
+        this.setStyleSpans(0, computeHighlighting(this.getText()));
     }
-
 
     /**
      * Handles the text change action.
@@ -111,36 +139,5 @@ public class JavaCodeArea extends CodeArea {
 
                 // run the following code block when previous stream emits an event
                 .subscribe(ignore -> this.highlightText());
-    }
-
-
-    /**
-     * Computes the highlighting of substrings of text to return the style of each substring.
-     *
-     * @param text string to compute highlighting of
-     * @return StyleSpans Collection Object
-     */
-    private static StyleSpans<Collection<String>> computeHighlighting(String text) {
-        Matcher matcher = PATTERN.matcher(text);
-        int lastKwEnd = 0;
-        StyleSpansBuilder<Collection<String>> spansBuilder
-                = new StyleSpansBuilder<>();
-        while(matcher.find()) {
-            String styleClass =
-                    matcher.group("KEYWORD") != null ? "keyword" :
-                            matcher.group("PAREN") != null ? "paren" :
-                                    matcher.group("BRACE") != null ? "brace" :
-                                            matcher.group("BRACKET") != null ? "bracket" :
-                                                    matcher.group("SEMICOLON") != null ? "semicolon" :
-                                                            matcher.group("STRING") != null ? "string" :
-                                                                    matcher.group("COMMENT") != null ? "comment" :
-                                                                            matcher.group("INTEGER") != null ? "integer" :
-                                                                                    null; /* never happens */ assert styleClass != null;
-            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
-            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
-            lastKwEnd = matcher.end();
-        }
-        spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
-        return spansBuilder.create();
     }
 }

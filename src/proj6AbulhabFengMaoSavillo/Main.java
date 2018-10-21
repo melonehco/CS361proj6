@@ -6,6 +6,7 @@
  */
 
 package proj6AbulhabFengMaoSavillo;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -19,12 +20,21 @@ import javafx.scene.Parent;
  * buttons for compiling, running, and stopping code; and a program console
  * that takes in standard input, displays standard output and program message.
  *
- * @author Evan Savillo
- * @author Yi Feng
  * @author Zena Abulhab
+ * @author Yi Feng
  * @author Melody Mao
+ * @author Evan Savillo
  */
 public class Main extends Application {
+    /**
+     * main function of Main class
+     *
+     * @param args command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     /**
      * Creates a stage as specified in Main.fxml, that contains a set of tabs,
      * embedded in a tab pane, with each tab window containing a code area; a menu
@@ -34,27 +44,23 @@ public class Main extends Application {
      *
      * @param stage The stage that contains the window content
      */
-    @Override public void start(Stage stage) throws Exception{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/proj6AbulhabFengMaoSavillo/Main.fxml"));
+    @Override
+    public void start(Stage stage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                "/proj6AbulhabFengMaoSavillo/Main.fxml"));
         Parent root = loader.load();
+        Controller controller = loader.getController();
 
         // initialize a scene and add features specified in the css file to the scene
-        Scene scene = new Scene(root, 640+160, 480+120);
-        scene.getStylesheets().add(getClass().getResource("/proj6AbulhabFengMaoSavillo/Main.css").toExternalForm());
+        Scene scene = new Scene(root, 640 + 160, 480 + 120);
+        scene.getStylesheets().add(getClass().getResource(
+                "/proj6AbulhabFengMaoSavillo/Main.css").toExternalForm());
+
         // configure the stage
-        stage.setTitle("DeutschJiangMaoYokota's Project 5");
+        stage.setTitle("AbulhabFengMaoSavillo's Project 6");
         stage.sizeToScene();
         stage.setScene(scene);
-        stage.setOnCloseRequest(event -> ((proj6AbulhabFengMaoSavillo.Controller)loader.getController()).handleExitAction(event));
+        stage.setOnCloseRequest(controller::handleExitAction);
         stage.show();
-    }
-
-    /**
-     * main function of Main class
-     *
-     * @param args command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
     }
 }

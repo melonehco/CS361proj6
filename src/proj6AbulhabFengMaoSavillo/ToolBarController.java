@@ -7,14 +7,17 @@
  */
 
 package proj6AbulhabFengMaoSavillo;
+
 import javafx.application.Platform;
 import org.fxmisc.richtext.StyleClassedTextArea;
 import javafx.scene.control.*;
 import javafx.event.Event;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.*;
 import java.io.*;
+
 import javafx.concurrent.Task;
 import javafx.concurrent.Service;
 
@@ -267,7 +270,7 @@ public class ToolBarController {
         reader.close();
     }
 
-    
+
     /**
      * Helper function to write user input
      */
@@ -289,6 +292,53 @@ public class ToolBarController {
     }
 
     /**
+     * Handles the Compile button action.
+     *
+     * @param event Event object
+     * @param file  the Selected file
+     */
+    public void handleCompileButtonAction(Event event, File file) {
+        // user select cancel button
+        if (this.fileMenuController.checkSaveBeforeCompile() == 2) {
+            event.consume();
+        } else {
+            compileWorker.setFile(file);
+            compileWorker.restart();
+        }
+    }
+
+    /**
+     * Handles the CompileRun button action.
+     *
+     * @param event Event object
+     * @param file  the Selected file
+     */
+    public void handleCompileRunButtonAction(Event event, File file) {
+        // user select cancel button
+        if (this.fileMenuController.checkSaveBeforeCompile() == 2) {
+            event.consume();
+        } else {
+            compileRunWorker.setFile(file);
+            compileRunWorker.restart();
+        }
+    }
+
+    /**
+     * Handles the Stop button action.
+     */
+    public void handleStopButtonAction() {
+        try {
+            if (this.curProcess.isAlive()) {
+                this.inThread.interrupt();
+                this.outThread.interrupt();
+                this.curProcess.destroy();
+            }
+        } catch (Throwable e) {
+            this.fileMenuController.createErrorDialog("Program Stop", "Error stopping the Java program.");
+        }
+    }
+
+    /**
      * A CompileWorker subclass handling Java program compiling in a separated thread in the background.
      * CompileWorker extends the javafx Service class.
      */
@@ -297,6 +347,7 @@ public class ToolBarController {
          * the file to be compiled.
          */
         private File file;
+
         /**
          * Sets the selected file.
          *
@@ -311,9 +362,10 @@ public class ToolBarController {
          * Compiles the file embedded in the selected tab, if appropriate.
          *
          * @return true if the program compiles successfully;
-         *         false otherwise.
+         * false otherwise.
          */
-        @Override protected Task<Boolean> createTask() {
+        @Override
+        protected Task<Boolean> createTask() {
             return new Task<Boolean>() {
                 /**
                  * Called when we execute the start() method of a CompileRunWorker object
@@ -322,7 +374,8 @@ public class ToolBarController {
                  * @return true if the program compiles successfully;
                  *         false otherwise.
                  */
-                @Override protected Boolean call() {
+                @Override
+                protected Boolean call() {
                     Boolean compileResult = compileJavaFile(file);
                     if (compileResult) {
                         Platform.runLater(() -> console.appendText("Compilation was successful!\n"));
@@ -342,6 +395,7 @@ public class ToolBarController {
          * the file to be compiled.
          */
         private File file;
+
         /**
          * Sets the selected file.
          *
@@ -356,9 +410,10 @@ public class ToolBarController {
          * Compiles and runs the file embedded in the selected tab, if appropriate.
          *
          * @return true if the program runs successfully;
-         *         false otherwise.
+         * false otherwise.
          */
-        @Override protected Task<Boolean> createTask() {
+        @Override
+        protected Task<Boolean> createTask() {
             return new Task<Boolean>() {
                 /**
                  * Called when we execute the start() method of a CompileRunWorker object.
@@ -367,62 +422,14 @@ public class ToolBarController {
                  * @return true if the program runs successfully;
                  *         false otherwise.
                  */
-                @Override protected Boolean call() {
+                @Override
+                protected Boolean call() {
                     if (compileJavaFile(file)) {
                         return runJavaFile(file);
                     }
                     return false;
                 }
             };
-        }
-    }
-
-    /**
-     * Handles the Compile button action.
-     *
-     * @param event Event object
-     * @param tab the Selected tab
-     */
-    public void handleCompileButtonAction(Event event, File file) {
-        // user select cancel button
-        if (this.fileMenuController.checkSaveBeforeCompile() == 2) {
-            event.consume();
-        }
-        else {
-            compileWorker.setFile(file);
-            compileWorker.restart();
-        }
-    }
-
-    /**
-     * Handles the CompileRun button action.
-     *
-     * @param event Event object
-     * @param tab the Selected tab
-     */
-    public void handleCompileRunButtonAction(Event event, File file) {
-        // user select cancel button
-        if (this.fileMenuController.checkSaveBeforeCompile() == 2) {
-            event.consume();
-        }
-        else {
-            compileRunWorker.setFile(file);
-            compileRunWorker.restart();
-        }
-    }
-
-    /**
-     * Handles the Stop button action.
-     */
-    public void handleStopButtonAction() {
-        try {
-            if (this.curProcess.isAlive()) {
-                this.inThread.interrupt();
-                this.outThread.interrupt();
-                this.curProcess.destroy();
-            }
-        } catch (Throwable e) {
-            this.fileMenuController.createErrorDialog("Program Stop", "Error stopping the Java program.");
         }
     }
 }
