@@ -214,24 +214,6 @@ public class Controller
         {
             if (this.checkBox.isSelected()) divider.setPosition(0.0);
         }));
-
-        // Ugly Code
-        {
-            // Boolean Properties for availability of undo and redo
-            // Must 'cast' to use not() method
-            Tab currentTab = this.tabPane.getSelectionModel().getSelectedItem();
-            VirtualizedScrollPane vsp = (VirtualizedScrollPane) currentTab.getContent();
-            JavaCodeArea currentCodeArea = (JavaCodeArea) vsp.getContent();
-
-            BooleanExpression undoableProperty =
-                    BooleanExpression.booleanExpression(currentCodeArea.undoAvailableProperty());
-
-            BooleanExpression redoableProperty =
-                    BooleanExpression.booleanExpression(currentCodeArea.redoAvailableProperty());
-
-            this.undoMenuItem.disableProperty().bind(undoableProperty.not());
-            this.redoMenuItem.disableProperty().bind(redoableProperty.not());
-        }
     }
 
     /**
