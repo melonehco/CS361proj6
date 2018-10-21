@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
+
 /**
  * This class creates a stage, as specified in Main.fxml, that contains a
  * set of tabs, embedded in a tab pane, with each tab window containing a
@@ -25,13 +26,15 @@ import javafx.scene.Parent;
  * @author Melody Mao
  * @author Evan Savillo
  */
-public class Main extends Application {
+public class Main extends Application
+{
     /**
      * main function of Main class
      *
      * @param args command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
 
@@ -45,7 +48,8 @@ public class Main extends Application {
      * @param stage The stage that contains the window content
      */
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws Exception
+    {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(
                 "/proj6AbulhabFengMaoSavillo/Main.fxml"));
         Parent root = loader.load();
