@@ -44,6 +44,7 @@ public class StructureViewController
 
         //for testing, should be removed
         this.treeView.setRoot(new CodeStructureTree().getRoot());
+        //this.treeView.setShowRoot(false);
     }
 
     /**

@@ -17,7 +17,6 @@
       <change beforePath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/ToolBarController$CompileWorker$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/ToolBarController$CompileWorker$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/ToolBarController$CompileWorker.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/ToolBarController$CompileWorker.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/ToolBarController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/ToolBarController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Controller.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -54,7 +53,7 @@
     <session id="1552166463">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.5" value="1" />
@@ -66,14 +65,14 @@
           <entry key="css" value="34" />
           <entry key="fxml" value="2" />
           <entry key="java" value="4607" />
-          <entry key="txt" value="770" />
+          <entry key="txt" value="843" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="34" />
           <entry key="JAVA" value="4607" />
-          <entry key="PLAIN_TEXT" value="770" />
+          <entry key="PLAIN_TEXT" value="843" />
           <entry key="XML" value="2" />
         </counts>
       </usages-collector>
@@ -98,22 +97,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Controller.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="215" column="12" selection-start-line="215" selection-start-column="12" selection-end-line="215" selection-end-column="12" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/StructureViewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="25" column="55" selection-start-line="25" selection-start-column="55" selection-end-line="25" selection-end-column="55" />
+            <state relative-caret-position="432">
+              <caret line="32" column="62" lean-forward="true" selection-start-line="32" selection-start-column="62" selection-end-line="32" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -162,8 +149,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="5" />
-    <option name="y" value="34" />
+    <option name="x" value="11" />
+    <option name="y" value="32" />
     <option name="width" value="1416" />
     <option name="height" value="791" />
   </component>
@@ -219,7 +206,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540161645765" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540161941093" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -238,7 +225,7 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="Unnamed" type="Application" factoryName="Application">
+    <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="proj6AbulhabFengMaoSavillo.Main" />
       <module name="proj6" />
       <method v="2">
@@ -271,15 +258,21 @@
       <option name="project" value="LOCAL" />
       <updated>1540161504516</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="removed undo/redo binding code which didn't work">
+      <created>1540161870470</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1540161870470</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="5" y="34" width="1416" height="791" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.41078067" visible="true" weight="0.2540029" />
-      <window_info id="Structure" order="1" sideWeight="0.58921933" side_tool="true" visible="true" weight="0.2540029" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.41058657" visible="true" weight="0.2540029" />
+      <window_info id="Structure" order="1" sideWeight="0.58941346" side_tool="true" visible="true" weight="0.2540029" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -288,7 +281,7 @@
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32904148" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.8168264" visible="true" weight="0.23032904" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.8168264" weight="0.23032904" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -316,7 +309,8 @@
     <MESSAGE value="-Intellij auto-formatted files&#10;-fixed behavior so that now&#10;project view structure cannot be resized while it is disabled" />
     <MESSAGE value="created test file to parse.&#10;created StructureViewController to handle structure view,&#10;wrote some of the basic layout of the code for it.&#10;updated todo.txt with some considerations&#10;changed unsaved files to display a red-colored name, from green" />
     <MESSAGE value="created StructureViewController to handle structure view,&#10;wrote some of the basic layout of the code for it.&#10;updated todo.txt with some considerations&#10;changed unsaved files to display a red-colored name, from green" />
-    <option name="LAST_COMMIT_MESSAGE" value="created StructureViewController to handle structure view,&#10;wrote some of the basic layout of the code for it.&#10;updated todo.txt with some considerations&#10;changed unsaved files to display a red-colored name, from green" />
+    <MESSAGE value="removed undo/redo binding code which didn't work" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed undo/redo binding code which didn't work" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -411,20 +405,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/StructureViewController.java">
+    <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="25" column="55" selection-start-line="25" selection-start-column="55" selection-end-line="25" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="176">
+          <caret line="17" column="20" lean-forward="true" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Controller.java">
+    <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/StructureViewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="215" column="12" selection-start-line="215" selection-start-column="12" selection-end-line="215" selection-end-column="12" />
+        <state relative-caret-position="432">
+          <caret line="32" column="62" lean-forward="true" selection-start-line="32" selection-start-column="62" selection-end-line="32" selection-end-column="62" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
