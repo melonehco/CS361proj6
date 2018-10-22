@@ -11,7 +11,7 @@
 	/* set button color to green */
     -fx-background-color:#afeeee;
     /* set button border to black */
-    -fx-border-color: black; 
+    -fx-border-color: black;
     /* set rounded corners */
     -fx-border-radius: 5;
 }
@@ -35,6 +35,26 @@
     /* set rounded corners */
     -fx-border-radius: 5;
 }
+
+/* Proposed Changes
+#compileButton {
+    -fx-font: 13 arial;
+    -fx-base: paleTurquoise;
+    -fx-background-radius: 100;
+}
+
+#compileRunButton {
+    -fx-font: 13 arial;
+    -fx-base: PaleGreen;
+    -fx-background-radius: 100;
+}
+
+#stopButton {
+    -fx-font: 13 arial;
+    -fx-base: lightpink;
+    -fx-background-radius: 100;
+}
+*/
 
 /* style of keywords */
 .keyword {
