@@ -10,9 +10,7 @@ package proj6AbulhabFengMaoSavillo;
 
 import javafx.beans.binding.BooleanExpression;
 import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
@@ -22,6 +20,7 @@ import java.util.*;
 
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.Bindings;
+import javafx.scene.input.MouseEvent;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.StyleClassedTextArea;
 
@@ -204,13 +203,22 @@ public class Controller
         SplitPane.Divider divider = this.horizontalSplitPane.getDividers().get(0);
         this.checkBox.selectedProperty().addListener((observable, oldValue, newValue) ->
                                                      {
-                                                         if (newValue) divider.setPosition(0.0);
-                                                         else divider.setPosition(0.25);
+                                                         if (newValue)
+                                                             divider.setPosition(0.0);
+                                                         else
+                                                             divider.setPosition(0.25);
                                                      });
         divider.positionProperty().addListener(((observable, oldValue, newValue) ->
         {
             if (this.checkBox.isSelected()) divider.setPosition(0.0);
         }));
+
+        this.console.addEventFilter(MouseEvent.ANY, event ->
+        {
+            this.console.requestFocus();
+            if (this.compileRunWorker.isRunning())
+                event.consume();
+        });
     }
 
     /**
