@@ -126,7 +126,7 @@ public class JavaCodeArea extends CodeArea {
      * Handles the text change action.
      * Listens to the text changes and highlights the keywords real-time.
      */
-    public void handleTextChange() {
+    private void handleTextChange() {
         Subscription cleanupWhenNoLongerNeedIt = this
 
                 // plain changes = ignore style changes that are emitted when syntax highlighting is reapplied

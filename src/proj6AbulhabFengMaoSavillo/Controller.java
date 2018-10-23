@@ -12,8 +12,10 @@ import javafx.beans.binding.BooleanExpression;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 
 import java.io.File;
 import java.util.*;
@@ -209,21 +211,6 @@ public class Controller
         {
             if (this.checkBox.isSelected()) divider.setPosition(0.0);
         }));
-    }
-
-    /**
-     * Calls the method that handles the text change in the JavaCodeArea.
-     *
-     * @param event Event object
-     */
-    @FXML
-    private void handleTextChange(Event event)
-    {
-        Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-        // change the tab color to indicate the code field has been changed and not been saved
-        selectedTab.setStyle("-fx-text-base-color: red");
-
-        ((JavaCodeArea) event.getSource()).handleTextChange();
     }
 
     /**
