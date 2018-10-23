@@ -204,17 +204,6 @@ public class FileMenuController {
         this.tabFileMap.put(newTab, file);
     }
 
-
-    /**
-     * Helper method to get a FileChooser with file type restriction.
-     *
-     * @return fileChooser created
-     */
-    private FileChooser getFileChooser() {
-        FileChooser fileChooser = new FileChooser();
-        return fileChooser;
-    }
-
     /**
      * Checks whether a file embedded in the specified tab should be saved before compiling.
      * Pops up a dialog asking whether the user wants to save the file before compiling.
@@ -317,7 +306,7 @@ public class FileMenuController {
      * If the user cancels, the dialog disappears without doing anything.
      */
     public void handleOpenAction() {
-        FileChooser fileChooser = this.getFileChooser();
+        FileChooser fileChooser = new FileChooser();
         File openFile = fileChooser.showOpenDialog(this.tabPane.getScene().getWindow());
 
         if (openFile != null) {
@@ -388,7 +377,7 @@ public class FileMenuController {
      * @return true if save as successfully; false if cancels or an error occurs when saving the file.
      */
     public boolean handleSaveAsAction() {
-        FileChooser fileChooser = this.getFileChooser();
+        FileChooser fileChooser = new FileChooser();
         File saveFile = fileChooser.showSaveDialog(this.tabPane.getScene().getWindow());
 
         if (saveFile != null) {
