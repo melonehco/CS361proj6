@@ -71,11 +71,6 @@ public class Controller
     @FXML
     private TabPane tabPane;
     /**
-     * the default untitled tab defined in Main.fxml
-     */
-    @FXML
-    private Tab untitledTab;
-    /**
      * the console pane defined in Main.fxml
      */
     @FXML

@@ -82,19 +82,6 @@
                    prefWidth="416.0">
             <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS">
                 <tabs>
-                    <Tab fx:id="untitledTab" onCloseRequest="#handleCloseAction"
-                         text="untitled">
-                        <content>
-                            <VirtualizedScrollPane fx:id="scrollPane">
-                                <content>
-                                    <JavaCodeArea fx:id="defaultCodeArea"
-                                                  onKeyPressed="#handleTextChange"
-                                                  stylesheets="@Main.css"
-                                                  wrapText="true"/>
-                                </content>
-                            </VirtualizedScrollPane>
-                        </content>
-                    </Tab>
                 </tabs>
             </TabPane>
             <VirtualizedScrollPane SplitPane.resizableWithParent="false">
