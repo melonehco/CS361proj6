@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.util.regex.*;
 
 /**
  * Controller that manages the generation and display of the structure of the
@@ -89,6 +90,11 @@ public class StructureViewController
         CodeStructureTree newTree = new CodeStructureTree();
 
         //TODO: Do we want to hand file to the class or parsed output?
+        //1. Read entire file into string
+        //2. Recursively Parse String
+        String methodRegex = "((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*\\{?[^\\}]*\\}?";
+        Pattern p = Pattern.compile(methodRegex);
+
 
         return newTree;
     }
@@ -112,7 +118,7 @@ public class StructureViewController
 
         /**
          * Tier 1 items include names of
-         * Classes, *
+         * Classes, interfaces
          *
          * @return fileItems
          */
@@ -153,3 +159,20 @@ public class StructureViewController
         }
     }
 }
+
+/**
+ * 1. pass over file:
+ * -get top level declarations
+ * -get all top-level bodies
+ * 2. pass over all top-level bodies
+ * -get all top level declarations
+ * -get all top level bodies
+ * 3. pass over all top-level bodies
+ * ...etc
+ * -get all methods and fields
+ * <p>
+ * <p>
+ * getConsituents(body)
+ * <p>
+ * return [[methods/fields], getConstituents(top-level entity bodies)]
+ */

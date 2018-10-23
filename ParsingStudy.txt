@@ -1,0 +1,11 @@
+ClassDeclaration:
+NormalClassDeclaration
+EnumDeclaration
+
+NormalClassDeclaration:
+{ClassModifier} class Identifier [TypeParameters] [Superclass] [Superinterfaces] ClassBody
+
+ClassModifier:
+(one of)
+Annotation public protected private
+abstract static final strictfp
