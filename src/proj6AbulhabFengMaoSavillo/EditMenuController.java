@@ -76,6 +76,9 @@ public class EditMenuController {
             case "tabMenuItem":
                 this.handleIndentation(activeCodeArea);
                 break;
+            case "untabMenuItem":
+                this.handleUnindentation(activeCodeArea);
+                break;
             case "commentMenuItem":
                 this.handleToggleCommenting(activeCodeArea);
             default:
@@ -83,13 +86,13 @@ public class EditMenuController {
     }
 
     /**
-     * Handles the indentation of the selected text in the code area
+     * Handles the indentation of the selected text in the code area.
+     * Called from the accelerator, the tab key, or the menu item
      *
      * @param selectedCodeArea
      */
     public void handleIndentation(CodeArea selectedCodeArea) {
         Selection<?, ?, ?> selection = selectedCodeArea.getCaretSelectionBind();
-        System.out.println(selection);
         int startIdx = selection.getStartParagraphIndex();
         int endIdx = selection.getEndParagraphIndex();
         for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
@@ -98,7 +101,32 @@ public class EditMenuController {
     }
 
     /**
-     * Handles commentting of the selected text in the code area
+     * Handles unindentation of the selected text by removing white space from the start.
+     * Works one full tab at a time, or for any extra space(s)
+     *
+     * @param selectedCodeArea
+     */
+    public void handleUnindentation(CodeArea selectedCodeArea) {
+        Selection<?, ?, ?> selection = selectedCodeArea.getCaretSelectionBind();
+        int startIdx = selection.getStartParagraphIndex();
+        int endIdx = selection.getEndParagraphIndex();
+        for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
+            // full tab(s) present at the start of the line
+            if (selectedCodeArea.getParagraph(lineNum).getText().startsWith("\t")) {
+                selectedCodeArea.deleteText(lineNum, 0, lineNum, 1);
+            }
+            // space(s) present at the start of the line, but not a full tab
+            else if (selectedCodeArea.getParagraph(lineNum).getText().startsWith(" ")) {
+                while (selectedCodeArea.getParagraph(lineNum).getText().startsWith(" ")) {
+                    selectedCodeArea.deleteText(lineNum, 0, lineNum, 1);
+                }
+            }
+
+        }
+    }
+
+    /**
+     * Handles commenting of the selected text in the code area
      *
      * @param selectedCodeArea
      */
