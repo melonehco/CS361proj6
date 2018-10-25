@@ -16,6 +16,8 @@ import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.Selection;
+
+import org.fxmisc.richtext.TextEditingArea;
 //import javafx.beans.value.ObservableValue;
 
 /**
@@ -75,7 +77,7 @@ public class EditMenuController {
                 this.handleIndentation(activeCodeArea);
                 break;
             case "commentMenuItem":
-                this.handleCommenting(activeCodeArea);
+                this.handleToggleCommenting(activeCodeArea);
             default:
         }
     }
@@ -100,13 +102,35 @@ public class EditMenuController {
      *
      * @param selectedCodeArea
      */
-    public void handleCommenting(CodeArea selectedCodeArea) {
+    public void handleToggleCommenting(CodeArea selectedCodeArea) {
+
+        // get the start paragraph and the end paragraph of the selection
         Selection<?, ?, ?> selection = selectedCodeArea.getCaretSelectionBind();
-        System.out.println(selection);
         int startIdx = selection.getStartParagraphIndex();
         int endIdx = selection.getEndParagraphIndex();
+
+
+        // If there is one line that is not commented in the selected paragraphs,
+        // comment all selected paragraphs.
+        boolean shouldComment = false;
         for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
-            selectedCodeArea.insertText(lineNum, 0, "//");
+            if (!(selectedCodeArea.getParagraph(lineNum).getText().startsWith("//"))) {
+                shouldComment = true;
+            }
+        }
+
+
+        // If we should comment all paragraphs, comment all paragraphs.
+        // If all selected the paragraphs are commented,
+        // uncomment the selected paragraphs.
+        if (shouldComment) {
+            for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
+                selectedCodeArea.insertText(lineNum, 0, "//");
+            }
+        } else {
+            for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
+                selectedCodeArea.deleteText(lineNum, 0, lineNum, 2);
+            }
         }
     }
 
