@@ -13,6 +13,7 @@ import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyEvent;
 
 import java.io.File;
@@ -224,11 +225,23 @@ public class Controller
 
         // Detects presses to tab (overriding the system default that deletes the selection) and calls handleIndentation
         this.tabPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.TAB) {
+            if (event.getCode() == KeyCode.TAB && !(event.isShiftDown())) {
                 Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
                 if (selectedTab != null) { // if a tab is open
                     CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
                     editMenuController.handleIndentation(activeCodeArea);
+                    event.consume();
+                }
+            }
+        });
+
+        // Detects presses to tab (overriding the system default that deletes the selection) and calls handleUnindentation
+        this.tabPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.TAB && event.isShiftDown()) {
+                Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
+                if (selectedTab != null) { // if a tab is open
+                    CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
+                    editMenuController.handleUnindentation(activeCodeArea);
                     event.consume();
                 }
             }

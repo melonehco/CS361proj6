@@ -64,6 +64,9 @@
             <MenuItem fx:id="tabMenuItem" accelerator="Shortcut+]"
                       onAction="#handleEditMenuAction"
                       text="Indent Selection"/>
+            <MenuItem fx:id="untabMenuItem" accelerator="Shortcut+["
+                      onAction="#handleEditMenuAction"
+                      text="Unindent Selection"/>
             <MenuItem fx:id="commentMenuItem"
                       onAction="#handleEditMenuAction" accelerator="Shortcut+/"
                       text="Comment/Uncomment Selection"/>
