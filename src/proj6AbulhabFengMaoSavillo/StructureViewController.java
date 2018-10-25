@@ -100,7 +100,7 @@ public class StructureViewController
         try
         {
             ParseTree parseTree = parse("/Users/slave/Desktop/Senior-Year/Fall-2018/CS361/Projects/CS361proj6/testfiles" +
-                                                "/Test.java",
+                                                "/Test.txt",
                                         "/Users/slave/Desktop/Senior-Year/Fall-2018/CS361/Projects/CS361proj6/lib/Java8" +
                                                 ".g4",
                                         "compilationUnit");

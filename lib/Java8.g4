@@ -48,7 +48,7 @@
 /Users/parrt/antlr/code/grammars-v4/java8/./Java8Lexer.java
 /Users/parrt/antlr/code/grammars-v4/java8/./Java8Listener.java
 /Users/parrt/antlr/code/grammars-v4/java8/./Java8Parser.java
-/Users/parrt/antlr/code/grammars-v4/java8/./Test.java
+/Users/parrt/antlr/code/grammars-v4/java8/./Test.txt
 Total lexer+parser time 30844ms.
  */
 grammar Java8;
