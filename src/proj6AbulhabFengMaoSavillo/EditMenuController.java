@@ -102,33 +102,39 @@ public class EditMenuController {
      *
      * @param selectedCodeArea
      */
-    public void handleToggleCommenting(CodeArea selectedCodeArea) {
+    public void handleToggleCommenting(CodeArea selectedCodeArea)
+    {
 
         // get the start paragraph and the end paragraph of the selection
         Selection<?, ?, ?> selection = selectedCodeArea.getCaretSelectionBind();
         int startIdx = selection.getStartParagraphIndex();
         int endIdx = selection.getEndParagraphIndex();
 
-
         // If there is one line that is not commented in the selected paragraphs,
         // comment all selected paragraphs.
         boolean shouldComment = false;
-        for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
-            if (!(selectedCodeArea.getParagraph(lineNum).getText().startsWith("//"))) {
+        for (int lineNum = startIdx; lineNum <= endIdx; lineNum++)
+        {
+            if (!(selectedCodeArea.getParagraph(lineNum).getText().startsWith("//")))
+            {
                 shouldComment = true;
             }
         }
 
-
         // If we should comment all paragraphs, comment all paragraphs.
         // If all selected the paragraphs are commented,
         // uncomment the selected paragraphs.
-        if (shouldComment) {
-            for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
+        if (shouldComment)
+        {
+            for (int lineNum = startIdx; lineNum <= endIdx; lineNum++)
+            {
                 selectedCodeArea.insertText(lineNum, 0, "//");
             }
-        } else {
-            for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
+        }
+        else
+        {
+            for (int lineNum = startIdx; lineNum <= endIdx; lineNum++)
+            {
                 selectedCodeArea.deleteText(lineNum, 0, lineNum, 2);
             }
         }
