@@ -54,6 +54,7 @@ public class StructureViewController
         //for testing, should be removed
         this.treeView.setRoot(new CodeStructureTree().getRoot());
         //this.treeView.setShowRoot(false);
+        this.generateStructureTree();
     }
 
     /**
@@ -91,9 +92,9 @@ public class StructureViewController
     /**
      * Parses a file thereby storing contents as TreeItems in our special tree.
      *
-     * @param file the file to be parsed
+     * @param //file the file to be parsed
      */
-    private CodeStructureTree generateStructureTree(File file)
+    private CodeStructureTree generateStructureTree()//File file)
     {
         CodeStructureTree newTree = new CodeStructureTree();
         try

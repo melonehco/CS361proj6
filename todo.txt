@@ -26,3 +26,6 @@ https://github.com/antlr/antlr4/blob/master/doc/tree-matching.md
 
 Probably Necessary:
 https://github.com/antlr/antlr4/blob/master/doc/interpreters.md
+
+How to get line numbers:
+https://stackoverflow.com/questions/19787204/getting-the-line-number-in-the-parservisitor
