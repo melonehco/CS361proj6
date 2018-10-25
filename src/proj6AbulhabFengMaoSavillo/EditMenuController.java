@@ -73,6 +73,9 @@ public class EditMenuController {
                 break;
             case "tabMenuItem":
                 this.handleIndentation(activeCodeArea);
+                break;
+            case "commentMenuItem":
+                this.handleCommenting(activeCodeArea);
             default:
         }
     }
@@ -82,13 +85,28 @@ public class EditMenuController {
      *
      * @param selectedCodeArea
      */
-    protected void handleIndentation(CodeArea selectedCodeArea) {
+    public void handleIndentation(CodeArea selectedCodeArea) {
         Selection<?, ?, ?> selection = selectedCodeArea.getCaretSelectionBind();
         System.out.println(selection);
         int startIdx = selection.getStartParagraphIndex();
         int endIdx = selection.getEndParagraphIndex();
         for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
             selectedCodeArea.insertText(lineNum, 0, "\t");
+        }
+    }
+
+    /**
+     * Handles commentting of the selected text in the code area
+     *
+     * @param selectedCodeArea
+     */
+    public void handleCommenting(CodeArea selectedCodeArea) {
+        Selection<?, ?, ?> selection = selectedCodeArea.getCaretSelectionBind();
+        System.out.println(selection);
+        int startIdx = selection.getStartParagraphIndex();
+        int endIdx = selection.getEndParagraphIndex();
+        for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
+            selectedCodeArea.insertText(lineNum, 0, "//");
         }
     }
 

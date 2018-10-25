@@ -61,9 +61,12 @@
             <MenuItem fx:id="selectMenuItem" accelerator="Shortcut+A"
                       onAction="#handleEditMenuAction"
                       text="Select all"/>
-            <MenuItem fx:id="tabMenuItem"
+            <MenuItem fx:id="tabMenuItem" accelerator="Shortcut+]"
                       onAction="#handleEditMenuAction"
                       text="Indent Selection"/>
+            <MenuItem fx:id="commentMenuItem"
+                      onAction="#handleEditMenuAction" accelerator="Shortcut+/"
+                      text="Comment Selection"/>
         </Menu>
     </MenuBar>
     <ToolBar VBox.vgrow="ALWAYS">
