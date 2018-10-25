@@ -89,7 +89,6 @@ public class EditMenuController {
      */
     public void handleIndentation(CodeArea selectedCodeArea) {
         Selection<?, ?, ?> selection = selectedCodeArea.getCaretSelectionBind();
-        System.out.println(selection);
         int startIdx = selection.getStartParagraphIndex();
         int endIdx = selection.getEndParagraphIndex();
         for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
@@ -98,7 +97,7 @@ public class EditMenuController {
     }
 
     /**
-     * Handles commentting of the selected text in the code area
+     * Handles commenting of the selected text in the code area
      *
      * @param selectedCodeArea
      */
