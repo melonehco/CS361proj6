@@ -7,6 +7,7 @@ Date: 10/27/2018
 
 package proj6AbulhabFengMaoSavillo;
 
+
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
@@ -14,8 +15,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 /**
  * Controller that manages the generation and display of the structure of the
