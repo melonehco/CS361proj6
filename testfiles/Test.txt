@@ -1,0 +1,59 @@
+/*
+This is a comment class { let's hope this won't hurt us }
+*/
+
+import java.lang.Thread;
+
+
+/**
+ * This is a test file to be parsed
+ */
+public class Test
+{
+    public int i; // We'll add another comment here to spice things up
+    // And a third one here
+    float field2 = 0.96f;
+    private static final String field3 = "lorem ipsum";
+
+    private void run(boolean theTruth)
+    {
+        i = 0;
+        while (theTruth)
+        {
+            try
+            {
+                System.out.println(i++);
+                Thread.sleep(100);
+            }
+            catch (InterruptedException e)
+            {
+                System.out.println(e);
+            }
+        }
+    }
+
+    boolean getTruth()
+    {
+        return true;
+    }
+
+    protected enum Lorem
+    {
+        SUNDAY, MONDAY, TUESDAY, WEDNESDAY,
+        THURSDAY, FRIDAY, SATURDAY
+    }
+
+    public static void main(String[] args)
+    {
+        Test test = new Test();
+        test.run(test.getTruth());
+    }
+}
+
+class DirtbagClass extends Test
+{
+    DirtbagClass(Object smallbananas)
+    {
+        return;
+    }
+}
