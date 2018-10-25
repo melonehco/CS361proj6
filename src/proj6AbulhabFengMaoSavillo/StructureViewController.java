@@ -99,10 +99,9 @@ public class StructureViewController
         CodeStructureTree newTree = new CodeStructureTree();
         try
         {
-            ParseTree parseTree = parse("/Users/slave/Desktop/Senior-Year/Fall-2018/CS361/Projects/CS361proj6/testfiles" +
+            ParseTree parseTree = parse(System.getProperty("user.dir") + "/testfiles" +
                                                 "/Test.txt",
-                                        "/Users/slave/Desktop/Senior-Year/Fall-2018/CS361/Projects/CS361proj6/lib/Java8" +
-                                                ".g4",
+                    System.getProperty("user.dir") + "/lib/Java8.g4",
                                         "compilationUnit");
         }
         catch (IOException e)
