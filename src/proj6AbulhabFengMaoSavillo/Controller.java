@@ -22,7 +22,9 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.binding.Bindings;
 import javafx.scene.input.MouseEvent;
 import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.StyleClassedTextArea;
+import javafx.scene.input.KeyCode;
 
 
 /**
@@ -218,6 +220,18 @@ public class Controller
             this.console.requestFocus();
             if (this.compileRunWorker.isRunning())
                 event.consume();
+        });
+
+        // Detects presses to tab (overriding the system default that deletes the selection) and calls handleIndentation
+        this.tabPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.TAB) {
+                Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
+                if (selectedTab != null) { // if a tab is open
+                    CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
+                    editMenuController.handleIndentation(activeCodeArea);
+                    event.consume();
+                }
+            }
         });
     }
 

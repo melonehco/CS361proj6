@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0c1875e6-79d8-4ca9-a972-d36e664ba50d" name="Default Changelist" comment="">
+    <list default="true" id="0c1875e6-79d8-4ca9-a972-d36e664ba50d" name="Default Changelist" comment="Added in multi-line tabbing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/JavaParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/JavaParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/EditMenuController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/FileMenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/FileMenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/JavaCodeArea.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/JavaCodeArea.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/JavaParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/JavaParser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/Main.css" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/Main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/StructureViewController$CodeStructureTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/StructureViewController$CodeStructureTree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/StructureViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/proj6AbulhabFengMaoSavillo/StructureViewController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/EditMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/EditMenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/todo.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,12 +55,26 @@
     <session id="711442755">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="txt" value="29" />
+          <entry key="fxml" value="156" />
+          <entry key="java" value="1279" />
+          <entry key="txt" value="131" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="29" />
+          <entry key="JAVA" value="1279" />
+          <entry key="PLAIN_TEXT" value="131" />
+          <entry key="XML" value="156" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="txt" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
     </session>
@@ -102,8 +127,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="55" column="55" lean-forward="true" selection-start-line="55" selection-start-column="55" selection-end-line="55" selection-end-column="55" />
+            <state relative-caret-position="600">
+              <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Main.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-962" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/todo.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="59" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -111,58 +152,15 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/FileMenuController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/StructureViewController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="138" column="35" selection-start-line="138" selection-start-column="35" selection-end-line="138" selection-end-column="35" />
+            <state relative-caret-position="-2234">
+              <caret line="103" column="78" lean-forward="true" selection-start-line="103" selection-start-column="78" selection-end-line="103" selection-end-column="78" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2376#2377#0" expanded="true" />
-                <element signature="e#2435#2436#0" expanded="true" />
-                <element signature="e#4527#4528#0" expanded="true" />
-                <element signature="e#4567#4568#0" expanded="true" />
+                <element signature="e#1267#1268#0" expanded="true" />
+                <element signature="e#1311#1312#0" expanded="true" />
+                <element signature="e#1436#1437#0" expanded="true" />
+                <element signature="e#1474#1475#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/JavaParser.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="34" column="4" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#553#561#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Controller.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="109" column="38" selection-start-line="109" selection-start-column="32" selection-end-line="109" selection-end-column="38" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/EditMenuController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -170,8 +168,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/ToolBarController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1179">
-              <caret line="190" lean-forward="true" selection-start-line="190" selection-end-line="190" />
+            <state relative-caret-position="-34">
+              <caret line="279" column="64" selection-start-line="279" selection-start-column="64" selection-end-line="279" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2257#2258#0" expanded="true" />
@@ -198,23 +196,73 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/JavaCodeArea.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-149">
+              <caret line="79" column="32" lean-forward="true" selection-start-line="79" selection-start-column="32" selection-end-line="79" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Main.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-987">
-              <caret line="14" column="38" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
+            <state relative-caret-position="93">
+              <caret line="62" column="41" selection-start-line="62" selection-start-column="41" selection-end-line="62" selection-end-column="41" />
             </state>
           </provider>
           <provider editor-type-id="JavaFX-Scene-Builder" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/JavaCodeArea.java">
+        <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="123" selection-start-line="123" selection-end-line="123" />
+            <state relative-caret-position="192">
+              <caret line="228" column="62" lean-forward="true" selection-start-line="228" selection-start-column="62" selection-end-line="228" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#8620#8621#0" expanded="true" />
+                <element signature="e#8683#8684#0" expanded="true" />
+                <element signature="e#8842#8843#0" expanded="true" />
+                <element signature="e#8901#8902#0" expanded="true" />
+                <element signature="e#9060#9061#0" expanded="true" />
+                <element signature="e#9117#9118#0" expanded="true" />
+                <element signature="e#9278#9279#0" expanded="true" />
+                <element signature="e#9336#9337#0" expanded="true" />
+                <element signature="e#9550#9551#0" expanded="true" />
+                <element signature="e#9614#9615#0" expanded="true" />
+                <element signature="e#9780#9781#0" expanded="true" />
+                <element signature="e#9840#9841#0" expanded="true" />
+                <element signature="e#10001#10002#0" expanded="true" />
+                <element signature="e#10059#10060#0" expanded="true" />
+                <element signature="e#10270#10271#0" expanded="true" />
+                <element signature="e#10333#10334#0" expanded="true" />
+                <element signature="e#10556#10557#0" expanded="true" />
+                <element signature="e#10623#10624#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/EditMenuController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="84" column="48" lean-forward="true" selection-start-line="84" selection-start-column="48" selection-end-line="84" selection-end-column="48" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#945#946#0" expanded="true" />
+                <element signature="e#983#984#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/StructureViewController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="236">
+              <caret line="31" column="6" lean-forward="true" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -232,10 +280,14 @@
     <findStrings>
       <find>getfilechoose</find>
       <find>getfilecontent</find>
-      <find>untitled</find>
       <find>handletextchang</find>
       <find>untitledtab</find>
       <find>toggle</find>
+      <find>setbuttonbinding</find>
+      <find>eventfilter</find>
+      <find>active</find>
+      <find>untitled</find>
+      <find>codearea</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -249,15 +301,15 @@
         <option value="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/FileMenuController.java" />
         <option value="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/JavaCodeArea.java" />
         <option value="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/ToolBarController.java" />
-        <option value="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/EditMenuController.java" />
-        <option value="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Main.fxml" />
-        <option value="$PROJECT_DIR$/todo.txt" />
         <option value="$PROJECT_DIR$/testfiles/TestParse.java" />
         <option value="$PROJECT_DIR$/testfiles/Test.java" />
-        <option value="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Controller.java" />
         <option value="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/StructureViewController.java" />
         <option value="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Main.java" />
         <option value="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/JavaParser.java" />
+        <option value="$PROJECT_DIR$/todo.txt" />
+        <option value="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/EditMenuController.java" />
+        <option value="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Controller.java" />
+        <option value="$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Main.fxml" />
       </list>
     </option>
   </component>
@@ -287,35 +339,39 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="proj6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proj6AbulhabFengMaoSavillo" type="b2602c69:ProjectViewProjectNode" />
               <item name="CS361proj6" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="proj6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proj6AbulhabFengMaoSavillo" type="b2602c69:ProjectViewProjectNode" />
               <item name="CS361proj6" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="proj6" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proj6AbulhabFengMaoSavillo" type="b2602c69:ProjectViewProjectNode" />
               <item name="CS361proj6" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="proj6AbulhabFengMaoSavillo" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="proj6AbulhabFengMaoSavillo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540252238683" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540426342102" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -333,7 +389,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.JavaParser">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="JavaParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="proj6AbulhabFengMaoSavillo.JavaParser" />
       <module name="proj6" />
@@ -414,10 +470,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-24" y="23" width="1315" height="873" extended-state="0" />
+    <frame x="1" y="23" width="1280" height="729" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.40952381" visible="true" weight="0.24980362" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.40952381" visible="true" weight="0.18578352" />
       <window_info id="Structure" order="1" sideWeight="0.5904762" side_tool="true" visible="true" weight="0.24980362" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -426,16 +482,16 @@
       <window_info id="Learn" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32904148" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.8168264" weight="0.22919334" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49919224" weight="0.32810047" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.6292407" weight="0.23704867" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3290653" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.18317358" side_tool="true" weight="0.32761088" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50403875" side_tool="true" weight="0.3265306" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49919224" weight="0.32904148" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.4983845" visible="true" weight="0.3277849" />
+      <window_info active="true" anchor="bottom" id="Messages" order="10" sideWeight="0.49596122" visible="true" weight="0.3265306" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -458,7 +514,8 @@
     <MESSAGE value="removed undo/redo binding code which didn't work" />
     <MESSAGE value="Some initial attempt to parse methods" />
     <MESSAGE value="refactor JavaParser" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor JavaParser" />
+    <MESSAGE value="Added in multi-line tabbing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added in multi-line tabbing" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -467,40 +524,28 @@
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home/javafx-src.zip!/javafx/beans/value/ObservableValue.java" />
     <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/todo.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
+        <state relative-caret-position="-962" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/testfiles/Test.java" />
-    <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/JavaCodeArea.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="123" selection-start-line="123" selection-end-line="123" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/FileMenuController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+        <state relative-caret-position="-2234">
+          <caret line="103" column="78" lean-forward="true" selection-start-line="103" selection-start-column="78" selection-end-line="103" selection-end-column="78" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1267#1268#0" expanded="true" />
+            <element signature="e#1311#1312#0" expanded="true" />
+            <element signature="e#1436#1437#0" expanded="true" />
+            <element signature="e#1474#1475#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/ToolBarController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1179">
-          <caret line="190" lean-forward="true" selection-start-line="190" selection-end-line="190" />
+        <state relative-caret-position="-34">
+          <caret line="279" column="64" selection-start-line="279" selection-start-column="64" selection-end-line="279" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2257#2258#0" expanded="true" />
@@ -525,49 +570,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Main.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-987">
-          <caret line="14" column="38" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/EditMenuController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="109" column="38" selection-start-line="109" selection-start-column="32" selection-end-line="109" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="55" column="55" lean-forward="true" selection-start-line="55" selection-start-column="55" selection-end-line="55" selection-end-column="55" />
+        <state relative-caret-position="600">
+          <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/StructureViewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="138" column="35" selection-start-line="138" selection-start-column="35" selection-end-line="138" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2376#2377#0" expanded="true" />
-            <element signature="e#2435#2436#0" expanded="true" />
-            <element signature="e#4527#4528#0" expanded="true" />
-            <element signature="e#4567#4568#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="236">
+          <caret line="31" column="6" lean-forward="true" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -575,12 +588,70 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="34" column="4" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/todo.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="59" selection-start-line="14" selection-start-column="59" selection-end-line="14" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/JavaCodeArea.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-149">
+          <caret line="79" column="32" lean-forward="true" selection-start-line="79" selection-start-column="32" selection-end-line="79" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/EditMenuController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="84" column="48" lean-forward="true" selection-start-line="84" selection-start-column="48" selection-end-line="84" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#553#561#0" expanded="true" />
+            <element signature="e#945#946#0" expanded="true" />
+            <element signature="e#983#984#0" expanded="true" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="228" column="62" lean-forward="true" selection-start-line="228" selection-start-column="62" selection-end-line="228" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#8620#8621#0" expanded="true" />
+            <element signature="e#8683#8684#0" expanded="true" />
+            <element signature="e#8842#8843#0" expanded="true" />
+            <element signature="e#8901#8902#0" expanded="true" />
+            <element signature="e#9060#9061#0" expanded="true" />
+            <element signature="e#9117#9118#0" expanded="true" />
+            <element signature="e#9278#9279#0" expanded="true" />
+            <element signature="e#9336#9337#0" expanded="true" />
+            <element signature="e#9550#9551#0" expanded="true" />
+            <element signature="e#9614#9615#0" expanded="true" />
+            <element signature="e#9780#9781#0" expanded="true" />
+            <element signature="e#9840#9841#0" expanded="true" />
+            <element signature="e#10001#10002#0" expanded="true" />
+            <element signature="e#10059#10060#0" expanded="true" />
+            <element signature="e#10270#10271#0" expanded="true" />
+            <element signature="e#10333#10334#0" expanded="true" />
+            <element signature="e#10556#10557#0" expanded="true" />
+            <element signature="e#10623#10624#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/proj6AbulhabFengMaoSavillo/Main.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="62" column="41" selection-start-line="62" selection-start-column="41" selection-end-line="62" selection-end-column="41" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
   </component>
   <component name="masterDetails">

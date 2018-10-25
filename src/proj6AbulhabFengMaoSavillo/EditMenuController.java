@@ -15,6 +15,8 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.Selection;
+//import javafx.beans.value.ObservableValue;
 
 /**
  * Main controller handles Edit menu related actions.
@@ -69,7 +71,26 @@ public class EditMenuController {
             case "selectMenuItem":
                 activeCodeArea.selectAll();
                 break;
+            case "tabMenuItem":
+                this.handleIndentation(activeCodeArea);
             default:
         }
     }
+
+    /**
+     * Handles the indentation of the selected text in the code area
+     *
+     * @param selectedCodeArea
+     */
+    protected void handleIndentation(CodeArea selectedCodeArea) {
+        Selection<?, ?, ?> selection = selectedCodeArea.getCaretSelectionBind();
+        System.out.println(selection);
+        int startIdx = selection.getStartParagraphIndex();
+        int endIdx = selection.getEndParagraphIndex();
+        for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
+            selectedCodeArea.insertText(lineNum, 0, "\t");
+        }
+    }
+
+
 }

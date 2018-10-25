@@ -12,3 +12,4 @@ New Considerations:
 -Consider deleting unhelpful jdocs over FXML fields
 -Sicker button css/ maybe updated css in general?
 -Do something about ugly binding code @ Controller:212?
+-Rename SetButtonBinding in Controller because it does more

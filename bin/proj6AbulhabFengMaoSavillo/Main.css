@@ -6,37 +6,7 @@
  * Date: 10/27/2018
  */
 
-/* style of Compile button */
-#compileButton {
-	/* set button color to green */
-    -fx-background-color:#afeeee;
-    /* set button border to black */
-    -fx-border-color: black;
-    /* set rounded corners */
-    -fx-border-radius: 5;
-}
 
-/* style of CompileRun button */
-#compileRunButton {
-	/* set button color to red */
-    -fx-background-color:#98FB98;
-    /* set button border to black */
-    -fx-border-color: black;
-    /* set rounded corners */
-    -fx-border-radius: 5;
-}
-
-/* style of Stop button */
-#stopButton {
-	/* set button color to red */
-    -fx-background-color:#ffab99;
-    /* set button border to black */
-    -fx-border-color: black;
-    /* set rounded corners */
-    -fx-border-radius: 5;
-}
-
-/* Proposed Changes
 #compileButton {
     -fx-font: 13 arial;
     -fx-base: paleTurquoise;
@@ -54,7 +24,6 @@
     -fx-base: lightpink;
     -fx-background-radius: 100;
 }
-*/
 
 /* style of keywords */
 .keyword {
