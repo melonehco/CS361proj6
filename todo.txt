@@ -10,6 +10,12 @@ New Considerations:
 
 -Consider moving set...() etc code into Constructors in relevant controllers
 -Consider deleting unhelpful jdocs over FXML fields
--Sicker button css/ maybe updated css in general?
 -Do something about ugly binding code @ Controller:212?
 -Rename SetButtonBinding in Controller because it does more
+or, separate out functionality the doesn't belong?
+
+
+
+Links for ANTLR endeavors
+Listeners and how to walk the parse tree
+https://github.com/antlr/antlr4/blob/master/doc/listeners.md
