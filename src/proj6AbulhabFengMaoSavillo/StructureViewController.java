@@ -11,11 +11,19 @@ package proj6AbulhabFengMaoSavillo;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.LexerInterpreter;
+import org.antlr.v4.runtime.ParserInterpreter;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.tool.Grammar;
+
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * Controller that manages the generation and display of the structure of the
@@ -88,15 +96,40 @@ public class StructureViewController
     private CodeStructureTree generateStructureTree(File file)
     {
         CodeStructureTree newTree = new CodeStructureTree();
+        try
+        {
+            ParseTree parseTree = parse("/Users/slave/Desktop/Senior-Year/Fall-2018/CS361/Projects/CS361proj6/testfiles" +
+                                                "/Test.java",
+                                        "/Users/slave/Desktop/Senior-Year/Fall-2018/CS361/Projects/CS361proj6/lib/Java8" +
+                                                ".g4",
+                                        "compilationUnit");
+        }
+        catch (IOException e)
+        {
+            System.out.println(e);
+        }
 
         //TODO: Do we want to hand file to the class or parsed output?
         //1. Read entire file into string
         //2. Recursively Parse String
-        String methodRegex = "((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*\\{?[^\\}]*\\}?";
-        Pattern p = Pattern.compile(methodRegex);
+
 
 
         return newTree;
+    }
+
+    public static ParseTree parse(String fileName,
+                                  String combinedGrammarFileName,
+                                  String startRule)
+            throws IOException
+    {
+        final Grammar g = Grammar.load(combinedGrammarFileName);
+        LexerInterpreter lexEngine = g.createLexerInterpreter(CharStreams.fromPath(Paths.get(fileName)));
+        CommonTokenStream tokens = new CommonTokenStream(lexEngine);
+        ParserInterpreter parser = g.createParserInterpreter(tokens);
+        ParseTree t = parser.parse(g.getRule(startRule).index);
+        System.out.println("parse tree: " + t.toStringTree(parser));
+        return t;
     }
 
 
