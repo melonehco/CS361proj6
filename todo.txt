@@ -12,7 +12,7 @@ New Considerations:
 -Consider deleting unhelpful jdocs over FXML fields
 -Do something about ugly binding code @ Controller:212?
 -Rename SetButtonBinding in Controller because it does more
-or, separate out functionality the doesn't belong?
+or, separate out functionality that doesn't belong?
 
 
 
