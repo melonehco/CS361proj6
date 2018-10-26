@@ -56,6 +56,7 @@ public class StructureViewController
     public void setTreeView(TreeView treeView)
     {
         this.treeView = treeView;
+        this.generateStructureTree();
     }
 
     /**
@@ -102,7 +103,6 @@ public class StructureViewController
         {
             ParseTree parseTree = parse(System.getProperty("user.dir") + "/src/proj6AbulhabFengMaoSavillo" +
                     "/StructureViewController.java",
-                    System.getProperty("user.dir") + "/lib/Java8.g4",
             							"compilationUnit",
             							newRoot );
         }
@@ -119,21 +119,20 @@ public class StructureViewController
     }
 
     public static ParseTree parse(String fileName,
-                                  String combinedGrammarFileName,
                                   String startRule,
                                   TreeItem<String> treeRoot)
             throws IOException
     {
-        Java8Lexer lexer = new Java8Lexer(CharStreams.fromPath(Paths.get(fileName)));
+        //build lexer, parser, and parse tree for the given file
+    	Java8Lexer lexer = new Java8Lexer(CharStreams.fromPath(Paths.get(fileName)));
     	CommonTokenStream tokens = new CommonTokenStream(lexer);
     	Java8Parser parser = new Java8Parser(tokens);
     	ParseTree tree = parser.compilationUnit();
     	
+    	//walk through parse tree with listening for code structure elements
         ParseTreeWalker walker = new ParseTreeWalker();
         CodeStructureListener codeStructureListener = new CodeStructureListener(treeRoot);
-        
         walker.walk(codeStructureListener, tree);
-        System.out.println("WALKED");
         
         return tree;
     }
@@ -169,7 +168,6 @@ public class StructureViewController
             this.currentNode.getChildren().add(newNode);
             this.currentNode = newNode; //move current node into new subtree
         }
-      
 
         /**
          * ends the new subtree for the class declaration exited,
@@ -181,25 +179,27 @@ public class StructureViewController
             this.currentNode = this.currentNode.getParent(); //move current node back to parent
         }
       
+        /**
+         * adds a child node for the method entered under the TreeItem for the current class
+         */
         @Override
         public void enterMethodHeader(Java8Parser.MethodHeaderContext ctx) {
             //get method name
         	TerminalNode nameNode = ctx.methodDeclarator().Identifier();
             String methodName = nameNode.getText();
             
-            //get return type
-            ResultContext resultCtx = ctx.result();
-            Token lastToken = resultCtx.getStop();
-            String returnType = lastToken.getText();
-            
             //add method to TreeView under the current class tree
-            TreeItem<String> newNode = new TreeItem<String>("[method] " + methodName + ": " + returnType);
+            TreeItem<String> newNode = new TreeItem<String>("[method] " + methodName);
             this.currentNode.getChildren().add(newNode);
         }
-        
+
+        /**
+         * adds a child node for the field entered under the TreeItem for the current class
+         */
         @Override
         public void enterFieldDeclaration(Java8Parser.FieldDeclarationContext ctx) {
-            TerminalNode node = ctx.variableDeclaratorList().variableDeclarator(0).variableDeclaratorId().Identifier();
+            //get field name
+        	TerminalNode node = ctx.variableDeclaratorList().variableDeclarator(0).variableDeclaratorId().Identifier();
             String fieldName = node.getText();
             
             //add field to TreeView under the current class tree
