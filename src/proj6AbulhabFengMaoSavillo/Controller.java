@@ -223,29 +223,34 @@ public class Controller
                 event.consume();
         });
 
-        // Detects presses to tab (overriding the system default that deletes the selection) and calls handleIndentation
+        // Detects presses to tab (overriding the system default that deletes the selection) and calls tabOrUntab
         this.tabPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.TAB && !(event.isShiftDown())) {
-                Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-                if (selectedTab != null) { // if a tab is open
-                    CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
-                    editMenuController.handleIndentation(activeCodeArea);
-                    event.consume();
-                }
+            // if tab or shift+tab pressed
+            if (event.getCode() == KeyCode.TAB) {
+                tabOrUntab(event);
             }
         });
+    }
 
-        // Detects presses to tab (overriding the system default that deletes the selection) and calls handleUnindentation
-        this.tabPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.TAB && event.isShiftDown()) {
-                Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-                if (selectedTab != null) { // if a tab is open
-                    CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
-                    editMenuController.handleUnindentation(activeCodeArea);
-                    event.consume();
-                }
-            }
-        });
+    /**
+     * Depending on whether or not shift was held down with tab, tab or untab the selection
+     *
+     * @param event the key event, whether that be tab or shift+tab
+     */
+    private void tabOrUntab(KeyEvent event) {
+        Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
+        if (selectedTab != null) { // if a tab is open
+
+            CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
+
+            if (event.isShiftDown()) { // Shift was held down with tab
+                editMenuController.handleUnindentation(activeCodeArea);
+            } else // Tab only
+                editMenuController.handleIndentation(activeCodeArea);
+
+        }
+        event.consume();
+
     }
 
 
