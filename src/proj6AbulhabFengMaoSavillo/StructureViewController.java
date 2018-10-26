@@ -29,8 +29,7 @@ import java.util.Map;
  * Controller that manages the generation and display of the structure of the
  * java code in the file currently being viewed.
  */
-public class StructureViewController
-{
+public class StructureViewController {
     //TODO: add listeners to add/remove structures on tab opens/closes
     //TODO: figure out how we're actually parsing files
     /*
@@ -39,7 +38,9 @@ public class StructureViewController
             2. The current file has changed (is red) or only whenever saved?
     */
     private TreeView<String> treeView;
-    /** a HashMap mapping the tabs and the associated files */
+    /**
+     * a HashMap mapping the tabs and the associated files
+     */
     private Map<File, CodeStructureTree> fileToCodeStructMap = new HashMap<>();
 
     /**
@@ -47,8 +48,7 @@ public class StructureViewController
      *
      * @param treeView TreeView item representing structure display
      */
-    public void setTreeView(TreeView treeView)
-    {
+    public void setTreeView(TreeView treeView) {
         this.treeView = treeView;
 
         //for testing, should be removed
@@ -62,8 +62,7 @@ public class StructureViewController
      *
      * @param root root node corresponding to currently displaying file
      */
-    private void setRootNode(CodeStructureTree root)
-    {
+    private void setRootNode(CodeStructureTree root) {
         this.treeView.setRoot(root.getRoot());
     }
 
@@ -73,8 +72,7 @@ public class StructureViewController
      * @param file file which was parsed to generate CodeStructureTree
      * @param root root node which defines the CodeStructureTree
      */
-    private void addStructure(File file, CodeStructureTree root)
-    {
+    private void addStructure(File file, CodeStructureTree root) {
         this.fileToCodeStructMap.put(file, root);
     }
 
@@ -84,8 +82,7 @@ public class StructureViewController
      * @param file file which was parsed to generate CodeStructureTree
      * @param root root node which defines the CodeStructureTree
      */
-    private void removeStructure(File file, CodeStructureTree root)
-    {
+    private void removeStructure(File file, CodeStructureTree root) {
         this.fileToCodeStructMap.remove(file, root);
     }
 
@@ -97,15 +94,12 @@ public class StructureViewController
     private CodeStructureTree generateStructureTree()//File file)
     {
         CodeStructureTree newTree = new CodeStructureTree();
-        try
-        {
+        try {
             ParseTree parseTree = parse(System.getProperty("user.dir") + "/testfiles" +
-                                                "/Test.txt",
+                            "/Test.txt",
                     System.getProperty("user.dir") + "/lib/Java8.g4",
-                                        "compilationUnit");
-        }
-        catch (IOException e)
-        {
+                    "compilationUnit");
+        } catch (IOException e) {
             System.out.println(e);
         }
 
@@ -114,15 +108,13 @@ public class StructureViewController
         //2. Recursively Parse String
 
 
-
         return newTree;
     }
 
     public static ParseTree parse(String fileName,
                                   String combinedGrammarFileName,
                                   String startRule)
-            throws IOException
-    {
+            throws IOException {
         final Grammar g = Grammar.load(combinedGrammarFileName);
         LexerInterpreter lexEngine = g.createLexerInterpreter(CharStreams.fromPath(Paths.get(fileName)));
         CommonTokenStream tokens = new CommonTokenStream(lexEngine);
@@ -137,8 +129,7 @@ public class StructureViewController
      * Private helper class used to make and store parsed java file structures.
      * Considered a tree more conceptually than in function.
      */
-    private class CodeStructureTree
-    {
+    private class CodeStructureTree {
         private TreeItem<String> root;
 
         CodeStructureTree()//File file)
@@ -155,8 +146,7 @@ public class StructureViewController
          *
          * @return fileItems
          */
-        private ArrayList<TreeItem<String>> getFileItems()
-        {
+        private ArrayList<TreeItem<String>> getFileItems() {
             ArrayList<TreeItem<String>> fileItems = new ArrayList<>();
 
             TreeItem<String> fitem1 = new TreeItem<>("Class Lorem");
@@ -175,8 +165,7 @@ public class StructureViewController
          *
          * @return
          */
-        private ArrayList<TreeItem<String>> getClassItems(String fileItem)
-        {
+        private ArrayList<TreeItem<String>> getClassItems(String fileItem) {
             ArrayList<TreeItem<String>> classItems = new ArrayList<>();
 
             classItems.add(new TreeItem<>("[Method] Ipsum(): void"));
@@ -186,8 +175,7 @@ public class StructureViewController
             return classItems;
         }
 
-        private TreeItem<String> getRoot()
-        {
+        private TreeItem<String> getRoot() {
             return this.root;
         }
     }
