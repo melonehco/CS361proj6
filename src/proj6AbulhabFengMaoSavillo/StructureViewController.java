@@ -47,16 +47,24 @@ public class StructureViewController
     /** a HashMap mapping the tabs and the associated files */
     private Map<File, TreeItem<String>> fileToCodeStructMap = new HashMap<>();
     //private Map<File, Map<TreeItem, Integer>> //thinking about how to store line numbers
-    
-    /**
-     * Takes in the fxml item treeView from main Controller.
-     *
-     * @param treeView TreeView item representing structure display
-     */
-    public void setTreeView(TreeView treeView)
+
+    public static ParseTree parse(String input,
+                                  String startRule,
+                                  TreeItem<String> treeRoot)
+            throws IOException
     {
-        this.treeView = treeView;
-        this.generateStructureTree();
+        //build lexer, parser, and parse tree for the given file
+        Java8Lexer lexer = new Java8Lexer(CharStreams.fromString(input));
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        Java8Parser parser = new Java8Parser(tokens);
+        ParseTree tree = parser.compilationUnit();
+
+        //walk through parse tree with listening for code structure elements
+        ParseTreeWalker walker = new ParseTreeWalker();
+        CodeStructureListener codeStructureListener = new CodeStructureListener(treeRoot);
+        walker.walk(codeStructureListener, tree);
+
+        return tree;
     }
 
     /**
@@ -92,19 +100,33 @@ public class StructureViewController
     }
 
     /**
+     * Takes in the fxml item treeView from main Controller.
+     *
+     * @param treeView TreeView item representing structure display
+     */
+    public void setTreeView(TreeView treeView) {
+        this.treeView = treeView;
+//        this.generateStructureTree();
+    }
+
+    /**
      * Parses a file thereby storing contents as TreeItems in our special tree.
      *
      * @param //file the file to be parsed
      */
-    private void generateStructureTree()//File file)
+    public void generateStructureTree(String input)
     {
         TreeItem<String> newRoot = new TreeItem<String>("StructureViewController.java");
         try
         {
-            ParseTree parseTree = parse(System.getProperty("user.dir") + "/src/proj6AbulhabFengMaoSavillo" +
-                    "/StructureViewController.java",
-            							"compilationUnit",
-            							newRoot );
+//            ParseTree parseTree = parse(System.getProperty("user.dir") + "/src/proj6AbulhabFengMaoSavillo" +
+//                    "/StructureViewController.java",
+//            							"compilationUnit",
+//            							newRoot );
+
+            ParseTree parseTree = parse(input,
+                    "compilationUnit",
+                    newRoot);
         }
         catch (IOException e)
         {
@@ -116,25 +138,6 @@ public class StructureViewController
         //2. Recursively Parse String
 
         this.treeView.setRoot(newRoot);
-    }
-
-    public static ParseTree parse(String fileName,
-                                  String startRule,
-                                  TreeItem<String> treeRoot)
-            throws IOException
-    {
-        //build lexer, parser, and parse tree for the given file
-    	Java8Lexer lexer = new Java8Lexer(CharStreams.fromPath(Paths.get(fileName)));
-    	CommonTokenStream tokens = new CommonTokenStream(lexer);
-    	Java8Parser parser = new Java8Parser(tokens);
-    	ParseTree tree = parser.compilationUnit();
-    	
-    	//walk through parse tree with listening for code structure elements
-        ParseTreeWalker walker = new ParseTreeWalker();
-        CodeStructureListener codeStructureListener = new CodeStructureListener(treeRoot);
-        walker.walk(codeStructureListener, tree);
-        
-        return tree;
     }
     
     /**

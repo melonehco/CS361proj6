@@ -248,6 +248,17 @@ public class Controller
         });
     }
 
+
+    private void setUpdateStructureViewBinding() {
+        this.tabPane.addEventHandler(KeyEvent.KEY_TYPED, event -> {
+            Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
+            CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
+            this.structureViewController.generateStructureTree(activeCodeArea.getText());
+
+        });
+
+    }
+
     /**
      * Calls the method that handles the Compile button action from the toolbarController.
      *
