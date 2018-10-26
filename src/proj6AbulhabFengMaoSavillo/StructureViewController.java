@@ -10,11 +10,13 @@ package proj6AbulhabFengMaoSavillo;
 
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import proj6AbulhabFengMaoSavillo.Java8Parser.ResultContext;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.LexerInterpreter;
 import org.antlr.v4.runtime.ParserInterpreter;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -43,8 +45,9 @@ public class StructureViewController
     */
     private TreeView<String> treeView;
     /** a HashMap mapping the tabs and the associated files */
-    private Map<File, CodeStructureTree> fileToCodeStructMap = new HashMap<>();
-
+    private Map<File, TreeItem<String>> fileToCodeStructMap = new HashMap<>();
+    //private Map<File, Map<TreeItem, Integer>> //thinking about how to store line numbers
+    
     /**
      * Takes in the fxml item treeView from main Controller.
      *
@@ -53,41 +56,36 @@ public class StructureViewController
     public void setTreeView(TreeView treeView)
     {
         this.treeView = treeView;
-
-        //for testing, should be removed
-        this.treeView.setRoot(new CodeStructureTree().getRoot());
-        //this.treeView.setShowRoot(false);
-        this.generateStructureTree();
     }
 
     /**
-     * Sets the currently displaying File CodeStructureTree View.
+     * Sets the currently displaying File TreeItem<String> View.
      *
      * @param root root node corresponding to currently displaying file
      */
-    private void setRootNode(CodeStructureTree root)
+    private void setRootNode(TreeItem<String> root)
     {
-        this.treeView.setRoot(root.getRoot());
+        this.treeView.setRoot(root);
     }
 
     /**
-     * Adds a CodeStructureTree to the map, meaning the program has the relevant file open.
+     * Adds a TreeItem<String> to the map, meaning the program has the relevant file open.
      *
-     * @param file file which was parsed to generate CodeStructureTree
-     * @param root root node which defines the CodeStructureTree
+     * @param file file which was parsed to generate TreeItem<String>
+     * @param root root node which defines the TreeItem<String>
      */
-    private void addStructure(File file, CodeStructureTree root)
+    private void addStructure(File file, TreeItem<String> root)
     {
         this.fileToCodeStructMap.put(file, root);
     }
 
     /**
-     * Removes a CodeStructureTree to the map, meaning the program has closed the relevant file.
+     * Removes a TreeItem<String> to the map, meaning the program has closed the relevant file.
      *
-     * @param file file which was parsed to generate CodeStructureTree
-     * @param root root node which defines the CodeStructureTree
+     * @param file file which was parsed to generate TreeItem<String>
+     * @param root root node which defines the TreeItem<String>
      */
-    private void removeStructure(File file, CodeStructureTree root)
+    private void removeStructure(File file, TreeItem<String> root)
     {
         this.fileToCodeStructMap.remove(file, root);
     }
@@ -97,19 +95,16 @@ public class StructureViewController
      *
      * @param //file the file to be parsed
      */
-    private CodeStructureTree generateStructureTree()//File file)
+    private void generateStructureTree()//File file)
     {
-        CodeStructureTree newTree = new CodeStructureTree();
+        TreeItem<String> newRoot = new TreeItem<String>("StructureViewController.java");
         try
         {
-//            ParseTree parseTree = parse(System.getProperty("user.dir") + "/testfiles" +
-//                                                "/Test.txt",
-//                    System.getProperty("user.dir") + "/lib/Java8.g4",
-//                                        "compilationUnit");
-            ParseTree parseTree = parse(System.getProperty("user.dir") + "/src/proj6AbulhabFengMaoSavillo6" +
+            ParseTree parseTree = parse(System.getProperty("user.dir") + "/src/proj6AbulhabFengMaoSavillo" +
                     "/StructureViewController.java",
                     System.getProperty("user.dir") + "/lib/Java8.g4",
-            							"compilationUnit");
+            							"compilationUnit",
+            							newRoot );
         }
         catch (IOException e)
         {
@@ -120,96 +115,96 @@ public class StructureViewController
         //1. Read entire file into string
         //2. Recursively Parse String
 
-
-
-        return newTree;
+        this.treeView.setRoot(newRoot);
     }
 
     public static ParseTree parse(String fileName,
                                   String combinedGrammarFileName,
-                                  String startRule)
+                                  String startRule,
+                                  TreeItem<String> treeRoot)
             throws IOException
     {
-//        final Grammar g = Grammar.load(combinedGrammarFileName);
-//        LexerInterpreter lexEngine = g.createLexerInterpreter(CharStreams.fromPath(Paths.get(fileName)));
-//        CommonTokenStream tokens = new CommonTokenStream(lexEngine);
-//        ParserInterpreter parser = g.createParserInterpreter(tokens);
-//        ParseTree t = parser.parse(g.getRule(startRule).index);
-//        
-//        System.out.println("parse tree: " + t.toStringTree(parser));
-        
-    	Java8Lexer lexer = new Java8Lexer(CharStreams.fromPath(Paths.get(fileName)));
+        Java8Lexer lexer = new Java8Lexer(CharStreams.fromPath(Paths.get(fileName)));
     	CommonTokenStream tokens = new CommonTokenStream(lexer);
     	Java8Parser parser = new Java8Parser(tokens);
     	ParseTree tree = parser.compilationUnit();
     	
         ParseTreeWalker walker = new ParseTreeWalker();
-        MethodListener methodListener = new MethodListener();
+        CodeStructureListener codeStructureListener = new CodeStructureListener(treeRoot);
         
-        walker.walk(methodListener, tree);
-        System.out.println(methodListener.getMethodNames());
-        System.out.println(methodListener.getClassNames());
+        walker.walk(codeStructureListener, tree);
+        System.out.println("WALKED");
         
         return tree;
     }
-
-
+    
     /**
-     * Private helper class used to make and store parsed java file structures.
-     * Considered a tree more conceptually than in function.
+     * Private helper class that listens for code structure declarations
+     * (classes, fields, methods) during a parse tree walk and builds a
+     * TreeView subtree representing the code structure.
+     *
      */
-    private class CodeStructureTree
-    {
-        private TreeItem<String> root;
-
-        CodeStructureTree()//File file)
+    private static class CodeStructureListener extends Java8BaseListener {
+        private TreeItem<String> currentNode;
+        
+        /**
+         * creates a new CodeStructureListener that builds a subtree
+         * from the given root TreeItem
+         * @param root root TreeItem to build subtree from
+         */
+        public CodeStructureListener(TreeItem<String> root)
         {
-            //this.root = new TreeItem<>(file.getName());
-            this.root = new TreeItem<>("Root Item");
-            this.root.getChildren().addAll(this.getFileItems());
-            this.root.setExpanded(true);
+        	this.currentNode = root;
         }
+      
+        /**
+         * starts a new subtree for the class declaration entered
+         */
+        @Override
+        public void enterNormalClassDeclaration(Java8Parser.NormalClassDeclarationContext ctx) {
+            TerminalNode node = ctx.Identifier();
+            String className = node.getText();
+            
+            TreeItem<String> newNode = new TreeItem<String>("[class] " + className);
+            this.currentNode.getChildren().add(newNode);
+            this.currentNode = newNode; //move current node into new subtree
+        }
+      
 
         /**
-         * Tier 1 items include names of
-         * Classes, interfaces
-         *
-         * @return fileItems
+         * ends the new subtree for the class declaration exited,
+         * returns traversal to parent node
          */
-        private ArrayList<TreeItem<String>> getFileItems()
-        {
-            ArrayList<TreeItem<String>> fileItems = new ArrayList<>();
-
-            TreeItem<String> fitem1 = new TreeItem<>("Class Lorem");
-            fitem1.getChildren().addAll(getClassItems(fitem1.getValue()));
-            fileItems.add(fitem1);
-            fitem1.setExpanded(true);
-
-            return fileItems;
+        @Override
+        public void exitNormalClassDeclaration(Java8Parser.NormalClassDeclarationContext ctx) {
+            
+            this.currentNode = this.currentNode.getParent(); //move current node back to parent
         }
-
-        /**
-         * Tier 2 items listed under each Class include names of
-         * Classes, class items.
-         * <p>
-         * Class items are of the form,
-         *
-         * @return
-         */
-        private ArrayList<TreeItem<String>> getClassItems(String fileItem)
-        {
-            ArrayList<TreeItem<String>> classItems = new ArrayList<>();
-
-            classItems.add(new TreeItem<>("[Method] Ipsum(): void"));
-            classItems.add(new TreeItem<>("[Method] Dolor(): void"));
-            classItems.add(new TreeItem<>("[Field] Sit(): Amet"));
-
-            return classItems;
+      
+        @Override
+        public void enterMethodHeader(Java8Parser.MethodHeaderContext ctx) {
+            //get method name
+        	TerminalNode nameNode = ctx.methodDeclarator().Identifier();
+            String methodName = nameNode.getText();
+            
+            //get return type
+            ResultContext resultCtx = ctx.result();
+            Token lastToken = resultCtx.getStop();
+            String returnType = lastToken.getText();
+            
+            //add method to TreeView under the current class tree
+            TreeItem<String> newNode = new TreeItem<String>("[method] " + methodName + ": " + returnType);
+            this.currentNode.getChildren().add(newNode);
         }
-
-        private TreeItem<String> getRoot()
-        {
-            return this.root;
+        
+        @Override
+        public void enterFieldDeclaration(Java8Parser.FieldDeclarationContext ctx) {
+            TerminalNode node = ctx.variableDeclaratorList().variableDeclarator(0).variableDeclaratorId().Identifier();
+            String fieldName = node.getText();
+            
+            //add field to TreeView under the current class tree
+            TreeItem<String> newNode = new TreeItem<String>("[field] " + fieldName);
+            this.currentNode.getChildren().add(newNode);
         }
     }
 }
@@ -231,36 +226,4 @@ public class StructureViewController
  * return [[methods/fields], getConstituents(top-level entity bodies)]
  */
 
-class MethodListener extends Java8BaseListener {
-	 
-    private List<String> methodNames = new ArrayList<String>();
-    private List<String> classNames = new ArrayList<String>();
-  
-    @Override
-    public void enterNormalClassDeclaration(Java8Parser.NormalClassDeclarationContext ctx) {
-        TerminalNode node = ctx.Identifier();
-        String className = node.getText();
- 
-        classNames.add(className);
-        System.out.println("class: " + className);
-    }
-  
-    @Override
-    public void enterMethodDeclarator(Java8Parser.MethodDeclaratorContext ctx) {
-        TerminalNode node = ctx.Identifier();
-        String methodName = node.getText();
- 
-        methodNames.add(methodName);
-        System.out.println("method: " + methodName);
-    }
-    
-    public List<String> getMethodNames()
-    {
-    	return this.methodNames;
-    }
-    
-    public List<String> getClassNames()
-    {
-    	return this.classNames;
-    }
-}
+
