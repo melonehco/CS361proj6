@@ -141,6 +141,87 @@ public class Controller
         this.setupStructureViewController();
 
         this.setButtonBinding();
+        this.setupEventAwareness();
+    }
+
+    /**
+     * Sets up listening and handling of various events and whatnot
+     */
+    private void setupEventAwareness()
+    {
+        // Prevents user from moving caret in console during running
+        {
+            this.console.addEventFilter(MouseEvent.ANY, event ->
+            {
+                this.console.requestFocus();
+                if (this.compileRunWorker.isRunning())
+                    event.consume();
+            });
+        }
+
+        // Detects presses to tab (overriding the system default that deletes the selection) and calls tabOrUntab
+        {
+            this.tabPane.addEventFilter(KeyEvent.KEY_PRESSED, event ->
+            {
+                // if tab or shift+tab pressed
+                if (event.getCode() == KeyCode.TAB)
+                {
+                    tabOrUntab(event);
+                }
+            });
+        }
+
+        // Structure View various
+        {
+            //Prevents user from resizing split pane when closed
+            SplitPane.Divider divider = this.horizontalSplitPane.getDividers().get(0);
+            this.checkBox.selectedProperty().addListener((observable, oldValue, newValue) ->
+                                                         {
+                                                             if (newValue)
+                                                                 divider.setPosition(0.0);
+                                                             else
+                                                                 divider.setPosition(0.25);
+                                                         });
+            divider.positionProperty().addListener(((observable, oldValue, newValue) ->
+            {
+                if (this.checkBox.isSelected()) divider.setPosition(0.0);
+            }));
+
+            //Updates the file structure tree whenever a key is typed
+            this.tabPane.addEventFilter(KeyEvent.KEY_RELEASED, event ->
+            {
+                System.out.println("KeyPressed");
+                Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
+                CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
+                this.structureViewController.generateStructureTree(activeCodeArea.getText());
+
+            });
+        }
+    }
+
+    /**
+     * Depending on whether or not shift was held down with tab, tab or untab the selection
+     *
+     * @param event the key event, whether that be tab or shift+tab
+     */
+    private void tabOrUntab(KeyEvent event)
+    {
+        Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
+        if (selectedTab != null)
+        { // if a tab is open
+
+            CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
+
+            if (event.isShiftDown())
+            { // Shift was held down with tab
+                editMenuController.handleUnindentation(activeCodeArea);
+            }
+            else // Tab only
+                editMenuController.handleIndentation(activeCodeArea);
+
+        }
+        event.consume();
+
     }
 
     /**
@@ -202,66 +283,6 @@ public class Controller
         this.stopButton.disableProperty().bind(((ifCompiling.not()).and(ifCompilingRunning.not())).or(ifTabPaneEmpty));
         this.compileButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(ifTabPaneEmpty));
         this.compileRunButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(ifTabPaneEmpty));
-
-        SplitPane.Divider divider = this.horizontalSplitPane.getDividers().get(0);
-        this.checkBox.selectedProperty().addListener((observable, oldValue, newValue) ->
-                                                     {
-                                                         if (newValue)
-                                                             divider.setPosition(0.0);
-                                                         else
-                                                             divider.setPosition(0.25);
-                                                     });
-        divider.positionProperty().addListener(((observable, oldValue, newValue) ->
-        {
-            if (this.checkBox.isSelected()) divider.setPosition(0.0);
-        }));
-
-        this.console.addEventFilter(MouseEvent.ANY, event ->
-        {
-            this.console.requestFocus();
-            if (this.compileRunWorker.isRunning())
-                event.consume();
-        });
-
-        // Detects presses to tab (overriding the system default that deletes the selection) and calls tabOrUntab
-        this.tabPane.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            // if tab or shift+tab pressed
-            if (event.getCode() == KeyCode.TAB) {
-                tabOrUntab(event);
-            }
-        });
-    }
-
-    /**
-     * Depending on whether or not shift was held down with tab, tab or untab the selection
-     *
-     * @param event the key event, whether that be tab or shift+tab
-     */
-    private void tabOrUntab(KeyEvent event) {
-        Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-        if (selectedTab != null) { // if a tab is open
-
-            CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
-
-            if (event.isShiftDown()) { // Shift was held down with tab
-                editMenuController.handleUnindentation(activeCodeArea);
-            } else // Tab only
-                editMenuController.handleIndentation(activeCodeArea);
-
-        }
-        event.consume();
-
-    }
-
-
-    private void setUpdateStructureViewBinding() {
-        this.tabPane.addEventHandler(KeyEvent.KEY_TYPED, event -> {
-            Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-            CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
-            this.structureViewController.generateStructureTree(activeCodeArea.getText());
-
-        });
-
     }
 
     /**
