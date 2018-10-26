@@ -16,6 +16,8 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.LexerInterpreter;
 import org.antlr.v4.runtime.ParserInterpreter;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import org.antlr.v4.tool.Grammar;
 
 import java.io.File;
@@ -23,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -99,10 +102,14 @@ public class StructureViewController
         CodeStructureTree newTree = new CodeStructureTree();
         try
         {
-            ParseTree parseTree = parse(System.getProperty("user.dir") + "/testfiles" +
-                                                "/Test.txt",
+//            ParseTree parseTree = parse(System.getProperty("user.dir") + "/testfiles" +
+//                                                "/Test.txt",
+//                    System.getProperty("user.dir") + "/lib/Java8.g4",
+//                                        "compilationUnit");
+            ParseTree parseTree = parse(System.getProperty("user.dir") + "/src/proj6AbulhabFengMaoSavillo6" +
+                    "/StructureViewController.java",
                     System.getProperty("user.dir") + "/lib/Java8.g4",
-                                        "compilationUnit");
+            							"compilationUnit");
         }
         catch (IOException e)
         {
@@ -123,13 +130,27 @@ public class StructureViewController
                                   String startRule)
             throws IOException
     {
-        final Grammar g = Grammar.load(combinedGrammarFileName);
-        LexerInterpreter lexEngine = g.createLexerInterpreter(CharStreams.fromPath(Paths.get(fileName)));
-        CommonTokenStream tokens = new CommonTokenStream(lexEngine);
-        ParserInterpreter parser = g.createParserInterpreter(tokens);
-        ParseTree t = parser.parse(g.getRule(startRule).index);
-        System.out.println("parse tree: " + t.toStringTree(parser));
-        return t;
+//        final Grammar g = Grammar.load(combinedGrammarFileName);
+//        LexerInterpreter lexEngine = g.createLexerInterpreter(CharStreams.fromPath(Paths.get(fileName)));
+//        CommonTokenStream tokens = new CommonTokenStream(lexEngine);
+//        ParserInterpreter parser = g.createParserInterpreter(tokens);
+//        ParseTree t = parser.parse(g.getRule(startRule).index);
+//        
+//        System.out.println("parse tree: " + t.toStringTree(parser));
+        
+    	Java8Lexer lexer = new Java8Lexer(CharStreams.fromPath(Paths.get(fileName)));
+    	CommonTokenStream tokens = new CommonTokenStream(lexer);
+    	Java8Parser parser = new Java8Parser(tokens);
+    	ParseTree tree = parser.compilationUnit();
+    	
+        ParseTreeWalker walker = new ParseTreeWalker();
+        MethodListener methodListener = new MethodListener();
+        
+        walker.walk(methodListener, tree);
+        System.out.println(methodListener.getMethodNames());
+        System.out.println(methodListener.getClassNames());
+        
+        return tree;
     }
 
 
@@ -209,3 +230,37 @@ public class StructureViewController
  * <p>
  * return [[methods/fields], getConstituents(top-level entity bodies)]
  */
+
+class MethodListener extends Java8BaseListener {
+	 
+    private List<String> methodNames = new ArrayList<String>();
+    private List<String> classNames = new ArrayList<String>();
+  
+    @Override
+    public void enterNormalClassDeclaration(Java8Parser.NormalClassDeclarationContext ctx) {
+        TerminalNode node = ctx.Identifier();
+        String className = node.getText();
+ 
+        classNames.add(className);
+        System.out.println("class: " + className);
+    }
+  
+    @Override
+    public void enterMethodDeclarator(Java8Parser.MethodDeclaratorContext ctx) {
+        TerminalNode node = ctx.Identifier();
+        String methodName = node.getText();
+ 
+        methodNames.add(methodName);
+        System.out.println("method: " + methodName);
+    }
+    
+    public List<String> getMethodNames()
+    {
+    	return this.methodNames;
+    }
+    
+    public List<String> getClassNames()
+    {
+    	return this.classNames;
+    }
+}
