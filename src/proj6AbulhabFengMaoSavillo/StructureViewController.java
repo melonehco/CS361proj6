@@ -153,9 +153,6 @@ public class StructureViewController
             TerminalNode node = ctx.Identifier();
             String className = node.getText();
 
-            Token t = ctx.start;
-            int lineNumber = t.getLine();
-
             TreeItem<String> newNode = new TreeItem<>(className);
             newNode.setGraphic(new ImageView(this.classPic));
             newNode.setExpanded(true);
@@ -186,9 +183,6 @@ public class StructureViewController
             TerminalNode node = ctx.variableDeclaratorList().variableDeclarator(0).variableDeclaratorId().Identifier();
             String fieldName = node.getText();
 
-            Token t = ctx.start;
-            int lineNumber = t.getLine();
-
             //add field to TreeView under the current class tree
             TreeItem<String> newNode = new TreeItem<>(fieldName);
             newNode.setGraphic(new ImageView(this.fieldPic));
@@ -205,9 +199,6 @@ public class StructureViewController
             //get method name
             TerminalNode nameNode = ctx.methodDeclarator().Identifier();
             String methodName = nameNode.getText();
-
-            Token t = ctx.start;
-            int lineNumber = t.getLine();
 
             //add method to TreeView under the current class tree
             TreeItem<String> newNode = new TreeItem<>(methodName);
