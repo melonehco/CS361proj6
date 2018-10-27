@@ -10,6 +10,8 @@ package proj6AbulhabFengMaoSavillo;
 
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import proj6AbulhabFengMaoSavillo.Java8Parser.ResultContext;
 
 import org.antlr.v4.runtime.CharStreams;
@@ -23,6 +25,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import org.antlr.v4.tool.Grammar;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -42,6 +45,7 @@ public class StructureViewController
     /** a HashMap mapping the tabs and the associated files */
     private Map<File, TreeItem<String>> fileToCodeStructMap = new HashMap<>();
     private ParseTreeWalker walker;
+
 
     public StructureViewController()
     {
@@ -121,6 +125,9 @@ public class StructureViewController
      */
     private static class CodeStructureListener extends Java8BaseListener
     {
+        Image classPic;
+        Image methodPic;
+        Image fieldPic;
         private TreeItem<String> currentNode;
 
         /**
@@ -132,6 +139,17 @@ public class StructureViewController
         public CodeStructureListener(TreeItem<String> root)
         {
             this.currentNode = root;
+
+            try
+            {
+                this.classPic = new Image(new FileInputStream(System.getProperty("user.dir") + "/include/c.png"));
+                this.methodPic = new Image(new FileInputStream(System.getProperty("user.dir") + "/include/m.png"));
+                this.fieldPic = new Image(new FileInputStream(System.getProperty("user.dir") + "/include/f.png"));
+            }
+            catch (IOException e)
+            {
+                System.out.println("Error Loading Images");
+            }
         }
 
         /**
@@ -144,6 +162,7 @@ public class StructureViewController
             String className = node.getText();
 
             TreeItem<String> newNode = new TreeItem<String>("[class] " + className);
+            newNode.setGraphic(new ImageView(this.classPic));
             this.currentNode.getChildren().add(newNode);
             this.currentNode = newNode; //move current node into new subtree
         }
@@ -171,6 +190,7 @@ public class StructureViewController
 
             //add field to TreeView under the current class tree
             TreeItem<String> newNode = new TreeItem<String>("[field] " + fieldName);
+            newNode.setGraphic(new ImageView(this.fieldPic));
             this.currentNode.getChildren().add(newNode);
         }
 
@@ -186,6 +206,7 @@ public class StructureViewController
 
             //add method to TreeView under the current class tree
             TreeItem<String> newNode = new TreeItem<String>("[method] " + methodName);
+            newNode.setGraphic(new ImageView(this.methodPic));
             this.currentNode.getChildren().add(newNode);
         }
     }
