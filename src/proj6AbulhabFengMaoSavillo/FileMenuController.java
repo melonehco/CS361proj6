@@ -42,6 +42,20 @@ public class FileMenuController {
      * TabPane defined in Main.fxml
      */
     private TabPane tabPane;
+    /**
+     * Parent Controller
+     */
+    private Controller parentController;
+
+    /**
+     * Sets the parent controller
+     *
+     * @param controller the parent controller
+     */
+    public void setParentController(Controller controller)
+    {
+        this.parentController = controller;
+    }
 
     /**
      * Sets the tabFileMap.
@@ -197,7 +211,7 @@ public class FileMenuController {
         Tab newTab = new Tab();
         newTab.setText(filename);
         newTab.setContent(new VirtualizedScrollPane<>(newJavaCodeArea));
-        newTab.setOnCloseRequest(this::handleCloseAction);
+        newTab.setOnCloseRequest(this.parentController::handleCloseAction);
 
         this.tabPane.getTabs().add(newTab);
         this.tabPane.getSelectionModel().select(newTab);

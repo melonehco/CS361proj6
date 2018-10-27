@@ -285,6 +285,7 @@ public class Controller
         this.fileMenuController = new FileMenuController();
         this.fileMenuController.setTabFileMap(this.tabFileMap);
         this.fileMenuController.setTabPane(this.tabPane);
+        this.fileMenuController.setParentController(this);
     }
 
     /**
@@ -417,7 +418,7 @@ public class Controller
      * @param event Event object
      */
     @FXML
-    private void handleCloseAction(Event event)
+    protected void handleCloseAction(Event event)
     {
         this.fileMenuController.handleCloseAction(event);
         if (this.tablessProperty().getValue())
