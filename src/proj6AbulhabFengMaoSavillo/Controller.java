@@ -138,6 +138,9 @@ public class Controller
 
         this.setButtonBinding();
         this.setupEventAwareness();
+
+        // Sets focus to console on startup
+        this.console.requestFocus();
     }
 
     /**
@@ -202,23 +205,24 @@ public class Controller
         }
     }
 
-    private void updateStructureView()
+    /**
+     * Binds the Close, Save, Save As menu items of the File menu,
+     * the Edit menu, with the condition whether the tab pane is empty.
+     */
+    private void setButtonBinding()
     {
-        JavaCodeArea currentCodeArea = this.getCurrentCodeArea();
-        File currentFile = this.getCurrentFile();
+        ReadOnlyBooleanProperty ifCompiling = this.compileWorker.runningProperty();
+        ReadOnlyBooleanProperty ifCompilingRunning = this.compileRunWorker.runningProperty();
 
-        if (currentFile != null && currentCodeArea != null)
-        {
-            String fileName = currentFile.getName();
-            if (fileName.endsWith(".java"))
-            {
-                this.structureViewController.generateStructureTree(currentCodeArea.getText());
-            }
-            else
-            {
-                this.structureViewController.resetRootNode();
-            }
-        }
+        this.closeMenuItem.disableProperty().bind(this.fileMenuController.tablessProperty());
+        this.saveMenuItem.disableProperty().bind(this.fileMenuController.tablessProperty());
+        this.saveAsMenuItem.disableProperty().bind(this.fileMenuController.tablessProperty());
+        this.editMenu.disableProperty().bind(this.fileMenuController.tablessProperty());
+
+        this.stopButton.disableProperty().bind(((ifCompiling.not()).and(ifCompilingRunning.not())).or(this.fileMenuController.tablessProperty()));
+        this.compileButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(this.fileMenuController.tablessProperty()));
+        this.compileRunButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(this.fileMenuController.tablessProperty()));
+
     }
 
     public File getCurrentFile()
@@ -306,34 +310,23 @@ public class Controller
         this.structureViewController.setTreeView(this.treeView);
     }
 
-    /**
-     * Binds the Close, Save, Save As menu items of the File menu,
-     * the Edit menu, with the condition whether the tab pane is empty.
-     */
-    private void setButtonBinding()
+    private void updateStructureView()
     {
-        ReadOnlyBooleanProperty ifCompiling = this.compileWorker.runningProperty();
-        ReadOnlyBooleanProperty ifCompilingRunning = this.compileRunWorker.runningProperty();
+        JavaCodeArea currentCodeArea = this.getCurrentCodeArea();
+        File currentFile = this.getCurrentFile();
 
-        this.closeMenuItem.disableProperty().bind(this.tablessProperty());
-        this.saveMenuItem.disableProperty().bind(this.tablessProperty());
-        this.saveAsMenuItem.disableProperty().bind(this.tablessProperty());
-        this.editMenu.disableProperty().bind(this.tablessProperty());
-
-        this.stopButton.disableProperty().bind(((ifCompiling.not()).and(ifCompilingRunning.not())).or(this.tablessProperty()));
-        this.compileButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(this.tablessProperty()));
-        this.compileRunButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(this.tablessProperty()));
-
-    }
-
-    /**
-     * Property which indicates if there are currently any tabs open.
-     *
-     * @return truth value indicating if there are any tabs currently open
-     */
-    public ReadOnlyBooleanProperty tablessProperty()
-    {
-        return new SimpleListProperty<>(this.tabPane.getTabs()).emptyProperty();
+        if (currentFile != null && currentCodeArea != null)
+        {
+            String fileName = currentFile.getName();
+            if (fileName.endsWith(".java"))
+            {
+                this.structureViewController.generateStructureTree(currentCodeArea.getText());
+            }
+            else
+            {
+                this.resetStructureView();
+            }
+        }
     }
 
     /**
@@ -398,7 +391,22 @@ public class Controller
     {
         this.fileMenuController.handleOpenAction();
         this.updateStructureView();
-        this.updateCheckbox(true);
+    }
+
+    public void resetStructureView()
+    {
+        this.structureViewController.resetRootNode();
+    }
+
+    /**
+     * Calls the method that handles the Close menu item action from the fileMenuController.
+     *
+     * @param event Event object
+     */
+    @FXML
+    private void handleCloseAction(Event event)
+    {
+        this.fileMenuController.handleCloseAction(event);
     }
 
     /**
@@ -410,22 +418,6 @@ public class Controller
     public void updateCheckbox(Boolean bool)
     {
         this.checkBox.setSelected(bool);
-    }
-
-    /**
-     * Calls the method that handles the Close menu item action from the fileMenuController.
-     *
-     * @param event Event object
-     */
-    @FXML
-    protected void handleCloseAction(Event event)
-    {
-        this.fileMenuController.handleCloseAction(event);
-        if (this.tablessProperty().getValue())
-        {
-            this.structureViewController.resetRootNode();
-            this.updateCheckbox(true);
-        }
     }
 
     /**

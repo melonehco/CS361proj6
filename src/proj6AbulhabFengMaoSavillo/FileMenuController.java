@@ -9,6 +9,8 @@
 package proj6AbulhabFengMaoSavillo;
 
 import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.event.Event;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -25,6 +27,7 @@ import java.util.*;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
+
 /**
  * FileMenuController handles File menu related actions.
  *
@@ -33,7 +36,8 @@ import javafx.scene.control.TabPane;
  * @author Zena Abulhab
  * @author Melody Mao
  */
-public class FileMenuController {
+public class FileMenuController
+{
     /**
      * a HashMap mapping the tabs and the associated files
      */
@@ -62,7 +66,8 @@ public class FileMenuController {
      *
      * @param tabFileMap HashMap mapping the tabs and the associated files
      */
-    public void setTabFileMap(Map<Tab, File> tabFileMap) {
+    public void setTabFileMap(Map<Tab, File> tabFileMap)
+    {
         this.tabFileMap = tabFileMap;
     }
 
@@ -71,25 +76,10 @@ public class FileMenuController {
      *
      * @param tabPane TabPane
      */
-    public void setTabPane(TabPane tabPane) {
+    public void setTabPane(TabPane tabPane)
+    {
         this.tabPane = tabPane;
     }
-
-    /**
-     * Helper method to get the text content of a specified file.
-     *
-     * @param file File to get the text content from
-     * @return the text content of the specified file; null if an error occurs when reading the specified file.
-     */
-    private String getFileContent(File file) {
-        try {
-            return new String(Files.readAllBytes(Paths.get(file.toURI())));
-        } catch (Exception ex) {
-            this.createErrorDialog("Reading File", "Cannot read " + file.getName() + ".");
-            return null;
-        }
-    }
-
 
     /**
      * Helper method to save the input string to a specified file.
@@ -98,18 +88,21 @@ public class FileMenuController {
      * @param file    File that the input string is saved to
      * @return true is the specified file is successfully saved; false if an error occurs when saving the specified file.
      */
-    public boolean setFileContent(String content, File file) {
-        try {
+    public boolean setFileContent(String content, File file)
+    {
+        try
+        {
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(content);
             fileWriter.close();
             return true;
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             this.createErrorDialog("Saving File", "Cannot save to " + file.getName() + ".");
             return false;
         }
     }
-
 
     /**
      * Helper method to check if the content of the specified JavaCodeArea
@@ -119,12 +112,12 @@ public class FileMenuController {
      * @param file         File to compare with the the specified JavaCodeArea
      * @return true if the content of the JavaCodeArea matches the content of the File; false if not
      */
-    public boolean fileContainsMatch(JavaCodeArea javaCodeArea, File file) {
+    public boolean fileContainsMatch(JavaCodeArea javaCodeArea, File file)
+    {
         String javaCodeAreaContent = javaCodeArea.getText();
         String fileContent = this.getFileContent(file);
         return javaCodeAreaContent.equals(fileContent);
     }
-
 
     /**
      * Helper method to handle closing tag action.
@@ -134,24 +127,28 @@ public class FileMenuController {
      * @param ifSaveEmptyFile boolean false if not to save the empty file; true if to save the empty file
      * @return true if the tab needs saving; false if the tab does not need saving.
      */
-    public boolean tabNeedsSaving(Tab tab, boolean ifSaveEmptyFile) {
+    public boolean tabNeedsSaving(Tab tab, boolean ifSaveEmptyFile)
+    {
         JavaCodeArea activeJavaCodeArea = (JavaCodeArea) ((VirtualizedScrollPane) tab.getContent()).getContent();
         // check whether the embedded text has been saved or not
-        if (this.tabFileMap.get(tab) == null) {
+        if (this.tabFileMap.get(tab) == null)
+        {
             // if the newly created file is empty, don't save
-            if (!ifSaveEmptyFile) {
-                if (activeJavaCodeArea.getText().equals("")) {
+            if (!ifSaveEmptyFile)
+            {
+                if (activeJavaCodeArea.getText().equals(""))
+                {
                     return false;
                 }
             }
             return true;
         }
         // check whether the saved file match the tab content or not
-        else {
+        else
+        {
             return !this.fileContainsMatch(activeJavaCodeArea, this.tabFileMap.get(tab));
         }
     }
-
 
     /**
      * Helper method to handle closing tag action.
@@ -159,11 +156,11 @@ public class FileMenuController {
      *
      * @param tab Tab to be closed
      */
-    private void removeTab(Tab tab) {
+    private void removeTab(Tab tab)
+    {
         this.tabFileMap.remove(tab);
         this.tabPane.getTabs().remove(tab);
     }
-
 
     /**
      * Helper method to create a confirmation dialog window.
@@ -173,7 +170,8 @@ public class FileMenuController {
      * @param contentText the content text of the confirmation dialog
      * @return 0 if the user clicks No button; 1 if the user clicks the Yes button; 2 if the user clicks cancel button.
      */
-    public int createConfirmationDialog(String title, String headerText, String contentText) {
+    public int createConfirmationDialog(String title, String headerText, String contentText)
+    {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
@@ -186,36 +184,18 @@ public class FileMenuController {
 
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.get() == buttonNo) {
+        if (result.get() == buttonNo)
+        {
             return 0;
-        } else if (result.get() == buttonYes) {
+        }
+        else if (result.get() == buttonYes)
+        {
             return 1;
-        } else {
+        }
+        else
+        {
             return 2;
         }
-    }
-
-
-    /**
-     * Helper method to create a new tab.
-     *
-     * @param contentString the contentString being added into the styled code area; empty string if
-     *                      creating an empty window
-     * @param filename      the name of the file opened; "untitled" if creating an empty window
-     * @param file          File opened; null if creating an empty window
-     */
-    private void createTab(String contentString, String filename, File file) {
-        JavaCodeArea newJavaCodeArea = new JavaCodeArea();
-        newJavaCodeArea.appendText(contentString); //set to given contents
-
-        Tab newTab = new Tab();
-        newTab.setText(filename);
-        newTab.setContent(new VirtualizedScrollPane<>(newJavaCodeArea));
-        newTab.setOnCloseRequest(this.parentController::handleCloseAction);
-
-        this.tabPane.getTabs().add(newTab);
-        this.tabPane.getSelectionModel().select(newTab);
-        this.tabFileMap.put(newTab, file);
     }
 
     /**
@@ -226,24 +206,26 @@ public class FileMenuController {
      * @return 0 if user clicked NO button; 1 if user clicked OK button;
      * 2 is user clicked Cancel button; -1 is no saving is needed
      */
-    public int checkSaveBeforeCompile() {
+    public int checkSaveBeforeCompile()
+    {
         // get the selected tab from the tab pane
         Tab tab = this.tabPane.getSelectionModel().getSelectedItem();
 
         // if the file has not been saved or has been changed
-        if (this.tabNeedsSaving(tab, true)) {
+        if (this.tabNeedsSaving(tab, true))
+        {
             int buttonClicked = createConfirmationDialog("Save Changes?",
-                    "Do you want to save the changes before compiling?",
-                    "Your recent file changes would not be compiled if not saved.");
+                                                         "Do you want to save the changes before compiling?",
+                                                         "Your recent file changes would not be compiled if not saved.");
             // if user presses Yes button
-            if (buttonClicked == 1) {
+            if (buttonClicked == 1)
+            {
                 this.handleSaveAction();
             }
             return buttonClicked;
         }
         return -1;
     }
-
 
     /**
      * Helper method to handle closing tag action.
@@ -254,64 +236,78 @@ public class FileMenuController {
      * @param tab Tab to be closed
      * @return true if the tab is closed successfully; false if the user clicks cancel.
      */
-    private boolean closeTab(Tab tab) {
+    private boolean closeTab(Tab tab)
+    {
         // if the file has not been saved or has been changed
         // pop up a dialog window asking whether to save the file
-        if (this.tabNeedsSaving(tab, false)) {
+        if (this.tabNeedsSaving(tab, false))
+        {
             int buttonClicked = this.createConfirmationDialog("Save Changes?",
-                    "Do you want to save the changes you made?",
-                    "Your changes will be lost if you don't save them.");
+                                                              "Do you want to save the changes you made?",
+                                                              "Your changes will be lost if you don't save them.");
 
             // if user presses No button, close the tab without saving
-            if (buttonClicked == 0) {
+            if (buttonClicked == 0)
+            {
                 this.removeTab(tab);
                 return true;
             }
             // if user presses Yes button, close the tab and save the tab content
-            else if (buttonClicked == 1) {
-                if (this.handleSaveAction()) {
+            else if (buttonClicked == 1)
+            {
+                if (this.handleSaveAction())
+                {
                     this.removeTab(tab);
                     return true;
                 }
                 return false;
             }
             // if user presses cancel button
-            else {
+            else
+            {
                 return false;
             }
         }
         // if the file has not been changed, close the tab
-        else {
+        else
+        {
             this.removeTab(tab);
             return true;
         }
     }
-
-
-    /**
-     * Creates a error dialog displaying message of any error encountered.
-     *
-     * @param errorTitle  String of the error title
-     * @param errorString String of error message
-     */
-    public void createErrorDialog(String errorTitle, String errorString) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(errorTitle + " Error");
-        alert.setHeaderText("Error for " + errorTitle);
-        alert.setContentText(errorString);
-        alert.showAndWait();
-    }
-
 
     /**
      * Handles the New button action.
      * Opens a styled code area embedded in a new tab.
      * Sets the newly opened tab to the the topmost one.
      */
-    public void handleNewAction() {
+    public void handleNewAction()
+    {
         this.createTab("", "untitled", null);
     }
 
+    /**
+     * Helper method to create a new tab.
+     *
+     * @param contentString the contentString being added into the styled code area; empty string if
+     *                      creating an empty window
+     * @param filename      the name of the file opened; "untitled" if creating an empty window
+     * @param file          File opened; null if creating an empty window
+     */
+    private void createTab(String contentString, String filename, File file)
+    {
+        JavaCodeArea newJavaCodeArea = new JavaCodeArea();
+        newJavaCodeArea.appendText(contentString); //set to given contents
+
+        Tab newTab = new Tab();
+        newTab.setText(filename);
+        newTab.setContent(new VirtualizedScrollPane<>(newJavaCodeArea));
+        newTab.setOnCloseRequest(this::handleCloseAction);
+
+        this.tabPane.getTabs().add(newTab);
+        this.tabPane.getSelectionModel().select(newTab);
+        this.tabFileMap.put(newTab, file);
+    }
 
     /**
      * Handles the open button action.
@@ -319,16 +315,21 @@ public class FileMenuController {
      * If the user chooses a valid file, a new tab is created and the file is loaded into the styled code area.
      * If the user cancels, the dialog disappears without doing anything.
      */
-    public void handleOpenAction() {
+    public void handleOpenAction()
+    {
         FileChooser fileChooser = new FileChooser();
         File openFile = fileChooser.showOpenDialog(this.tabPane.getScene().getWindow());
 
-        if (openFile != null) {
+        if (openFile != null)
+        {
             // if the selected file is already open, it cannot be opened twice
             // the tab containing this file becomes the current (topmost) one
-            for (Map.Entry<Tab, File> entry : this.tabFileMap.entrySet()) {
-                if (entry.getValue() != null) {
-                    if (entry.getValue().equals(openFile)) {
+            for (Map.Entry<Tab, File> entry : this.tabFileMap.entrySet())
+            {
+                if (entry.getValue() != null)
+                {
+                    if (entry.getValue().equals(openFile))
+                    {
                         this.tabPane.getSelectionModel().select(entry.getKey());
                         return;
                     }
@@ -336,16 +337,55 @@ public class FileMenuController {
             }
             String contentString = this.getFileContent(openFile);
 
-            if (contentString == null) {
+            if (contentString == null)
+            {
                 return;
             }
 
-
             this.createTab(contentString, openFile.getName(), openFile);
+        }
+        else
+        {
+            return;
+        }
 
+        // A little inelegant. Lets the checkbox know to display the view
+        this.parentController.updateCheckbox(true);
+    }
+
+    /**
+     * Helper method to get the text content of a specified file.
+     *
+     * @param file File to get the text content from
+     * @return the text content of the specified file; null if an error occurs when reading the specified file.
+     */
+    private String getFileContent(File file)
+    {
+        try
+        {
+            return new String(Files.readAllBytes(Paths.get(file.toURI())));
+        }
+        catch (Exception ex)
+        {
+            this.createErrorDialog("Reading File", "Cannot read " + file.getName() + ".");
+            return null;
         }
     }
 
+    /**
+     * Creates a error dialog displaying message of any error encountered.
+     *
+     * @param errorTitle  String of the error title
+     * @param errorString String of error message
+     */
+    public void createErrorDialog(String errorTitle, String errorString)
+    {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(errorTitle + " Error");
+        alert.setHeaderText("Error for " + errorTitle);
+        alert.setContentText(errorString);
+        alert.showAndWait();
+    }
 
     /**
      * Handles the save button action.
@@ -356,21 +396,25 @@ public class FileMenuController {
      *
      * @return true if save as successfully; false if cancels or an error occurs when saving the file.
      */
-    public boolean handleSaveAction() {
+    public boolean handleSaveAction()
+    {
         // get the selected tab from the tab pane
         Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
 
         // if the tab content was not loaded from a file nor ever saved to a file
         // save the content of the active styled code area to the selected file path
-        if (this.tabFileMap.get(selectedTab) == null) {
+        if (this.tabFileMap.get(selectedTab) == null)
+        {
             return this.handleSaveAsAction();
         }
         // if the current styled code area was loaded from a file or previously saved to a file,
         // then the styled code area is saved to that file
-        else {
+        else
+        {
             JavaCodeArea activeJavaCodeArea = (JavaCodeArea) ((VirtualizedScrollPane)
                     selectedTab.getContent()).getContent();
-            if (!this.setFileContent(activeJavaCodeArea.getText(), this.tabFileMap.get(selectedTab))) {
+            if (!this.setFileContent(activeJavaCodeArea.getText(), this.tabFileMap.get(selectedTab)))
+            {
                 return false;
             }
             selectedTab.setStyle("-fx-text-base-color: black");
@@ -390,15 +434,18 @@ public class FileMenuController {
      *
      * @return true if save as successfully; false if cancels or an error occurs when saving the file.
      */
-    public boolean handleSaveAsAction() {
+    public boolean handleSaveAsAction()
+    {
         FileChooser fileChooser = new FileChooser();
         File saveFile = fileChooser.showSaveDialog(this.tabPane.getScene().getWindow());
 
-        if (saveFile != null) {
+        if (saveFile != null)
+        {
             // get the selected tab from the tab pane
             Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
             JavaCodeArea activeJavaCodeArea = (JavaCodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
-            if (!this.setFileContent(activeJavaCodeArea.getText(), saveFile)) {
+            if (!this.setFileContent(activeJavaCodeArea.getText(), saveFile))
+            {
                 return false;
             }
             // set the title of the tab to the name of the saved file
@@ -421,17 +468,27 @@ public class FileMenuController {
      *
      * @param event Event object
      */
-    public void handleCloseAction(Event event) {
+    public void handleCloseAction(Event event)
+    {
         Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
 
         // selectedTab is null if this method is evoked by closing a tab
         // in this case the selectedTab tab should be the tab that evokes this method
-        if (selectedTab == null) {
+        if (selectedTab == null)
+        {
             selectedTab = (Tab) event.getSource();
         }
         // if the user select to not close the tab, then we consume the event (not performing the closing action)
-        if (!this.closeTab(selectedTab)) {
+        if (!this.closeTab(selectedTab))
+        {
             event.consume();
+            return;
+        }
+
+        if (this.tablessProperty().getValue())
+        {
+            this.parentController.resetStructureView();
+            this.parentController.updateCheckbox(false);
         }
     }
 
@@ -442,11 +499,14 @@ public class FileMenuController {
      *
      * @param event Event object
      */
-    public void handleExitAction(Event event) {
+    public void handleExitAction(Event event)
+    {
         ArrayList<Tab> tabList = new ArrayList<>(this.tabFileMap.keySet());
-        for (Tab currentTab : tabList) {
+        for (Tab currentTab : tabList)
+        {
             this.tabPane.getSelectionModel().select(currentTab);
-            if (!this.closeTab(currentTab)) {
+            if (!this.closeTab(currentTab))
+            {
                 event.consume();
                 return;
             }
@@ -459,7 +519,8 @@ public class FileMenuController {
      * Handles the About button action.
      * Creates a dialog window that displays the authors' names.
      */
-    public void handleAboutAction() {
+    public void handleAboutAction()
+    {
         // create a information dialog window displaying the About text
         Alert dialog = new Alert(Alert.AlertType.INFORMATION);
 
@@ -471,10 +532,20 @@ public class FileMenuController {
         dialog.setTitle("About");
         dialog.setHeaderText("Authors");
         dialog.setContentText("---- Project 4 ---- \nLiwei Jiang\nDanqing Zhao\nWyett MacDonald\nZeb Keith-Hardy" +
-                "\n\n---- Project 5 ---- \nLiwei Jiang\nMartin Deutsch\nMelody Mao\nTatsuya Yakota");
+                                      "\n\n---- Project 5 ---- \nLiwei Jiang\nMartin Deutsch\nMelody Mao\nTatsuya Yakota");
 
         // enable to resize the About window
         dialog.setResizable(true);
         dialog.showAndWait();
+    }
+
+    /**
+     * Property which indicates if there are currently any tabs open.
+     *
+     * @return truth value indicating if there are any tabs currently open
+     */
+    public ReadOnlyBooleanProperty tablessProperty()
+    {
+        return new SimpleListProperty<>(this.tabPane.getTabs()).emptyProperty();
     }
 }

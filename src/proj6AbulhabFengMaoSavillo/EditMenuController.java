@@ -18,7 +18,6 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.Selection;
 
 import org.fxmisc.richtext.TextEditingArea;
-//import javafx.beans.value.ObservableValue;
 
 /**
  * Main controller handles Edit menu related actions.
