@@ -9,7 +9,7 @@
 package proj6AbulhabFengMaoSavillo;
 
 import javafx.beans.binding.BooleanExpression;
-import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.*;
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -173,21 +173,26 @@ public class Controller
 
         // Structure View various
         {
-            //Prevents user from resizing split pane when closed
             SplitPane.Divider divider = this.horizontalSplitPane.getDividers().get(0);
+
+            // Toggles the side panel
             this.checkBox.selectedProperty().addListener((observable, oldValue, newValue) ->
                                                          {
-                                                             if (newValue)
+                                                             if (!newValue)
                                                                  divider.setPosition(0.0);
                                                              else
                                                                  divider.setPosition(0.25);
                                                          });
+
+            // Prevents user from resizing split pane when closed
             divider.positionProperty().addListener(((observable, oldValue, newValue) ->
             {
-                if (this.checkBox.isSelected()) divider.setPosition(0.0);
+                if (!this.checkBox.isSelected()) divider.setPosition(0.0);
             }));
 
-            //Updates the file structure tree whenever a key is typed
+            // If no tabs are open, close the structure view
+
+            // Updates the file structure tree whenever a key is typed
             this.tabPane.addEventFilter(KeyEvent.KEY_RELEASED, event ->
             {
                 this.updateStructureViewForCurrentTab();
@@ -200,7 +205,6 @@ public class Controller
                                                                                 });
         }
     }
-
 
     private void updateStructureViewForCurrentTab()
     {
@@ -235,7 +239,6 @@ public class Controller
 
         }
         event.consume();
-
     }
 
     /**
@@ -285,19 +288,28 @@ public class Controller
      */
     private void setButtonBinding()
     {
-        BooleanBinding ifTabPaneEmpty = Bindings.isEmpty(tabPane.getTabs());
         ReadOnlyBooleanProperty ifCompiling = this.compileWorker.runningProperty();
         ReadOnlyBooleanProperty ifCompilingRunning = this.compileRunWorker.runningProperty();
 
-        this.closeMenuItem.disableProperty().bind(ifTabPaneEmpty);
-        this.saveMenuItem.disableProperty().bind(ifTabPaneEmpty);
-        this.saveAsMenuItem.disableProperty().bind(ifTabPaneEmpty);
-        this.editMenu.disableProperty().bind(ifTabPaneEmpty);
+        this.closeMenuItem.disableProperty().bind(this.tablessProperty());
+        this.saveMenuItem.disableProperty().bind(this.tablessProperty());
+        this.saveAsMenuItem.disableProperty().bind(this.tablessProperty());
+        this.editMenu.disableProperty().bind(this.tablessProperty());
 
-        this.stopButton.disableProperty().bind(((ifCompiling.not()).and(ifCompilingRunning.not())).or(ifTabPaneEmpty));
-        this.compileButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(ifTabPaneEmpty));
-        this.compileRunButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(ifTabPaneEmpty));
+        this.stopButton.disableProperty().bind(((ifCompiling.not()).and(ifCompilingRunning.not())).or(this.tablessProperty()));
+        this.compileButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(this.tablessProperty()));
+        this.compileRunButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(this.tablessProperty()));
 
+    }
+
+    /**
+     * Property which indicates if there are currently any tabs open.
+     *
+     * @return truth value indicating if there are any tabs currently open
+     */
+    public ReadOnlyBooleanProperty tablessProperty()
+    {
+        return new SimpleListProperty<>(this.tabPane.getTabs()).emptyProperty();
     }
 
     /**
@@ -362,6 +374,7 @@ public class Controller
     private void handleOpenAction()
     {
         this.fileMenuController.handleOpenAction();
+        this.checkBox.setSelected(true);
     }
 
     /**

@@ -15,17 +15,15 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.VBox?>
 <?import org.fxmisc.flowless.VirtualizedScrollPane?>
 <?import org.fxmisc.richtext.StyleClassedTextArea?>
-<?import proj6AbulhabFengMaoSavillo.JavaCodeArea?>
 
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="VBox" stylesheets="@Main.css"
-      xmlns="http://javafx.com/javafx/8.0.121"
+      xmlns="http://javafx.com/javafx/8.0.172-ea"
       fx:controller="proj6AbulhabFengMaoSavillo.Controller">
     <MenuBar VBox.vgrow="NEVER">
         <Menu fx:id="fileMenu" text="File">
@@ -41,8 +39,7 @@
             <MenuItem fx:id="saveMenuItem" accelerator="Shortcut+S"
                       onAction="#handleSaveAction" text="Save"/>
             <MenuItem fx:id="saveAsMenuItem" accelerator="Shortcut+Shift+S"
-                      onAction="#handleSaveAsAction"
-                      text="Save as..."/>
+                      onAction="#handleSaveAsAction" text="Save as..."/>
             <SeparatorMenuItem/>
             <MenuItem fx:id="exitMenuItem" accelerator="Shortcut+Shift+W"
                       onAction="#handleExitAction" text="Exit"/>
@@ -59,16 +56,13 @@
             <MenuItem fx:id="pasteMenuItem" accelerator="Shortcut+V"
                       onAction="#handleEditMenuAction" text="Paste"/>
             <MenuItem fx:id="selectMenuItem" accelerator="Shortcut+A"
-                      onAction="#handleEditMenuAction"
-                      text="Select all"/>
+                      onAction="#handleEditMenuAction" text="Select all"/>
             <MenuItem fx:id="tabMenuItem" accelerator="Shortcut+]"
-                      onAction="#handleEditMenuAction"
-                      text="Indent Selection"/>
+                      onAction="#handleEditMenuAction" text="Indent Selection"/>
             <MenuItem fx:id="untabMenuItem" accelerator="Shortcut+["
+                      onAction="#handleEditMenuAction" text="Unindent Selection"/>
+            <MenuItem fx:id="commentMenuItem" accelerator="Shortcut+/"
                       onAction="#handleEditMenuAction"
-                      text="Unindent Selection"/>
-            <MenuItem fx:id="commentMenuItem"
-                      onAction="#handleEditMenuAction" accelerator="Shortcut+/"
                       text="Comment/Uncomment Selection"/>
         </Menu>
     </MenuBar>
@@ -80,11 +74,10 @@
         <Button fx:id="stopButton" onAction="#handleStopButtonAction" text="Stop"/>
         <Separator maxWidth="25" minWidth="25"/>
         <CheckBox fx:id="checkBox" alignment="CENTER_RIGHT" mnemonicParsing="false"
-                  text="Toggle Structure"/>
+                  text="Display File Structure"/>
     </ToolBar>
-    <SplitPane fx:id="horizontalSplitPane" dividerPositions="0.25" prefHeight="160.0"
-               prefWidth="200.0"
-               VBox.vgrow="ALWAYS">
+    <SplitPane fx:id="horizontalSplitPane" dividerPositions="0.25" prefHeight="1581.0"
+               prefWidth="5387.0" VBox.vgrow="ALWAYS">
         <TreeView fx:id="treeView" editable="true" prefHeight="200.0" prefWidth="200.0"
                   SplitPane.resizableWithParent="false" onMouseClicked="#handleTreeItemClicked"/>
         <SplitPane dividerPositions="0.75" orientation="VERTICAL" prefHeight="329.0"
