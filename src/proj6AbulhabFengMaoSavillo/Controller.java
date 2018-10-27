@@ -386,6 +386,7 @@ public class Controller
     private void handleNewAction()
     {
         this.fileMenuController.handleNewAction();
+        this.updateStructureView();
     }
 
     /**
@@ -395,6 +396,7 @@ public class Controller
     private void handleOpenAction()
     {
         this.fileMenuController.handleOpenAction();
+        this.updateStructureView();
         this.updateCheckbox(true);
     }
 

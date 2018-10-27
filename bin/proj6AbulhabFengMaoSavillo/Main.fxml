@@ -57,7 +57,7 @@
                       onAction="#handleEditMenuAction" text="Paste"/>
             <MenuItem fx:id="selectMenuItem" accelerator="Shortcut+A"
                       onAction="#handleEditMenuAction" text="Select all"/>
-            <MenuItem fx:id="tabMenuItem" 
+            <MenuItem fx:id="tabMenuItem"
                       onAction="#handleEditMenuAction" text="Indent Selection"/>
             <MenuItem fx:id="untabMenuItem"
                       onAction="#handleEditMenuAction" text="Unindent Selection"/>
