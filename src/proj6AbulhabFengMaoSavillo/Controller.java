@@ -194,21 +194,25 @@ public class Controller
 
             });
 
-            this.tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
-                this.updateStructureViewForCurrentTab();
-            });
+            this.tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) ->
+                                                                                {
+                                                                                    this.updateStructureViewForCurrentTab();
+                                                                                });
         }
     }
 
 
-    private void updateStructureViewForCurrentTab() {
+    private void updateStructureViewForCurrentTab()
+    {
 
         Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-        if (selectedTab != null) {
+        if (selectedTab != null)
+        {
             CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
             this.structureViewController.generateStructureTree(activeCodeArea.getText());
         }
     }
+
     /**
      * Depending on whether or not shift was held down with tab, tab or untab the selection
      *
@@ -293,6 +297,7 @@ public class Controller
         this.stopButton.disableProperty().bind(((ifCompiling.not()).and(ifCompilingRunning.not())).or(ifTabPaneEmpty));
         this.compileButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(ifTabPaneEmpty));
         this.compileRunButton.disableProperty().bind(ifCompiling.or(ifCompilingRunning).or(ifTabPaneEmpty));
+
     }
 
     /**

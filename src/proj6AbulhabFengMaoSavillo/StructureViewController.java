@@ -11,6 +11,8 @@ package proj6AbulhabFengMaoSavillo;
 import javafx.event.Event;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import proj6AbulhabFengMaoSavillo.Java8Parser.ResultContext;
 
 import org.antlr.v4.runtime.CharStreams;
@@ -24,6 +26,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import org.antlr.v4.tool.Grammar;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -43,6 +46,7 @@ public class StructureViewController
     /** a HashMap mapping the tabs and the associated files */
     private Map<File, TreeItem<String>> fileToCodeStructMap = new HashMap<>();
     private ParseTreeWalker walker;
+
 
     public StructureViewController()
     {
@@ -126,8 +130,11 @@ public class StructureViewController
      * (classes, fields, methods) during a parse tree walk and builds a
      * TreeView subtree representing the code structure.
      */
-    private static class CodeStructureListener extends Java8BaseListener
+    private class CodeStructureListener extends Java8BaseListener
     {
+        Image classPic;
+        Image methodPic;
+        Image fieldPic;
         private TreeItem<String> currentNode;
         private Map<TreeItem, Integer> treeItemIntegerMap;
 
@@ -142,6 +149,17 @@ public class StructureViewController
             this.currentNode = root;
             this.treeItemIntegerMap = treeItemIntegerMap;
 
+
+            try
+            {
+                this.classPic = new Image(new FileInputStream(System.getProperty("user.dir") + "/include/c.png"));
+                this.methodPic = new Image(new FileInputStream(System.getProperty("user.dir") + "/include/m.png"));
+                this.fieldPic = new Image(new FileInputStream(System.getProperty("user.dir") + "/include/f.png"));
+            }
+            catch (IOException e)
+            {
+                System.out.println("Error Loading Images");
+            }
         }
 
         /**
@@ -153,7 +171,12 @@ public class StructureViewController
             TerminalNode node = ctx.Identifier();
             String className = node.getText();
 
-            TreeItem<String> newNode = new TreeItem<String>("[class] " + className);
+            Token t = ctx.start;
+            int lineNumber = t.getLine();
+
+            TreeItem<String> newNode = new TreeItem<>(className);
+            newNode.setGraphic(new ImageView(this.classPic));
+            newNode.setExpanded(true);
             this.currentNode.getChildren().add(newNode);
             this.currentNode = newNode; //move current node into new subtree
             this.treeItemIntegerMap.put(newNode, ctx.getStart().getLine());
@@ -181,8 +204,12 @@ public class StructureViewController
             TerminalNode node = ctx.variableDeclaratorList().variableDeclarator(0).variableDeclaratorId().Identifier();
             String fieldName = node.getText();
 
+            Token t = ctx.start;
+            int lineNumber = t.getLine();
+
             //add field to TreeView under the current class tree
-            TreeItem<String> newNode = new TreeItem<String>("[field] " + fieldName);
+            TreeItem<String> newNode = new TreeItem<>(fieldName);
+            newNode.setGraphic(new ImageView(this.fieldPic));
             this.currentNode.getChildren().add(newNode);
             this.treeItemIntegerMap.put(newNode, ctx.getStart().getLine());
         }
@@ -197,8 +224,12 @@ public class StructureViewController
             TerminalNode nameNode = ctx.methodDeclarator().Identifier();
             String methodName = nameNode.getText();
 
+            Token t = ctx.start;
+            int lineNumber = t.getLine();
+
             //add method to TreeView under the current class tree
-            TreeItem<String> newNode = new TreeItem<String>("[method] " + methodName);
+            TreeItem<String> newNode = new TreeItem<>(methodName);
+            newNode.setGraphic(new ImageView(this.methodPic));
             this.currentNode.getChildren().add(newNode);
             this.treeItemIntegerMap.put(newNode, ctx.getStart().getLine());
 
@@ -209,22 +240,3 @@ public class StructureViewController
         }
     }
 }
-
-/**
- * 1. pass over file:
- * -get top level declarations
- * -get all top-level bodies
- * 2. pass over all top-level bodies
- * -get all top level declarations
- * -get all top level bodies
- * 3. pass over all top-level bodies
- * ...etc
- * -get all methods and fields
- * <p>
- * <p>
- * getConsituents(body)
- * <p>
- * return [[methods/fields], getConstituents(top-level entity bodies)]
- */
-
-
