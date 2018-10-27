@@ -8,6 +8,7 @@ Date: 10/27/2018
 package proj6AbulhabFengMaoSavillo;
 
 
+import javafx.event.Event;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import proj6AbulhabFengMaoSavillo.Java8Parser.ResultContext;
@@ -37,7 +38,7 @@ import java.util.Map;
  */
 public class StructureViewController
 {
-    //private Map<File, Map<TreeItem, Integer>> //thinking about how to store line numbers
+    private Map<TreeItem, Integer> treeItemLineNumMap;
     private TreeView<String> treeView;
     /** a HashMap mapping the tabs and the associated files */
     private Map<File, TreeItem<String>> fileToCodeStructMap = new HashMap<>();
@@ -46,6 +47,7 @@ public class StructureViewController
     public StructureViewController()
     {
         this.walker = new ParseTreeWalker();
+        this.treeItemLineNumMap = new HashMap<>();
     }
 
     /**
@@ -96,7 +98,7 @@ public class StructureViewController
         ParseTree tree = parser.compilationUnit();
 
         //walk through parse tree with listening for code structure elements
-        CodeStructureListener codeStructureListener = new CodeStructureListener(newRoot);
+        CodeStructureListener codeStructureListener = new CodeStructureListener(newRoot, this.treeItemLineNumMap);
         this.walker.walk(codeStructureListener, tree);
 
         this.setRootNode(newRoot);
@@ -113,6 +115,11 @@ public class StructureViewController
         this.treeView.setShowRoot(false);
     }
 
+    public void handleTreeItemClicked(Event event) {
+        TreeItem selectedTreeItem = this.treeView.getSelectionModel().getSelectedItem();
+        System.out.println(this.treeItemLineNumMap.get(selectedTreeItem));
+    }
+
 
     /**
      * Private helper class that listens for code structure declarations
@@ -122,6 +129,7 @@ public class StructureViewController
     private static class CodeStructureListener extends Java8BaseListener
     {
         private TreeItem<String> currentNode;
+        private Map<TreeItem, Integer> treeItemIntegerMap;
 
         /**
          * creates a new CodeStructureListener that builds a subtree
@@ -129,9 +137,11 @@ public class StructureViewController
          *
          * @param root root TreeItem to build subtree from
          */
-        public CodeStructureListener(TreeItem<String> root)
+        public CodeStructureListener(TreeItem<String> root, Map<TreeItem, Integer> treeItemIntegerMap)
         {
             this.currentNode = root;
+            this.treeItemIntegerMap = treeItemIntegerMap;
+
         }
 
         /**
@@ -146,6 +156,8 @@ public class StructureViewController
             TreeItem<String> newNode = new TreeItem<String>("[class] " + className);
             this.currentNode.getChildren().add(newNode);
             this.currentNode = newNode; //move current node into new subtree
+            this.treeItemIntegerMap.put(newNode, ctx.getStart().getLine());
+
         }
 
         /**
@@ -172,6 +184,7 @@ public class StructureViewController
             //add field to TreeView under the current class tree
             TreeItem<String> newNode = new TreeItem<String>("[field] " + fieldName);
             this.currentNode.getChildren().add(newNode);
+            this.treeItemIntegerMap.put(newNode, ctx.getStart().getLine());
         }
 
         /**
@@ -187,6 +200,12 @@ public class StructureViewController
             //add method to TreeView under the current class tree
             TreeItem<String> newNode = new TreeItem<String>("[method] " + methodName);
             this.currentNode.getChildren().add(newNode);
+            this.treeItemIntegerMap.put(newNode, ctx.getStart().getLine());
+
+        }
+
+        public Map<TreeItem, Integer> getTreeItemIntegerMap() {
+            return this.treeItemIntegerMap;
         }
     }
 }

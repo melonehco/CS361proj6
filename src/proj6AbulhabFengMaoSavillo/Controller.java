@@ -409,4 +409,14 @@ public class Controller
     {
         this.editMenuController.handleEditMenuAction(event);
     }
+
+    /**
+     * Calls the method that handles the tree item clicked action from the structureViewController.
+     *
+     * @param event
+     */
+    @FXML
+    private void handleTreeItemClicked(MouseEvent event) {
+        this.structureViewController.handleTreeItemClicked(event);
+    }
 }
