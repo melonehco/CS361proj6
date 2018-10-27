@@ -422,6 +422,18 @@ public class Controller
      */
     @FXML
     private void handleTreeItemClicked(MouseEvent event) {
-        this.structureViewController.handleTreeItemClicked(event);
+        TreeItem selectedTreeItem = (TreeItem) this.treeView.getSelectionModel().getSelectedItem();
+        if (selectedTreeItem != null) {
+
+            int lineNum = this.structureViewController.getTreeItemLineNum(selectedTreeItem);
+
+            Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
+            if (selectedTab != null) { // if a tab is open
+                CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
+                activeCodeArea.showParagraphAtTop(lineNum - 1);
+            }
+
+
+        }
     }
 }

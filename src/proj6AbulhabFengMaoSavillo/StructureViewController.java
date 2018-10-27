@@ -13,6 +13,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.antlr.v4.runtime.tree.Tree;
 import proj6AbulhabFengMaoSavillo.Java8Parser.ResultContext;
 
 import org.antlr.v4.runtime.CharStreams;
@@ -122,6 +123,10 @@ public class StructureViewController
     public void handleTreeItemClicked(Event event) {
         TreeItem selectedTreeItem = this.treeView.getSelectionModel().getSelectedItem();
         System.out.println(this.treeItemLineNumMap.get(selectedTreeItem));
+    }
+
+    public Integer getTreeItemLineNum(TreeItem treeItem) {
+        return this.treeItemLineNumMap.get(treeItem);
     }
 
 
