@@ -531,8 +531,11 @@ public class FileMenuController
         // set the title and the content of the About window
         dialog.setTitle("About");
         dialog.setHeaderText("Authors");
-        dialog.setContentText("---- Project 4 ---- \nLiwei Jiang\nDanqing Zhao\nWyett MacDonald\nZeb Keith-Hardy" +
-                                      "\n\n---- Project 5 ---- \nLiwei Jiang\nMartin Deutsch\nMelody Mao\nTatsuya Yakota");
+        dialog.setContentText(
+                "_.-- Project 6 --._ \n    Melody Mao\n    Zena Abulhab\n    Yi Feng\n    Evan Savillo" +
+                        "\n\n_.-- Project 5 --._ \n    Liwei Jiang\n    Martin Deutsch\n    Melody Mao\n    Tatsuya Yakota\n\n" +
+                        "_.-- Project 4 --._ \n    Liwei Jiang\n    Danqing Zhao\n    Wyett MacDonald\n    Zeb Keith-Hardy"
+        );
 
         // enable to resize the About window
         dialog.setResizable(true);
