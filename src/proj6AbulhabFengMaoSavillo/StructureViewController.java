@@ -44,8 +44,6 @@ public class StructureViewController
 {
     private Map<TreeItem, Integer> treeItemLineNumMap;
     private TreeView<String> treeView;
-    /** a HashMap mapping the tabs and the associated files */
-    private Map<File, TreeItem<String>> fileToCodeStructMap = new HashMap<>();
     private ParseTreeWalker walker;
 
 
@@ -63,28 +61,6 @@ public class StructureViewController
     public void setTreeView(TreeView treeView)
     {
         this.treeView = treeView;
-    }
-
-    /**
-     * Adds a TreeItem<String> to the map, meaning the program has the relevant file open.
-     *
-     * @param file file which was parsed to generate TreeItem<String>
-     * @param root root node which defines the TreeItem<String>
-     */
-    private void addStructure(File file, TreeItem<String> root)
-    {
-        this.fileToCodeStructMap.put(file, root);
-    }
-
-    /**
-     * Removes a TreeItem<String> to the map, meaning the program has closed the relevant file.
-     *
-     * @param file file which was parsed to generate TreeItem<String>
-     * @param root root node which defines the TreeItem<String>
-     */
-    private void removeStructure(File file, TreeItem<String> root)
-    {
-        this.fileToCodeStructMap.remove(file, root);
     }
 
     /**
