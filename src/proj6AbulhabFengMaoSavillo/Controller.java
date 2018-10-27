@@ -416,7 +416,7 @@ public class Controller
     }
 
     /**
-     * Calls the method that handles the tree item clicked action from the structureViewController.
+     * Jump to the line where the selected class/method/field is declared.
      *
      * @param event
      */
