@@ -123,7 +123,7 @@ public class StructureViewController
      * (classes, fields, methods) during a parse tree walk and builds a
      * TreeView subtree representing the code structure.
      */
-    private static class CodeStructureListener extends Java8BaseListener
+    private class CodeStructureListener extends Java8BaseListener
     {
         Image classPic;
         Image methodPic;
@@ -161,8 +161,12 @@ public class StructureViewController
             TerminalNode node = ctx.Identifier();
             String className = node.getText();
 
-            TreeItem<String> newNode = new TreeItem<String>("[class] " + className);
+            Token t = ctx.start;
+            int lineNumber = t.getLine();
+
+            TreeItem<String> newNode = new TreeItem<>(className);
             newNode.setGraphic(new ImageView(this.classPic));
+            newNode.setExpanded(true);
             this.currentNode.getChildren().add(newNode);
             this.currentNode = newNode; //move current node into new subtree
         }
@@ -188,8 +192,11 @@ public class StructureViewController
             TerminalNode node = ctx.variableDeclaratorList().variableDeclarator(0).variableDeclaratorId().Identifier();
             String fieldName = node.getText();
 
+            Token t = ctx.start;
+            int lineNumber = t.getLine();
+
             //add field to TreeView under the current class tree
-            TreeItem<String> newNode = new TreeItem<String>("[field] " + fieldName);
+            TreeItem<String> newNode = new TreeItem<>(fieldName);
             newNode.setGraphic(new ImageView(this.fieldPic));
             this.currentNode.getChildren().add(newNode);
         }
@@ -204,29 +211,13 @@ public class StructureViewController
             TerminalNode nameNode = ctx.methodDeclarator().Identifier();
             String methodName = nameNode.getText();
 
+            Token t = ctx.start;
+            int lineNumber = t.getLine();
+
             //add method to TreeView under the current class tree
-            TreeItem<String> newNode = new TreeItem<String>("[method] " + methodName);
+            TreeItem<String> newNode = new TreeItem<>(methodName);
             newNode.setGraphic(new ImageView(this.methodPic));
             this.currentNode.getChildren().add(newNode);
         }
     }
 }
-
-/**
- * 1. pass over file:
- * -get top level declarations
- * -get all top-level bodies
- * 2. pass over all top-level bodies
- * -get all top level declarations
- * -get all top level bodies
- * 3. pass over all top-level bodies
- * ...etc
- * -get all methods and fields
- * <p>
- * <p>
- * getConsituents(body)
- * <p>
- * return [[methods/fields], getConstituents(top-level entity bodies)]
- */
-
-

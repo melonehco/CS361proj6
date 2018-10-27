@@ -10,6 +10,7 @@
 package proj6AbulhabFengMaoSavillo;
 
 import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.Subscription;
@@ -82,6 +83,9 @@ public class JavaCodeArea extends CodeArea {
         this.setOnKeyPressed(event -> this.handleTextChange());
         //highlight for syntax
         this.highlightText();
+        //Enables line numbering
+        this.setParagraphGraphicFactory(LineNumberFactory.get(this));
+
     }
 
     /**
