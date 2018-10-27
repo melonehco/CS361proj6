@@ -47,8 +47,10 @@ public class StructureViewController
     private final ParseTreeWalker walker;
 
 
-    public StructureViewController()
-    {
+    /**
+     * Constructor for this class
+     */
+    public StructureViewController() {
         this.walker = new ParseTreeWalker();
         this.treeItemLineNumMap = new HashMap<>();
     }
@@ -65,8 +67,7 @@ public class StructureViewController
 
     /**
      * Parses a file thereby storing contents as TreeItems in our special tree.
-     *
-     * @param //file the file to be parsed
+     * @param fileContents the file to be parsed
      */
     public void generateStructureTree(String fileContents)
     {
@@ -145,7 +146,7 @@ public class StructureViewController
         }
 
         /**
-         * starts a new subtree for the class declaration entered
+         * Starts a new subtree for the class declaration entered
          */
         @Override
         public void enterNormalClassDeclaration(Java8Parser.NormalClassDeclarationContext ctx)
@@ -206,10 +207,6 @@ public class StructureViewController
             this.currentNode.getChildren().add(newNode);
             this.treeItemIntegerMap.put(newNode, ctx.getStart().getLine());
 
-        }
-
-        public Map<TreeItem, Integer> getTreeItemIntegerMap() {
-            return this.treeItemIntegerMap;
         }
     }
 }

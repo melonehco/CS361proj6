@@ -225,47 +225,44 @@ public class Controller
 
     }
 
-    public File getCurrentFile()
-    {
+    /**
+     * Returns the file object open in the tab pane
+     *
+     * @return the File object of the item selected in the tab pane
+     */
+    public File getCurrentFile() {
         Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-        if (selectedTab != null)
-        {
+        if (selectedTab != null) {
             return this.tabFileMap.get(selectedTab);
-        }
-        else return null;
+        } else return null;
     }
 
     /**
      * Depending on whether or not shift was held down with tab, tab or untab the selection
-     *
      * @param event the key event, whether that be tab or shift+tab
      */
-    private void tabOrUntab(KeyEvent event)
-    {
+    private void tabOrUntab(KeyEvent event) {
         JavaCodeArea currentCodeArea = this.getCurrentCodeArea();
-        if (currentCodeArea != null)
-        {
-            if (event.isShiftDown())
-            { // Shift was held down with tab
+        if (currentCodeArea != null) {
+            if (event.isShiftDown()) { // Shift was held down with tab
                 editMenuController.handleUnindentation(currentCodeArea);
-            }
-            else // Tab only
+            } else // Tab only
                 editMenuController.handleIndentation(currentCodeArea);
 
         }
         event.consume();
     }
 
-    public JavaCodeArea getCurrentCodeArea()
-    {
+    /**
+     * Returns the code area currently being viewed in the tab pane
+     * @return the JavaCodeArea object for the open tab
+     */
+    public JavaCodeArea getCurrentCodeArea() {
         Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-        if (selectedTab != null)
-        {
+        if (selectedTab != null) {
             return (JavaCodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
-        }
-        else
+        } else
             return null;
-
     }
 
     /**
@@ -304,26 +301,25 @@ public class Controller
     /**
      * Creates a reference to the StructureViewController and passes in relevant items
      */
-    private void setupStructureViewController()
-    {
+    private void setupStructureViewController() {
         this.structureViewController = new StructureViewController();
         this.structureViewController.setTreeView(this.treeView);
     }
 
-    private void updateStructureView()
-    {
+    /**
+     * Parses and generates the structure view for the currently open code area
+     */
+    private void updateStructureView() {
         JavaCodeArea currentCodeArea = this.getCurrentCodeArea();
         File currentFile = this.getCurrentFile();
 
-        if (currentFile != null && currentCodeArea != null)
-        {
+        if (currentFile != null && currentCodeArea != null) {
             String fileName = currentFile.getName();
-            if (fileName.endsWith(".java"))
-            {
+            if (fileName.endsWith(".java")) {
+                // Re-generates the tree
                 this.structureViewController.generateStructureTree(currentCodeArea.getText());
-            }
-            else
-            {
+            } else {
+                // Gets rid of open structure view
                 this.resetStructureView();
             }
         }
@@ -331,27 +327,21 @@ public class Controller
 
     /**
      * Calls the method that handles the Compile button action from the toolbarController.
-     *
      * @param event Event object
      */
     @FXML
     private void handleCompileButtonAction(Event event)
     {
-        // get the current tab and its corresponding File object
-
         this.toolbarController.handleCompileButtonAction(event, this.getCurrentFile());
     }
 
     /**
      * Calls the method that handles the CompileRun button action from the toolbarController.
-     *
      * @param event Event object
      */
     @FXML
     private void handleCompileRunButtonAction(Event event)
     {
-        // get the current tab and its corresponding File object
-
         this.toolbarController.handleCompileRunButtonAction(event, this.getCurrentFile());
     }
 
@@ -387,20 +377,20 @@ public class Controller
      * Calls the method that handles the Open menu item action from the fileMenuController.
      */
     @FXML
-    private void handleOpenAction()
-    {
+    private void handleOpenAction() {
         this.fileMenuController.handleOpenAction();
         this.updateStructureView();
     }
 
-    public void resetStructureView()
-    {
+    /**
+     * Clears the currently open structure view of all nodes
+     */
+    public void resetStructureView() {
         this.structureViewController.resetRootNode();
     }
 
     /**
      * Calls the method that handles the Close menu item action from the fileMenuController.
-     *
      * @param event Event object
      */
     @FXML
@@ -413,7 +403,7 @@ public class Controller
      * Inelegant, but slight
      * Checks or does not check the box
      *
-     * @param bool the intended truth value of
+     * @param bool whether or not to check or uncheck the box
      */
     public void updateCheckbox(Boolean bool)
     {
@@ -440,7 +430,6 @@ public class Controller
 
     /**
      * Calls the method that handles the Exit menu item action from the fileMenuController.
-     *
      * @param event Event object
      */
     @FXML
@@ -451,8 +440,7 @@ public class Controller
 
     /**
      * Calls the method that handles the Edit menu action from the editMenuController.
-     *
-     * @param event ActionEvent object
+     s     * @param event ActionEvent object
      */
     @FXML
     private void handleEditMenuAction(ActionEvent event)

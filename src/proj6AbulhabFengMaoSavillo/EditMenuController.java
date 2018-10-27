@@ -102,7 +102,6 @@ public class EditMenuController {
     /**
      * Handles unindentation of the selected text by removing white space from the start.
      * Works one full tab at a time, or for any extra space(s)
-     *
      * @param selectedCodeArea
      */
     public void handleUnindentation(CodeArea selectedCodeArea) {
@@ -126,7 +125,6 @@ public class EditMenuController {
 
     /**
      * Handles commenting of the selected text in the code area
-     *
      * @param selectedCodeArea
      */
     public void handleToggleCommenting(CodeArea selectedCodeArea)
