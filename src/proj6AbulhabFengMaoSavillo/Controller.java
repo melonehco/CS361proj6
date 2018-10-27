@@ -8,19 +8,15 @@
 
 package proj6AbulhabFengMaoSavillo;
 
-import javafx.beans.binding.BooleanExpression;
 import javafx.beans.property.*;
 import javafx.event.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyEvent;
 
 import java.io.File;
 import java.util.*;
 
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.binding.Bindings;
 import javafx.scene.input.MouseEvent;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
@@ -195,26 +191,44 @@ public class Controller
             // Updates the file structure tree whenever a key is typed
             this.tabPane.addEventFilter(KeyEvent.KEY_RELEASED, event ->
             {
-                this.updateStructureViewForCurrentTab();
+                this.updateStructureView();
 
             });
 
             this.tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) ->
                                                                                 {
-                                                                                    this.updateStructureViewForCurrentTab();
+                                                                                    this.updateStructureView();
                                                                                 });
         }
     }
 
-    private void updateStructureViewForCurrentTab()
+    private void updateStructureView()
     {
+        JavaCodeArea currentCodeArea = this.getCurrentCodeArea();
+        File currentFile = this.getCurrentFile();
 
+        if (currentFile != null && currentCodeArea != null)
+        {
+            String fileName = currentFile.getName();
+            if (fileName.endsWith(".java"))
+            {
+                this.structureViewController.generateStructureTree(currentCodeArea.getText());
+            }
+            else
+            {
+                this.structureViewController.resetRootNode();
+            }
+        }
+    }
+
+    public File getCurrentFile()
+    {
         Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
         if (selectedTab != null)
         {
-            CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
-            this.structureViewController.generateStructureTree(activeCodeArea.getText());
+            return this.tabFileMap.get(selectedTab);
         }
+        else return null;
     }
 
     /**
@@ -224,21 +238,30 @@ public class Controller
      */
     private void tabOrUntab(KeyEvent event)
     {
-        Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-        if (selectedTab != null)
-        { // if a tab is open
-
-            CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
-
+        JavaCodeArea currentCodeArea = this.getCurrentCodeArea();
+        if (currentCodeArea != null)
+        {
             if (event.isShiftDown())
             { // Shift was held down with tab
-                editMenuController.handleUnindentation(activeCodeArea);
+                editMenuController.handleUnindentation(currentCodeArea);
             }
             else // Tab only
-                editMenuController.handleIndentation(activeCodeArea);
+                editMenuController.handleIndentation(currentCodeArea);
 
         }
         event.consume();
+    }
+
+    public JavaCodeArea getCurrentCodeArea()
+    {
+        Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
+        if (selectedTab != null)
+        {
+            return (JavaCodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
+        }
+        else
+            return null;
+
     }
 
     /**
@@ -321,9 +344,8 @@ public class Controller
     private void handleCompileButtonAction(Event event)
     {
         // get the current tab and its corresponding File object
-        Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-        File selectedFile = this.tabFileMap.get(selectedTab);
-        this.toolbarController.handleCompileButtonAction(event, selectedFile);
+
+        this.toolbarController.handleCompileButtonAction(event, this.getCurrentFile());
     }
 
     /**
@@ -335,9 +357,8 @@ public class Controller
     private void handleCompileRunButtonAction(Event event)
     {
         // get the current tab and its corresponding File object
-        Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-        File selectedFile = this.tabFileMap.get(selectedTab);
-        this.toolbarController.handleCompileRunButtonAction(event, selectedFile);
+
+        this.toolbarController.handleCompileRunButtonAction(event, this.getCurrentFile());
     }
 
     /**
@@ -374,7 +395,18 @@ public class Controller
     private void handleOpenAction()
     {
         this.fileMenuController.handleOpenAction();
-        this.checkBox.setSelected(true);
+        this.updateCheckbox(true);
+    }
+
+    /**
+     * Inelegant, but slight
+     * Checks or does not check the box
+     *
+     * @param bool the intended truth value of
+     */
+    public void updateCheckbox(Boolean bool)
+    {
+        this.checkBox.setSelected(bool);
     }
 
     /**
@@ -386,6 +418,11 @@ public class Controller
     private void handleCloseAction(Event event)
     {
         this.fileMenuController.handleCloseAction(event);
+        if (this.tablessProperty().getValue())
+        {
+            this.structureViewController.resetRootNode();
+            this.updateCheckbox(true);
+        }
     }
 
     /**
@@ -430,23 +467,15 @@ public class Controller
 
     /**
      * Calls the method that handles the tree item clicked action from the structureViewController.
-     *
-     * @param event
      */
     @FXML
-    private void handleTreeItemClicked(MouseEvent event) {
+    private void handleTreeItemClicked()
+    {
         TreeItem selectedTreeItem = (TreeItem) this.treeView.getSelectionModel().getSelectedItem();
-        if (selectedTreeItem != null) {
-
+        if (selectedTreeItem != null)
+        {
             int lineNum = this.structureViewController.getTreeItemLineNum(selectedTreeItem);
-
-            Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-            if (selectedTab != null) { // if a tab is open
-                CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
-                activeCodeArea.showParagraphAtTop(lineNum - 1);
-            }
-
-
+            this.getCurrentCodeArea().showParagraphAtTop(lineNum - 1);
         }
     }
 }

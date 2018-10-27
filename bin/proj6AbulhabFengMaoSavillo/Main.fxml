@@ -22,8 +22,8 @@
 <?import org.fxmisc.flowless.VirtualizedScrollPane?>
 <?import org.fxmisc.richtext.StyleClassedTextArea?>
 
-<VBox fx:id="VBox" stylesheets="@Main.css" xmlns="http://javafx.com/javafx/8.0.172-ea"
-      xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="VBox" stylesheets="@Main.css"
+      xmlns="http://javafx.com/javafx/8.0.172-ea"
       fx:controller="proj6AbulhabFengMaoSavillo.Controller">
     <MenuBar VBox.vgrow="NEVER">
         <Menu fx:id="fileMenu" text="File">
@@ -57,9 +57,9 @@
                       onAction="#handleEditMenuAction" text="Paste"/>
             <MenuItem fx:id="selectMenuItem" accelerator="Shortcut+A"
                       onAction="#handleEditMenuAction" text="Select all"/>
-            <MenuItem fx:id="tabMenuItem" accelerator="Shortcut+]"
+            <MenuItem fx:id="tabMenuItem" 
                       onAction="#handleEditMenuAction" text="Indent Selection"/>
-            <MenuItem fx:id="untabMenuItem" accelerator="Shortcut+["
+            <MenuItem fx:id="untabMenuItem"
                       onAction="#handleEditMenuAction" text="Unindent Selection"/>
             <MenuItem fx:id="commentMenuItem" accelerator="Shortcut+/"
                       onAction="#handleEditMenuAction"
