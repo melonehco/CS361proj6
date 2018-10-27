@@ -312,11 +312,16 @@ public class Controller
         JavaCodeArea currentCodeArea = this.getCurrentCodeArea();
         File currentFile = this.getCurrentFile();
 
-        if (currentFile != null && currentCodeArea != null) {
-            String fileName = currentFile.getName();
-            if (fileName.endsWith(".java")) {
-                // Re-generates the tree
-                this.structureViewController.generateStructureTree(currentCodeArea.getText());
+        // if the code area is open
+        if (currentCodeArea != null) {
+            // if this is not an unsaved file
+            if (currentFile != null) {
+                String fileName = currentFile.getName();
+                // if this is a java file
+                if (fileName.endsWith(".java")) {
+                    // Re-generates the tree
+                    this.structureViewController.generateStructureTree(currentCodeArea.getText());
+                }
             } else {
                 // Gets rid of open structure view
                 this.resetStructureView();
