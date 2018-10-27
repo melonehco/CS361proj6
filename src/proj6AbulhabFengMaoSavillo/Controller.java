@@ -190,15 +190,25 @@ public class Controller
             //Updates the file structure tree whenever a key is typed
             this.tabPane.addEventFilter(KeyEvent.KEY_RELEASED, event ->
             {
-                System.out.println("KeyPressed");
-                Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
-                CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
-                this.structureViewController.generateStructureTree(activeCodeArea.getText());
+                this.updateStructureViewForCurrentTab();
 
+            });
+
+            this.tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
+                this.updateStructureViewForCurrentTab();
             });
         }
     }
 
+
+    private void updateStructureViewForCurrentTab() {
+
+        Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
+        if (selectedTab != null) {
+            CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
+            this.structureViewController.generateStructureTree(activeCodeArea.getText());
+        }
+    }
     /**
      * Depending on whether or not shift was held down with tab, tab or untab the selection
      *
