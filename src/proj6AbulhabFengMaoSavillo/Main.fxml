@@ -79,7 +79,7 @@
     <SplitPane fx:id="horizontalSplitPane" dividerPositions="0.25" prefHeight="1581.0"
                prefWidth="5387.0" VBox.vgrow="ALWAYS">
         <TreeView fx:id="treeView" editable="true" prefHeight="200.0" prefWidth="200.0"
-                  SplitPane.resizableWithParent="false"/>
+                  SplitPane.resizableWithParent="false" onMouseClicked="#handleTreeItemClicked"/>
         <SplitPane dividerPositions="0.75" orientation="VERTICAL" prefHeight="329.0"
                    prefWidth="416.0">
             <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS">

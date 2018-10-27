@@ -427,4 +427,26 @@ public class Controller
     {
         this.editMenuController.handleEditMenuAction(event);
     }
+
+    /**
+     * Calls the method that handles the tree item clicked action from the structureViewController.
+     *
+     * @param event
+     */
+    @FXML
+    private void handleTreeItemClicked(MouseEvent event) {
+        TreeItem selectedTreeItem = (TreeItem) this.treeView.getSelectionModel().getSelectedItem();
+        if (selectedTreeItem != null) {
+
+            int lineNum = this.structureViewController.getTreeItemLineNum(selectedTreeItem);
+
+            Tab selectedTab = this.tabPane.getSelectionModel().getSelectedItem();
+            if (selectedTab != null) { // if a tab is open
+                CodeArea activeCodeArea = (CodeArea) ((VirtualizedScrollPane) selectedTab.getContent()).getContent();
+                activeCodeArea.showParagraphAtTop(lineNum - 1);
+            }
+
+
+        }
+    }
 }
