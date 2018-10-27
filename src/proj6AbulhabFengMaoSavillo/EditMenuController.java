@@ -17,8 +17,6 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.Selection;
 
-import org.fxmisc.richtext.TextEditingArea;
-
 /**
  * Main controller handles Edit menu related actions.
  *

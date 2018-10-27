@@ -19,7 +19,6 @@ import java.util.*;
 
 import javafx.scene.input.MouseEvent;
 import org.fxmisc.flowless.VirtualizedScrollPane;
-import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.StyleClassedTextArea;
 import javafx.scene.input.KeyCode;
 

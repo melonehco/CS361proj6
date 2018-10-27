@@ -10,11 +10,8 @@ package proj6AbulhabFengMaoSavillo;
 
 import javafx.application.Platform;
 import org.fxmisc.richtext.StyleClassedTextArea;
-import javafx.scene.control.*;
 import javafx.event.Event;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.*;
 import java.io.*;
 

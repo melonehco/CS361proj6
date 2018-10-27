@@ -41,7 +41,6 @@ public class JavaParser {
                 "andy@yahoocom", "34234sdfa#2345", "f344@gmail.com",
                 "private void using(){return null;}", "public void this(String this){return this;}");
 
-        System.out.println(jparser.parse(methods));
     }
 
 

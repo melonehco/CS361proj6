@@ -7,32 +7,20 @@ Date: 10/27/2018
 
 package proj6AbulhabFengMaoSavillo;
 
-
-import javafx.event.Event;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import org.antlr.v4.runtime.tree.Tree;
-import proj6AbulhabFengMaoSavillo.Java8Parser.ResultContext;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.LexerInterpreter;
-import org.antlr.v4.runtime.ParserInterpreter;
-import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.antlr.v4.tool.Grammar;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -105,6 +93,12 @@ public class StructureViewController
         this.setRootNode(null);
     }
 
+    /**
+     * Returns the line number currently associated with the specified tree item
+     *
+     * @param treeItem Which TreeItem to get the line number of
+     * @return the line number corresponding with that tree item
+     */
     public Integer getTreeItemLineNum(TreeItem treeItem) {
         return this.treeItemLineNumMap.get(treeItem);
     }

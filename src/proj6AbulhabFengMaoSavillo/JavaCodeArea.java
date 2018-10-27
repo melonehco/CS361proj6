@@ -85,7 +85,6 @@ public class JavaCodeArea extends CodeArea {
         this.highlightText();
         //Enables line numbering
         this.setParagraphGraphicFactory(LineNumberFactory.get(this));
-
     }
 
     /**

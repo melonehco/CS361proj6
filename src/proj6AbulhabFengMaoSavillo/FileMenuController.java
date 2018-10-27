@@ -537,14 +537,13 @@ public class FileMenuController
                         "_.-- Project 4 --._ \n    Liwei Jiang\n    Danqing Zhao\n    Wyett MacDonald\n    Zeb Keith-Hardy"
         );
 
-        // enable to resize the About window
+        // enable resizing the About window
         dialog.setResizable(true);
         dialog.showAndWait();
     }
 
     /**
      * Property which indicates if there are currently any tabs open.
-     *
      * @return truth value indicating if there are any tabs currently open
      */
     public ReadOnlyBooleanProperty tablessProperty()
