@@ -122,7 +122,7 @@ public class EditMenuController {
     }
 
     /**
-     * Handles commenting of the selected text in the code area
+     * Handles commenting and uncommenting of the selected text in the code area
      * @param selectedCodeArea
      */
     public void handleToggleCommenting(CodeArea selectedCodeArea)

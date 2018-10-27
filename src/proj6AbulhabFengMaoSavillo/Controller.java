@@ -94,10 +94,7 @@ public class Controller
      */
     @FXML
     private Menu editMenu;
-    @FXML
-    private MenuItem undoMenuItem;
-    @FXML
-    private MenuItem redoMenuItem;
+
     @FXML
     private TreeView treeView;
     /**
@@ -122,9 +119,9 @@ public class Controller
 
     /**
      * This function is called after the FXML fields are populated.
-     * Initializes the tab file map with the default tab.
-     * Sets up bindings.
      * Sets up references to the sub Controllers.
+     * Sets up bindings.
+     * Sets focus to console.
      */
     @FXML
     public void initialize()
@@ -188,15 +185,16 @@ public class Controller
                 if (!this.checkBox.isSelected()) divider.setPosition(0.0);
             }));
 
-            // If no tabs are open, close the structure view
 
-            // Updates the file structure tree whenever a key is typed
+            // Updates the file structure view whenever a key is typed
             this.tabPane.addEventFilter(KeyEvent.KEY_RELEASED, event ->
             {
                 this.updateStructureView();
 
             });
 
+            // Updates the file structure view whenever the tab selection changes
+            // e.g., open tab, remove tab, select another tab
             this.tabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) ->
                                                                                 {
                                                                                     this.updateStructureView();
@@ -225,7 +223,7 @@ public class Controller
     }
 
     /**
-     * Returns the file object open in the tab pane
+     * Returns the file object in the current tab
      *
      * @return the File object of the item selected in the tab pane
      */
@@ -253,7 +251,7 @@ public class Controller
     }
 
     /**
-     * Returns the code area currently being viewed in the tab pane
+     * Returns the code area currently being viewed in the current tab
      * @return the JavaCodeArea object for the open tab
      */
     public JavaCodeArea getCurrentCodeArea() {
@@ -459,10 +457,11 @@ public class Controller
     private void handleTreeItemClicked()
     {
         TreeItem selectedTreeItem = (TreeItem) this.treeView.getSelectionModel().getSelectedItem();
+        JavaCodeArea currentCodeArea = this.getCurrentCodeArea();
         if (selectedTreeItem != null)
         {
             int lineNum = this.structureViewController.getTreeItemLineNum(selectedTreeItem);
-            this.getCurrentCodeArea().showParagraphAtTop(lineNum - 1);
+            if (currentCodeArea != null) currentCodeArea.showParagraphAtTop(lineNum - 1);
         }
     }
 }

@@ -145,9 +145,13 @@ public class StructureViewController
         @Override
         public void enterNormalClassDeclaration(Java8Parser.NormalClassDeclarationContext ctx)
         {
+            //get class name
             TerminalNode node = ctx.Identifier();
             String className = node.getText();
 
+            //add class to TreeView under the current class tree
+            //set up the icon
+            //store the line number of its declaration
             TreeItem<String> newNode = new TreeItem<>(className);
             newNode.setGraphic(new ImageView(this.classPic));
             newNode.setExpanded(true);
@@ -179,6 +183,8 @@ public class StructureViewController
             String fieldName = node.getText();
 
             //add field to TreeView under the current class tree
+            //set up the icon
+            //store the line number of its declaration
             TreeItem<String> newNode = new TreeItem<>(fieldName);
             newNode.setGraphic(new ImageView(this.fieldPic));
             this.currentNode.getChildren().add(newNode);
@@ -196,6 +202,8 @@ public class StructureViewController
             String methodName = nameNode.getText();
 
             //add method to TreeView under the current class tree
+            //set up the icon
+            //store the line number of its declaration
             TreeItem<String> newNode = new TreeItem<>(methodName);
             newNode.setGraphic(new ImageView(this.methodPic));
             this.currentNode.getChildren().add(newNode);
